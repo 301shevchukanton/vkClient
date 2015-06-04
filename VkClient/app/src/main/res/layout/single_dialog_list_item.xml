@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:mode="twoLine">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:id="@+id/single_dialog_name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:id="@+id/single_dialog_date"
+        android:layout_alignBaseline="@+id/single_dialog_name"
+        android:layout_alignBottom="@+id/single_dialog_text"
+        android:layout_toRightOf="@+id/single_dialog_name"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@+id/single_dialog_photo"
+        android:layout_toStartOf="@+id/single_dialog_photo" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/single_dialog_text"
+        android:paddingTop="25dp"
+        android:layout_toLeftOf="@+id/single_dialog_photo"
+        android:layout_toStartOf="@+id/single_dialog_photo" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/single_dialog_photo"
+        android:layout_alignTop="@+id/single_dialog_name"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/user_75" />
+
+</TwoLineListItem>

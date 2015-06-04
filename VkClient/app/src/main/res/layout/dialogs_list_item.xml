@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:mode="twoLine">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:id="@+id/dialog_name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:id="@+id/dialog_date"
+        android:layout_alignBaseline="@+id/dialog_name"
+        android:layout_alignBottom="@+id/dialog_text"
+        android:layout_toEndOf="@+id/dialog_name"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_text"
+        android:paddingTop="0dp"
+        android:layout_alignBottom="@+id/dialog_photo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/dialog_photo"
+        android:layout_toStartOf="@+id/dialog_photo"
+        android:maxHeight="150dp" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/dialog_photo"
+        android:layout_alignTop="@+id/dialog_name"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/user_75" />
+
+</TwoLineListItem>
