@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.podkaifom.vkclient" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="stateHidden" >
+        <activity android:name="com.vkclient.Activitys.LoginActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.vkclient.Activitys.ClientActivity"
+            android:label="@string/title_activity_client" >
+        </activity>
+        <activity android:name="com.vkclient.Activitys.ProfileActivity" >
+        </activity>
+        <activity
+            android:name="com.vkclient.Activitys.FriendsListActivity"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name="com.vkclient.Activitys.SendMessageActivity"
+            android:label="@string/title_activity_send_message" >
+        </activity>
+        <activity
+            android:name="com.vkclient.Activitys.WallPostActivity"
+            android:label="@string/title_activity_wall_post" >
+        </activity>
+        <activity
+            android:name="com.vkclient.Activitys.DialogsActivity"
+            android:label="@string/title_activity_dialogs" >
+        </activity>
+        <activity
+            android:name="com.vkclient.Activitys.SingleDialogActivity"
+            android:label="@string/title_activity_single_dialog"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+    </application>
+
+</manifest>
