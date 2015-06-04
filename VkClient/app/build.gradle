@@ -24,5 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile project(':vksdk_library')
     compile 'net.danlew:android.joda:2.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
 }

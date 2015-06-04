@@ -6,27 +6,35 @@
     android:mode="twoLine">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:id="@+id/dialog_name" />
+        android:id="@+id/dialog_name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceListItem"
         android:id="@+id/dialog_date"
-        android:layout_alignTop="@+id/dialog_name"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="226dp"
-        android:layout_marginStart="226dp" />
-        <TextView
+        android:layout_alignBaseline="@+id/dialog_name"
+        android:layout_alignBottom="@+id/dialog_text"
+        android:layout_toEndOf="@+id/dialog_name"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dialog_name"
         android:id="@+id/dialog_text"
-        android:paddingTop="10dp" />
+        android:paddingTop="0dp"
+        android:layout_alignBottom="@+id/dialog_photo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/dialog_photo"
+        android:layout_toStartOf="@+id/dialog_photo"
+        android:maxHeight="150dp" />
 
     <ImageView
         android:layout_width="60dp"

@@ -25,4 +25,5 @@
     <string name="title_activity_wall_post">WallPostActivity</string>
     <string name="Dialogs">Get dialogs</string>
     <string name="title_activity_dialogs">DialogsActivity</string>
+    <string name="title_activity_single_dialog">SingleDialogActivity</string>
 </resources>
