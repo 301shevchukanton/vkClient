@@ -1,4 +1,4 @@
-package com.vkclient.Activitys;
+package com.vkclient.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,24 +10,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.vkclient.Classes.Message;
+import com.vkclient.entities.Message;
 import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKUIHelper;
-import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
-import com.vkclient.Classes.myRequests;
+import com.vkclient.entities.RequestCreator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class SendMessageActivity extends Activity {
-    private String profileId=VKApiConst.OWNER_ID;
+public class SendMessageActivity extends VkSdkActivity {
+
     private VKRequest currentRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,48 +43,12 @@ public class SendMessageActivity extends Activity {
         });
 
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        VKUIHelper.onResume(this);
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        VKUIHelper.onDestroy(this);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        VKUIHelper.onActivityResult(this, requestCode, resultCode, data);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_message, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
     private void startLoading() {
         if (currentRequest != null) {
             currentRequest.cancel();
         }
         Log.d("profid", "onComplete " + profileId);
-           currentRequest = myRequests.getFullUserById(profileId);
+           currentRequest = RequestCreator.getFullUserById(profileId);
         currentRequest.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {

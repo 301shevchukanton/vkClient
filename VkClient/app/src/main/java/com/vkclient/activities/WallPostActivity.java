@@ -1,4 +1,4 @@
-package com.vkclient.Activitys;
+package com.vkclient.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,9 +28,7 @@ import com.vk.sdk.api.model.VKApiPhoto;
 import com.vk.sdk.api.model.VKAttachments;
 import com.vk.sdk.api.model.VKPhotoArray;
 import com.vk.sdk.api.model.VKWallPostResult;
-import com.vk.sdk.api.photo.VKImageParameters;
-import com.vk.sdk.api.photo.VKUploadImage;
-import com.vkclient.Classes.myRequests;
+import com.vkclient.entities.RequestCreator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,40 +37,42 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 
-public class WallPostActivity extends Activity {
-    private String profileId= VKApiConst.OWNER_ID;
+public class WallPostActivity extends VkSdkActivity
+{
     private VKRequest currentRequest;
      Bitmap photo;
     Bitmap selectedBitmap=null;
+    public final class WallPostRequestListener extends VKRequest.VKRequestListener
+    {
+        @Override
+        public void onComplete(VKResponse response) {
+            super.onComplete(response);
+        }
+
+        @Override
+        public void onError(VKError error) {
+            showError(error.apiError != null ? error.apiError : error);
+        }
+    }
+    public class WallPostClickListener implements View.OnClickListener
+    {
+        @Override
+        public void onClick(final View v)
+        {
+          if(v==findViewById(R.id.addPhotoButton)) pickPhoto();
+            if(v==findViewById(R.id.wallPostButton))   post();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         profileId=getIntent().getStringExtra("id");
         startLoading();
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_wall_post);
-        findViewById(R.id.addPhotoButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickPhoto();
-            }
-        });
-        findViewById(R.id.wallPostButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                post();
-            }
-        });
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        VKUIHelper.onResume(this);
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        VKUIHelper.onDestroy(this);
+        findViewById(R.id.addPhotoButton).setOnClickListener(new WallPostClickListener());
+        findViewById(R.id.wallPostButton).setOnClickListener(new WallPostClickListener());
     }
 
     @Override
@@ -84,7 +84,7 @@ public class WallPostActivity extends Activity {
             case 1:
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = data.getData();
-                    InputStream imageStream = null;
+                    InputStream imageStream;
                     try {
                         imageStream = getContentResolver().openInputStream(selectedImage);
                         selectedBitmap = BitmapFactory.decodeStream(imageStream);
@@ -95,60 +95,18 @@ public class WallPostActivity extends Activity {
                 }
         }
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_wall_post, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
     private void makePost(VKAttachments attachments) {
         makePost(attachments, null);
     }
     private void makePost(String message) {
         VKRequest post = VKApi.wall().post(VKParameters.from(VKApiConst.OWNER_ID, profileId, VKApiConst.MESSAGE, message));
         post.setModelClass(VKWallPostResult.class);
-        post.executeWithListener(new VKRequest.VKRequestListener() {
-            @Override
-            public void onComplete(VKResponse response) {
-                super.onComplete(response);
-            }
-
-            @Override
-            public void onError(VKError error) {
-                showError(error.apiError != null ? error.apiError : error);
-            }
-        });
+        post.executeWithListener(new WallPostRequestListener());
     }
     private void makePost(VKAttachments attachments, String message) {
         VKRequest post = VKApi.wall().post(VKParameters.from(VKApiConst.OWNER_ID, profileId, VKApiConst.ATTACHMENTS, attachments, VKApiConst.MESSAGE, message));
         post.setModelClass(VKWallPostResult.class);
-        post.executeWithListener(new VKRequest.VKRequestListener() {
-            @Override
-            public void onComplete(VKResponse response) {
-                super.onComplete(response);
-                VKWallPostResult result = (VKWallPostResult) response.parsedModel;
-                //      Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("https://vk.com/wall-60479154_%s", result.post_id) ) );
-                //    startActivity(i);
-            }
-
-            @Override
-            public void onError(VKError error) {
-                showError(error.apiError != null ? error.apiError : error);
-            }
-        });
+        post.executeWithListener(new WallPostRequestListener());
     }
     private void showError(VKError error) {
         new AlertDialog.Builder(WallPostActivity.this)
@@ -165,7 +123,7 @@ public class WallPostActivity extends Activity {
             currentRequest.cancel();
         }
         Log.d("profid", "onComplete " + profileId);
-        currentRequest = myRequests.getFullUserById(profileId);
+        currentRequest = RequestCreator.getFullUserById(profileId);
         currentRequest.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
@@ -223,7 +181,7 @@ public class WallPostActivity extends Activity {
         Toast.makeText(getApplicationContext(), "posted successful", Toast.LENGTH_LONG).show();
         ((TextView) findViewById(R.id.post)).setText("");
         if(photo!=null){
-        VKRequest request = myRequests.uploadPhotoToUser(profileId,photo);
+        VKRequest request = RequestCreator.uploadPhotoToUser(profileId, photo);
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {

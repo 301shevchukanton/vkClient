@@ -1,9 +1,7 @@
-package com.vkclient.Classes;
+package com.vkclient.entities;
 
-import android.app.Activity;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;

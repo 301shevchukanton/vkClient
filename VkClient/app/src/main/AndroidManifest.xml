@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateHidden" >
-        <activity android:name="com.vkclient.Activitys.LoginActivity" >
+        <activity android:name="com.vkclient.activities.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,29 +18,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.vkclient.Activitys.ClientActivity"
+            android:name="com.vkclient.activities.ClientActivity"
             android:label="@string/title_activity_client" >
         </activity>
-        <activity android:name="com.vkclient.Activitys.ProfileActivity" >
+        <activity android:name="com.vkclient.activities.ProfileActivity" >
         </activity>
         <activity
-            android:name="com.vkclient.Activitys.FriendsListActivity"
+            android:name="com.vkclient.activities.FriendsListActivity"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="com.vkclient.Activitys.SendMessageActivity"
+            android:name="com.vkclient.activities.SendMessageActivity"
             android:label="@string/title_activity_send_message" >
         </activity>
         <activity
-            android:name="com.vkclient.Activitys.WallPostActivity"
+            android:name="com.vkclient.activities.WallPostActivity"
             android:label="@string/title_activity_wall_post" >
         </activity>
         <activity
-            android:name="com.vkclient.Activitys.DialogsActivity"
+            android:name="com.vkclient.activities.DialogsActivity"
             android:label="@string/title_activity_dialogs" >
         </activity>
         <activity
-            android:name="com.vkclient.Activitys.SingleDialogActivity"
+            android:name="com.vkclient.activities.SingleDialogActivity"
             android:label="@string/title_activity_single_dialog"
             android:windowSoftInputMode="stateHidden">
         </activity>

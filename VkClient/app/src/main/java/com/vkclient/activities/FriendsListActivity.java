@@ -1,4 +1,4 @@
-package com.vkclient.Activitys;
+package com.vkclient.activities;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -15,20 +15,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.vkclient.Adapters.FriendListViewAdapter;
+import com.vkclient.adapters.FriendListViewAdapter;
 import com.example.podkaifom.vkclient.R;
-import com.vkclient.Classes.User;
+import com.vkclient.entities.User;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
-import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUserFull;
 import com.vk.sdk.api.model.VKUsersArray;
-import com.vkclient.Classes.myRequests;
+import com.vkclient.entities.RequestCreator;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -40,11 +37,58 @@ import java.util.List;
 public class FriendsListActivity extends ListActivity {
     private EditText filterText = null;
     private VKRequest currentRequest;
-    ListView listView;
+    ListView friendsList;
     private String profileId;
     private List<User> users = new ArrayList<User>();
     private FriendListViewAdapter listAdapter;
+    public final class GetFriendsRequestListener extends VKRequest.VKRequestListener
+    {
+        @Override
+        public void onComplete(VKResponse response) {
+            super.onComplete(response);
+            VKUsersArray usersArray = (VKUsersArray) response.parsedModel;
+            users.clear();
+            final String[] formats = new String[]{"dd.MM.yyyy", "dd.MM"};
 
+            for (VKApiUserFull userFull : usersArray) {
+                DateTime birthDate = null;
+                String format = null;
+
+                if (!TextUtils.isEmpty(userFull.bdate)) {
+                    for (int i = 0; i < formats.length; i++) {
+                        format = formats[i];
+                        try {
+                            birthDate = DateTimeFormat.forPattern(format).parseDateTime(userFull.bdate);
+                        } catch (Exception ignored) {
+                        }
+                        if (birthDate != null) {
+                            break;
+                        }
+                    }
+                }
+                users.add(new User(userFull.id, userFull.toString(), birthDate, userFull.photo_200, format));
+            }
+            listAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
+            super.attemptFailed(request, attemptNumber, totalAttempts);
+            Log.d("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
+        }
+
+        @Override
+        public void onError(VKError error) {
+            super.onError(error);
+            Log.d("VkDemoApp", "onError: " + error);
+        }
+
+        @Override
+        public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
+            super.onProgress(progressType, bytesLoaded, bytesTotal);
+            Log.d("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
+        }
+    }
     @Override
     public Object onRetainNonConfigurationInstance() {
         return this.listAdapter.getItems();
@@ -55,8 +99,7 @@ public class FriendsListActivity extends ListActivity {
         Log.d("profid", "profile id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
-        listView = (ListView)findViewById(android.R.id.list);
-
+        friendsList = (ListView)findViewById(android.R.id.list);
         filterText = (EditText) findViewById(R.id.searchView);
         filterText.addTextChangedListener(filterTextWatcher);
         VKUIHelper.onCreate(this);
@@ -114,7 +157,7 @@ public class FriendsListActivity extends ListActivity {
                     }
                 }
             }
-            listView.setAdapter(listAdapter = new FriendListViewAdapter(FriendsListActivity.this,temp));
+            friendsList.setAdapter(listAdapter = new FriendListViewAdapter(FriendsListActivity.this, temp));
         }
     };
     @Override
@@ -142,23 +185,16 @@ public class FriendsListActivity extends ListActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_friends_list, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -166,56 +202,8 @@ public class FriendsListActivity extends ListActivity {
         if (currentRequest != null) {
             currentRequest.cancel();
         }
-        currentRequest = myRequests.getFriends(profileId);
-        currentRequest.executeWithListener(new VKRequest.VKRequestListener() {
-            @Override
-            public void onComplete(VKResponse response) {
-                super.onComplete(response);
-                VKUsersArray usersArray = (VKUsersArray) response.parsedModel;
-                users.clear();
-                final String[] formats = new String[]{"dd.MM.yyyy", "dd.MM"};
-
-                for (VKApiUserFull userFull : usersArray) {
-                    DateTime birthDate = null;
-                    String format = null;
-
-                    if (!TextUtils.isEmpty(userFull.bdate)) {
-                        for (int i = 0; i < formats.length; i++) {
-                            format = formats[i];
-                            try {
-                                birthDate = DateTimeFormat.forPattern(format).parseDateTime(userFull.bdate);
-                            } catch (Exception ignored) {
-                            }
-                            if (birthDate != null) {
-                                break;
-                            }
-                        }
-                    }
-                    users.add(new User(userFull.id, userFull.toString(), birthDate, userFull.photo_200, format));
-
-                    //listAdapter.notifyDataSetChanged();
-                }
-                listAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
-                super.attemptFailed(request, attemptNumber, totalAttempts);
-                Log.d("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
-            }
-
-            @Override
-            public void onError(VKError error) {
-                super.onError(error);
-                Log.d("VkDemoApp", "onError: " + error);
-            }
-
-            @Override
-            public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
-                super.onProgress(progressType, bytesLoaded, bytesTotal);
-                Log.d("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
-            }
-        });
+        currentRequest = RequestCreator.getFriends(profileId);
+        currentRequest.executeWithListener(new GetFriendsRequestListener());
     }
 
     private void startUserApiCall(int id) {

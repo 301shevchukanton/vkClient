@@ -1,4 +1,4 @@
-package com.vkclient.Classes;
+package com.vkclient.entities;
 import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,8 +26,6 @@ public class User {
         this.dateFormat = null;
         this.photo=null;
         this.id=1;
-
-
     }
     public User(int id,String name, DateTime birthDate, String dateFormat) {
         this.name = name;

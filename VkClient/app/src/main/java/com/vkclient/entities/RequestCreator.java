@@ -1,4 +1,4 @@
-package com.vkclient.Classes;
+package com.vkclient.entities;
 
 import android.graphics.Bitmap;
 
@@ -12,7 +12,11 @@ import com.vk.sdk.api.photo.VKUploadImage;
 /**
  * Created by pod kaifom on 04.06.2015.
  */
-public class myRequests {
+public class RequestCreator {
+
+    static final String FRIENDS_COUNT = "222";
+    static final String SORT_BY = "hints";
+    static final String REQUEST_PARAMS = "id,first_name,last_name,bdate,photo_200";
 
     public static VKRequest getUserById(String user_id)
     {
@@ -35,7 +39,7 @@ public class myRequests {
     }
     public static VKRequest getFriends(String user_id)
     {
-        return VKApi.friends().get(VKParameters.from(VKApiConst.USER_ID, user_id, "order", "hints", VKApiConst.COUNT, "222",  VKApiConst.FIELDS, "id,first_name,last_name,bdate,photo_200"));
+        return VKApi.friends().get(VKParameters.from(VKApiConst.USER_ID, user_id, "order", SORT_BY, VKApiConst.COUNT, FRIENDS_COUNT,  VKApiConst.FIELDS, REQUEST_PARAMS));
     }
     public static VKRequest uploadPhotoToUser(String user_id, Bitmap photo)
     {

@@ -1,4 +1,4 @@
-package com.vkclient.Classes;
+package com.vkclient.entities;
 
 import org.joda.time.DateTime;
 import org.json.JSONException;
@@ -27,31 +27,31 @@ public Dialog(int id, long date, int user_id, boolean readState, String title, S
     this.body=body;
 }
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public long getDate() {
-        return date;
+        return this.date;
     }
 
     public int getUser_id() {
-        return user_id;
+        return this.user_id;
     }
 
     public boolean getReadState() {
-        return readState;
+        return this.readState;
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public String getBody() {
-        return body;
+        return this.body;
     }
     public  DateTime getParsedDate()
     {
-        DateTime dateTime = new DateTime( ( (long)this.date * 1000L + TimeZone.getDefault().getRawOffset()));
+        DateTime dateTime = new DateTime( ( this.date * 1000L + TimeZone.getDefault().getRawOffset()));
 
         return dateTime;
     }
@@ -64,7 +64,7 @@ public Dialog(int id, long date, int user_id, boolean readState, String title, S
     public void setPhoto(String photo){
         this.photo_200=photo;
     }
-    public String getGetphoto(){
+    public String getGetPhoto(){
         return this.photo_200;
     }
     public static Dialog parseDialog(JSONObject object){

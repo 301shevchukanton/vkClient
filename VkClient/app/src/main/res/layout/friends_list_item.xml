@@ -27,6 +27,6 @@
         android:layout_alignTop="@+id/text1"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/user_75" />
+        android:src="@drawable/ic_user75" />
 
 </TwoLineListItem>
