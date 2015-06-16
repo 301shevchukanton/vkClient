@@ -1,4 +1,4 @@
-package com.vkclient.adapter;
+package com.vkclient.adapters;
 
 import android.content.Context;
 import android.view.View;

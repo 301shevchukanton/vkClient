@@ -1,4 +1,4 @@
-package com.vkclient.adapter;
+package com.vkclient.adapters;
 
 import java.util.List;
 

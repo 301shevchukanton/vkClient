@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.vkclient.adapter.FriendListViewAdapter;
+import com.vkclient.adapters.FriendListViewAdapter;
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.entities.User;
 import com.vk.sdk.VKSdk;

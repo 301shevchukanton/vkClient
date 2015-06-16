@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.vkclient.entities.Message;
-import com.vkclient.adapter.MessagesAdapter;
+import com.vkclient.adapters.MessagesAdapter;
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
