@@ -15,6 +15,7 @@ public abstract class VkSdkActivity extends Activity {
         super.onResume();
         VKUIHelper.onResume(this);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
