@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.vkclient.adapters.FriendListViewAdapter;
+import com.vkclient.adapter.FriendListViewAdapter;
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.entities.User;
 import com.vk.sdk.VKSdk;

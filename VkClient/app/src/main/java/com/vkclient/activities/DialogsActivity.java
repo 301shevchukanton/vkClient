@@ -3,7 +3,6 @@ package com.vkclient.activities;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.vkclient.adapters.DialogsListViewAdapter;
+import com.vkclient.adapter.DialogsListViewAdapter;
 import com.vkclient.entities.Dialog;
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;

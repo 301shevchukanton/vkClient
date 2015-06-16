@@ -1,4 +1,4 @@
-package com.vkclient.adapters;
+package com.vkclient.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.vkclient.entities.Dialog;
 import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
-import com.vkclient.supports.Loger;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
