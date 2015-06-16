@@ -21,6 +21,7 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.supports.Loger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,12 +32,13 @@ import java.util.List;
 
 
 public class SingleDialogActivity extends ListActivity {
+    private final String COUNT="50";
+
     private String profileId;
     ListView listView;
     private VKRequest currentRequest;
     private List<Message> messages = new ArrayList<>();
     private MessagesAdapter listAdapter;
-
     public final class SingleDialogClickListener implements View.OnClickListener
     {
         @Override
@@ -58,7 +60,7 @@ public class SingleDialogActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId=getIntent().getStringExtra("userid");
-        Log.d("profid", "ic_user id taked" + profileId);
+         Loger.log("profid", "ic_user id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_dialog);
         listView = (ListView)findViewById(android.R.id.list);
@@ -114,7 +116,7 @@ public class SingleDialogActivity extends ListActivity {
             currentRequest.cancel();
         }
         messages.clear();
-        currentRequest  = new VKRequest ("messages.getHistory", VKParameters.from(VKApiConst.COUNT, "50", VKApiConst.USER_ID, profileId), VKRequest.HttpMethod.GET);
+        currentRequest  = new VKRequest ("messages.getHistory", VKParameters.from(VKApiConst.COUNT, this.COUNT, VKApiConst.USER_ID, this.profileId), VKRequest.HttpMethod.GET);
         currentRequest.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(final VKResponse response) {
@@ -169,19 +171,19 @@ public class SingleDialogActivity extends ListActivity {
                     @Override
                     public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
                         super.attemptFailed(request, attemptNumber, totalAttempts);
-                        Log.d("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
+                         Loger.log("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
                     }
 
                     @Override
                     public void onError(VKError error) {
                         super.onError(error);
-                        Log.d("VkDemoApp", "onError: " + error);
+                         Loger.log("VkDemoApp", "onError: " + error);
                     }
 
                     @Override
                     public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
                         super.onProgress(progressType, bytesLoaded, bytesTotal);
-                        Log.d("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
+                         Loger.log("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
                     }
                 });
             }
@@ -210,38 +212,38 @@ public class SingleDialogActivity extends ListActivity {
                     @Override
                     public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
                         super.attemptFailed(request, attemptNumber, totalAttempts);
-                        Log.d("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
+                         Loger.log("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
                     }
 
                     @Override
                     public void onError(VKError error) {
                         super.onError(error);
-                        Log.d("VkDemoApp", "onError: " + error);
+                         Loger.log("VkDemoApp", "onError: " + error);
                     }
 
                     @Override
                     public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
                         super.onProgress(progressType, bytesLoaded, bytesTotal);
-                        Log.d("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
+                         Loger.log("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
                     }
                 });
             }
             @Override
             public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
                 super.attemptFailed(request, attemptNumber, totalAttempts);
-                Log.d("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
+                 Loger.log("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
             }
 
             @Override
             public void onError(VKError error) {
                 super.onError(error);
-                Log.d("VkDemoApp", "onError: " + error);
+                 Loger.log("VkDemoApp", "onError: " + error);
             }
 
             @Override
             public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
                 super.onProgress(progressType, bytesLoaded, bytesTotal);
-                Log.d("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
+                 Loger.log("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
             }
         });
     }

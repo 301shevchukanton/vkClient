@@ -26,6 +26,7 @@ import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUserFull;
 import com.vk.sdk.api.model.VKUsersArray;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.supports.Loger;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -74,19 +75,19 @@ public class FriendsListActivity extends ListActivity {
         @Override
         public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
             super.attemptFailed(request, attemptNumber, totalAttempts);
-            Log.d("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
+             Loger.log("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
         }
 
         @Override
         public void onError(VKError error) {
             super.onError(error);
-            Log.d("VkDemoApp", "onError: " + error);
+             Loger.log("VkDemoApp", "onError: " + error);
         }
 
         @Override
         public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
             super.onProgress(progressType, bytesLoaded, bytesTotal);
-            Log.d("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
+             Loger.log("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
         }
     }
     @Override
@@ -96,7 +97,7 @@ public class FriendsListActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
             profileId=getIntent().getStringExtra("id");
-        Log.d("profid", "profile id taked" + profileId);
+         Loger.log("profid", "profile id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
         friendsList = (ListView)findViewById(android.R.id.list);
@@ -124,7 +125,7 @@ public class FriendsListActivity extends ListActivity {
                         break;
                     }
                 }
-                Log.d("VkList", "id: " + id);
+                 Loger.log("VkList", "id: " + id);
             }
         });
         setListAdapter(listAdapter);

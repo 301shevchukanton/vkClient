@@ -17,8 +17,10 @@ import com.vk.sdk.VKSdkListener;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.util.VKUtil;
+import com.vkclient.supports.Loger;
 
 public class LoginActivity extends VkSdkActivity {
+    final String APPLICATION_ID = "4929437";
     private static final String[] vkPermissionScope = new String[] {
             VKScope.FRIENDS,
             VKScope.WALL,
@@ -41,9 +43,9 @@ public class LoginActivity extends VkSdkActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         VKUIHelper.onCreate(this);
-        VKSdk.initialize(sdkListener, "4929437");
+        VKSdk.initialize(sdkListener, APPLICATION_ID);
         String[] fingerprint = VKUtil.getCertificateFingerprint(this, this.getPackageName());
-        Log.d("Fingerprint", fingerprint[0]);
+         Loger.log("Fingerprint", fingerprint[0]);
         findViewById(R.id.sign_in_button).setOnClickListener(new LoginClickListener());
         findViewById(R.id.force_oauth_button).setOnClickListener(new LoginClickListener());
         if (VKSdk.wakeUpSession()) {

@@ -18,6 +18,7 @@ import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.supports.Loger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,23 +31,32 @@ public class ProfileActivity extends VkSdkActivity {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
-            Log.d("profid", "onComplete " + response);
+             Loger.log("profid", "onComplete " + response);
             setUserInfo(response);
         }
-        void setLayoutsVisibility(User u)
+       private void setViewText(int id, String text)
+       {
+           ((TextView) findViewById(id)).setText(text);
+       }
+       private void hideLayout(int id)
+       {
+           findViewById(id).setVisibility(View.GONE);
+       }
+       private void setLayoutsVisibility(User u)
         {
-            ((TextView) findViewById(R.id.nameText)).setText(u.getName());
-            if(u.getStatus()!=null) ((TextView) findViewById(R.id.statusText)).setText(u.getStatus());
-            if(u.getBdDateString()!=null) ((TextView) findViewById(R.id.bdText)).setText(u.getBdDateString());
-            else  findViewById(R.id.bdLayout).setVisibility(View.GONE);
-            if(u.getCity()!=null) ((TextView) findViewById(R.id.townText)).setText(u.getCity());
-            else findViewById(R.id.homeTownLayout).setVisibility(View.GONE);
-            if(u.getRelationship()!=null) ((TextView) findViewById(R.id.relationshipText)).setText(u.getRelationship());
-            else findViewById(R.id.relationshipLayout).setVisibility(View.GONE);
-            if(u.getUnivers()!=null) ((TextView)findViewById(R.id.studiedAtText)).setText(u.getUnivers());
-            else findViewById(R.id.studiedAtLayout).setVisibility(View.GONE);
-            if(u.getLangs()!=null) ((TextView)findViewById(R.id.languagesText)).setText(u.getLangs());
-            else findViewById(R.id.langLayout).setVisibility(View.GONE);
+            setViewText(R.id.nameText,u.getName());
+            setViewText(R.id.languagesText,u.getLangs());
+            if(u.getStatus()!=null)  setViewText(R.id.statusText, u.getStatus());
+            if(u.getBdDateString()!=null) setViewText(R.id.bdText, u.getBdDateString());
+            else hideLayout(R.id.bdLayout);
+            if(u.getCity()!=null) setViewText(R.id.townText, u.getCity());
+            else hideLayout(R.id.homeTownLayout);
+            if(u.getRelationship()!=null) setViewText(R.id.relationshipText, u.getRelationship());
+            else hideLayout(R.id.relationshipLayout);
+            if(u.getUnivers()!=null) setViewText(R.id.studiedAtText, u.getUnivers());
+            else hideLayout(R.id.studiedAtLayout);
+            if(u.getLangs()!=null) setViewText(R.id.languagesText, u.getLangs());
+            else hideLayout(R.id.langLayout);
         }
         private void setUserInfo(VKResponse response) {
             try {
@@ -54,13 +64,11 @@ public class ProfileActivity extends VkSdkActivity {
                 User temp = User.parseUserFromJSON(r);
                 setLayoutsVisibility(temp);
                 profileId = r.getString("id");
-                try {
+          if(r.getString("photo_200")!=null) {
                     Picasso.with(getApplicationContext())
                             .load(r.getString("photo_200"))
                             .into((ImageView) findViewById(R.id.profilePhoto));
-                } catch (Exception e) {
                 }
-                ;
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());
             }
@@ -68,19 +76,19 @@ public class ProfileActivity extends VkSdkActivity {
         @Override
         public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
             super.attemptFailed(request, attemptNumber, totalAttempts);
-            Log.d("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
+             Loger.log("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
         }
 
         @Override
         public void onError(VKError error) {
             super.onError(error);
-            Log.d("VkDemoApp", "onError: " + error);
+             Loger.log("VkDemoApp", "onError: " + error);
         }
 
         @Override
         public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
             super.onProgress(progressType, bytesLoaded, bytesTotal);
-            Log.d("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
+             Loger.log("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
         }
     }
     public final class ProfileClickListener implements View.OnClickListener
@@ -97,7 +105,7 @@ public class ProfileActivity extends VkSdkActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId=getIntent().getStringExtra("id");
-        Log.d("profid", "profileid " + profileId);
+         Loger.log("profid", "profileid " + profileId);
         startLoading();
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
@@ -119,7 +127,7 @@ public class ProfileActivity extends VkSdkActivity {
         if (currentRequest != null) {
             currentRequest.cancel();
         }
-        Log.d("profid", "onComplete " + profileId);
+         Loger.log("profid", "onComplete " + profileId);
         currentRequest = RequestCreator.getFullUserById(profileId);
         currentRequest.executeWithListener(new ProfileRequestListener());
     }

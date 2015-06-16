@@ -21,6 +21,7 @@ import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.supports.Loger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +40,7 @@ public class DialogsActivity extends ListActivity {
         @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
-            Log.d("profid", response.responseString);
+            Loger.log("profid", response.responseString);
             dialogs.clear();
             try {
                 JSONArray messagesArray =response.json.getJSONObject("response").getJSONArray("items");
@@ -49,49 +50,51 @@ public class DialogsActivity extends ListActivity {
                     myrequests[i]= RequestCreator.getUserById(String.valueOf(messagesArray.getJSONObject(i).getJSONObject("message").getString("user_id")));
                 }
                 VKBatchRequest batch = new VKBatchRequest(myrequests);
-                batch.executeWithListener(new VKBatchRequest.VKBatchRequestListener() {
-                    @Override
-                    public void onComplete(VKResponse[] responses) {
-                        super.onComplete(responses);
-                        try {
-                            setUserInfo(responses);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    private void setUserInfo(VKResponse[] responses) throws JSONException {
-                        for(int i=0;i<responses.length;i++) {
-                            JSONObject r = responses[i].json.getJSONArray("response").getJSONObject(0);
-                            dialogs.get(i).setUsername(r.getString("first_name") + " " + r.getString("last_name"));
-                            if(!r.getString("photo_200").isEmpty()) dialogs.get(i).setPhoto(r.getString("photo_200"));
-
-                        }
-                        listAdapter.notifyDataSetChanged();
-                    }
-                });
+                batch.executeWithListener(batchListener);
             }
             catch (Exception e){
-                Log.d("profid", e.toString());
+                Loger.log("profid", e.toString());
             }
             listAdapter.notifyDataSetChanged();
         }
         @Override
         public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
             super.attemptFailed(request, attemptNumber, totalAttempts);
-            Log.d("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
+            Loger.log("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
         }
 
         @Override
         public void onError(VKError error) {
             super.onError(error);
-            Log.d("VkDemoApp", "onError: " + error);
+            Loger.log("VkDemoApp", "onError: " + error);
         }
 
         @Override
         public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
             super.onProgress(progressType, bytesLoaded, bytesTotal);
-            Log.d("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
+            Loger.log("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
         }
+        private final VKBatchRequest.VKBatchRequestListener batchListener = new VKBatchRequest.VKBatchRequestListener(){
+            @Override
+            public void onComplete(VKResponse[] responses) {
+                super.onComplete(responses);
+                try {
+                    setUserInfo(responses);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            private void setUserInfo(VKResponse[] responses) throws JSONException {
+                for(int i=0;i<responses.length;i++) {
+                    JSONObject r = responses[i].json.getJSONArray("response").getJSONObject(0);
+                    dialogs.get(i).setUsername(r.getString("first_name") + " " + r.getString("last_name"));
+                    if(!r.getString("photo_200").isEmpty()) dialogs.get(i).setPhoto(r.getString("photo_200"));
+
+                }
+                listAdapter.notifyDataSetChanged();
+            }
+        };
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +123,7 @@ public class DialogsActivity extends ListActivity {
                         break;
                     }
                 }
-                Log.d("VkList", "id: " + id);
+                Loger.log("VkList", "id: " + id);
             }
         });
         listAdapter = new DialogsListViewAdapter(this,dialogs);

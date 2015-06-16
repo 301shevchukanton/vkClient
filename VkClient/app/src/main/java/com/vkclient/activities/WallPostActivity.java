@@ -29,6 +29,7 @@ import com.vk.sdk.api.model.VKAttachments;
 import com.vk.sdk.api.model.VKPhotoArray;
 import com.vk.sdk.api.model.VKWallPostResult;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.supports.Loger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -122,19 +123,19 @@ public class WallPostActivity extends VkSdkActivity
         if (currentRequest != null) {
             currentRequest.cancel();
         }
-        Log.d("profid", "onComplete " + profileId);
+         Loger.log("profid", "onComplete " + profileId);
         currentRequest = RequestCreator.getFullUserById(profileId);
         currentRequest.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
-                Log.d("profid", "onComplete " + response);
+                 Loger.log("profid", "onComplete " + response);
                 setUserInfo(response);
             }
 
             private void setUserInfo(VKResponse response) {
                 try {
-                    Log.d("profid", "seting inf " + profileId);
+                     Loger.log("profid", "seting inf " + profileId);
                     JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
                     if (r.getString("last_name") != null && r.getString("first_name") != null)
                         ((TextView) findViewById(R.id.post_name)).setText(r.getString("first_name") + " " + r.getString("last_name"));
@@ -152,19 +153,19 @@ public class WallPostActivity extends VkSdkActivity
             @Override
             public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
                 super.attemptFailed(request, attemptNumber, totalAttempts);
-                Log.d("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
+                 Loger.log("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
             }
 
             @Override
             public void onError(VKError error) {
                 super.onError(error);
-                Log.d("VkDemoApp", "onError: " + error);
+                 Loger.log("VkDemoApp", "onError: " + error);
             }
 
             @Override
             public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
                 super.onProgress(progressType, bytesLoaded, bytesTotal);
-                Log.d("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
+                 Loger.log("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
             }
         });
     }

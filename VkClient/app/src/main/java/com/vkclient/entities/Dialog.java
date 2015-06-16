@@ -6,9 +6,6 @@ import org.json.JSONObject;
 
 import java.util.TimeZone;
 
-/**
- * Created by pod kaifom on 02.06.2015.
- */
 public class Dialog {
     private final int id;
     private final long date;
@@ -16,7 +13,7 @@ public class Dialog {
     private final boolean readState;
     private final String title;
     private final String body;
-    private String photo_200;
+    private String photo_200="";
     private  String username="";
 public Dialog(int id, long date, int user_id, boolean readState, String title, String body){
     this.id = id;
