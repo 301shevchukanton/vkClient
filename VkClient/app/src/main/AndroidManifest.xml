@@ -42,7 +42,11 @@
         <activity
             android:name="com.vkclient.activities.SingleDialogActivity"
             android:label="@string/title_activity_single_dialog"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name="com.vkclient.activities.PhotoViewActivity"
+            android:label="@string/title_activity_photo_view" >
         </activity>
     </application>
 

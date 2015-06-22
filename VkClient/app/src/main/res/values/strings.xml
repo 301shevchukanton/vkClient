@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">VkClient</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_sign_in_ez">Login with Vk-app</string>
     <string name="action_sign_in_force">Login with API</string>
@@ -26,4 +24,7 @@
     <string name="Dialogs">Get dialogs</string>
     <string name="title_activity_dialogs">DialogsActivity</string>
     <string name="title_activity_single_dialog">SingleDialogActivity</string>
+    <string name="title_activity_photo_view">PhotoViewActivity</string>
+    <string name="Share">Share</string>
+    <string name="Like">Like</string>
 </resources>

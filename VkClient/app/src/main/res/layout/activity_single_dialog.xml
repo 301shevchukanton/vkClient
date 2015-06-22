@@ -41,7 +41,7 @@
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:id="@android:id/list"
+            android:id="@+id/singleDialogListView"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
