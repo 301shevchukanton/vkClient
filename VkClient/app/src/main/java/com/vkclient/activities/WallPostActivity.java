@@ -1,6 +1,5 @@
 package com.vkclient.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,8 +7,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +26,7 @@ import com.vk.sdk.api.model.VKAttachments;
 import com.vk.sdk.api.model.VKPhotoArray;
 import com.vk.sdk.api.model.VKWallPostResult;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.entities.RequestListenerMaster;
 import com.vkclient.supports.Loger;
 
 import org.json.JSONException;
@@ -125,7 +123,7 @@ public class WallPostActivity extends VkSdkActivity
         }
          Loger.log("profid", "onComplete " + profileId);
         currentRequest = RequestCreator.getFullUserById(profileId);
-        currentRequest.executeWithListener(new VKRequest.VKRequestListener() {
+        currentRequest.executeWithListener(new RequestListenerMaster() {
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
@@ -149,24 +147,6 @@ public class WallPostActivity extends VkSdkActivity
                     Log.e(e.getMessage(), e.toString());
                 }
             }
-
-            @Override
-            public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
-                super.attemptFailed(request, attemptNumber, totalAttempts);
-                 Loger.log("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
-            }
-
-            @Override
-            public void onError(VKError error) {
-                super.onError(error);
-                 Loger.log("VkDemoApp", "onError: " + error);
-            }
-
-            @Override
-            public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
-                super.onProgress(progressType, bytesLoaded, bytesTotal);
-                 Loger.log("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
-            }
         });
     }
     private void pickPhoto(){
@@ -183,7 +163,7 @@ public class WallPostActivity extends VkSdkActivity
         ((TextView) findViewById(R.id.post)).setText("");
         if(photo!=null){
         VKRequest request = RequestCreator.uploadPhotoToUser(profileId, photo);
-        request.executeWithListener(new VKRequest.VKRequestListener() {
+        request.executeWithListener(new RequestListenerMaster() {
             @Override
             public void onComplete(VKResponse response) {
                 photo.recycle();

@@ -9,21 +9,21 @@ import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.photo.VKImageParameters;
 import com.vk.sdk.api.photo.VKUploadImage;
 
-/**
- * Created by pod kaifom on 04.06.2015.
- */
 public class RequestCreator {
 
     static final String FRIENDS_COUNT = "222";
     static final String SORT_BY = "hints";
-    static final String REQUEST_PARAMS = "id,first_name,last_name,bdate,photo_200";
+    static final String REQUEST_PARAMS = "id,first_name,last_name,bdate,photo_200,photo_max";
 
     public static VKRequest getUserById(String user_id)
     {
         return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, user_id, VKApiConst.FIELDS,
                 "first_name,last_name,photo_200"));
     }
-
+    public static VKRequest getBigUserPhoto(String user_id)  {
+        return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, user_id, VKApiConst.FIELDS,
+                "photo_max_orig"));
+    }
     public static VKRequest getFullUserById(String user_id)
     {
         return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, user_id, VKApiConst.FIELDS,

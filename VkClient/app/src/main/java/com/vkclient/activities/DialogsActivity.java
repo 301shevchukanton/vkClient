@@ -1,10 +1,7 @@
 package com.vkclient.activities;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -20,6 +17,7 @@ import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.entities.RequestListenerMaster;
 import com.vkclient.supports.Loger;
 
 import org.json.JSONArray;
@@ -29,13 +27,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DialogsActivity extends ListActivity {
+public class DialogsActivity extends VkSdkActivity {
     private VKRequest currentRequest;
     ListView listView;
     private List<Dialog> dialogs = new ArrayList<>();
     private DialogsListViewAdapter listAdapter;
 
-    public final class GetHistoryRequestListener extends VKRequest.VKRequestListener {
+    public final class GetHistoryRequestListener extends RequestListenerMaster {
         @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
@@ -55,23 +53,6 @@ public class DialogsActivity extends ListActivity {
                 Loger.log("profid", e.toString());
             }
             listAdapter.notifyDataSetChanged();
-        }
-        @Override
-        public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
-            super.attemptFailed(request, attemptNumber, totalAttempts);
-            Loger.log("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
-        }
-
-        @Override
-        public void onError(VKError error) {
-            super.onError(error);
-            Loger.log("VkDemoApp", "onError: " + error);
-        }
-
-        @Override
-        public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
-            super.onProgress(progressType, bytesLoaded, bytesTotal);
-            Loger.log("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
         }
         private final VKBatchRequest.VKBatchRequestListener batchListener = new VKBatchRequest.VKBatchRequestListener(){
             @Override
@@ -100,19 +81,20 @@ public class DialogsActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_dialogs);
-        listView = (ListView)findViewById(android.R.id.list);
+
+        listView = (ListView)findViewById(R.id.dialogsListView);
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
             dialogs =  ((List<Dialog>) items);
             listAdapter = new DialogsListViewAdapter(this,dialogs);
-            setListAdapter(listAdapter);
+            listView.setAdapter(listAdapter);
             listAdapter.notifyDataSetChanged();
         }
         else if (VKSdk.wakeUpSession()) {
             startLoading();
         }
 
-        ((ListView) findViewById(android.R.id.list)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ((ListView) findViewById(R.id.dialogsListView)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 ((TextView) view.findViewById(R.id.dialog_name)).getText();
@@ -126,42 +108,13 @@ public class DialogsActivity extends ListActivity {
             }
         });
         listAdapter = new DialogsListViewAdapter(this,dialogs);
-        setListAdapter(listAdapter);
+        listView.setAdapter(listAdapter);
     }
     private void startSingleDialogApiCall(int user_id){
             Intent i = new Intent(this, SingleDialogActivity.class);
             i.putExtra("userid", String.valueOf(user_id));
             startActivity(i);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        VKUIHelper.onResume(this);
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        VKUIHelper.onDestroy(this);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        VKUIHelper.onActivityResult(this, requestCode, resultCode, data);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_dialogs, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void startLoading() {
         if (currentRequest != null) {
             currentRequest.cancel();

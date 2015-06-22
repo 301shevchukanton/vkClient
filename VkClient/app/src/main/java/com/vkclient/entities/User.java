@@ -16,7 +16,8 @@ public class User {
     private String univers;
     private String relationship;
     private String dateFormat;
-    private  String photo;
+    private String photo;
+    private String photoMax;
     private String langs;
 
     public User()
@@ -25,6 +26,7 @@ public class User {
         this.birthDate = null;
         this.dateFormat = null;
         this.photo=null;
+        this.photoMax=null;
         this.id=1;
     }
     public User(int id,String name, DateTime birthDate, String dateFormat) {
@@ -35,11 +37,12 @@ public class User {
         this.id=id;
     }
 
-    public User(int id,String name, DateTime birthDate, String photo, String dateFormat ) {
+    public User(int id,String name, DateTime birthDate, String photo, String photoMax, String dateFormat ) {
         this.name = name;
         this.birthDate = birthDate;
         this.dateFormat = dateFormat;
         this.photo=photo;
+        this.photoMax=photoMax;
         this.id=id;
     }
     public DateTime getBirthDate() {
@@ -150,5 +153,13 @@ public class User {
         if(r.has("universities")) result.setUnivers(r.getJSONArray("universities").getJSONObject(0).getString("name"));
         result.setLangs(User.getLangs(r));
         return result;
+    }
+
+    public void setPhotoMax(String photoMax) {
+        this.photoMax = photoMax;
+    }
+
+    public String getPhotoMax() {
+        return photoMax;
     }
 }

@@ -1,11 +1,7 @@
 package com.vkclient.activities;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,11 +10,10 @@ import com.vkclient.entities.Message;
 import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKUIHelper;
-import com.vk.sdk.api.VKApiConst;
-import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.entities.RequestListenerMaster;
 import com.vkclient.supports.Loger;
 
 import org.json.JSONException;
@@ -50,7 +45,7 @@ public class SendMessageActivity extends VkSdkActivity {
         }
          Loger.log("profid", "onComplete " + profileId);
            currentRequest = RequestCreator.getFullUserById(profileId);
-        currentRequest.executeWithListener(new VKRequest.VKRequestListener() {
+        currentRequest.executeWithListener(new RequestListenerMaster() {
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
@@ -70,24 +65,6 @@ public class SendMessageActivity extends VkSdkActivity {
                 } catch (JSONException e) {
                     Log.e(e.getMessage(), e.toString());
                 }
-            }
-
-            @Override
-            public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
-                super.attemptFailed(request, attemptNumber, totalAttempts);
-                 Loger.log("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
-            }
-
-            @Override
-            public void onError(VKError error) {
-                super.onError(error);
-                 Loger.log("VkDemoApp", "onError: " + error);
-            }
-
-            @Override
-            public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
-                super.onProgress(progressType, bytesLoaded, bytesTotal);
-                 Loger.log("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
             }
         });
     }

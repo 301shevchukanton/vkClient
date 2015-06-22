@@ -3,7 +3,6 @@ package com.vkclient.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -49,5 +48,6 @@ public class ClientActivity extends VkSdkActivity {
     private void startApiCall(Class <?> cls){
         Intent i = new Intent(this, cls);
         startActivity(i);
+
     }
 }
