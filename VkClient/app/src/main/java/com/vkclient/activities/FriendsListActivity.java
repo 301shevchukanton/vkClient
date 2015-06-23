@@ -34,7 +34,7 @@ import java.util.List;
 public class FriendsListActivity extends VkSdkActivity {
     private EditText filterText = null;
     private VKRequest currentRequest;
-    private ListView friendsList;
+    ListView friendsList;
     private List<User> users = new ArrayList<User>();
     private FriendListViewAdapter listAdapter;
 
