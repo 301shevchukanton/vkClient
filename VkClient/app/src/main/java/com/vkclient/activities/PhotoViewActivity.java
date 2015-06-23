@@ -2,11 +2,7 @@ package com.vkclient.activities;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
@@ -54,7 +50,7 @@ public class PhotoViewActivity extends VkSdkActivity {
                 if(r.getString("photo_max_orig")!=null) {
                     Picasso.with(getApplicationContext())
                             .load(r.getString("photo_max_orig"))
-                            .into((ImageView) findViewById(R.id.photoView));
+                            .into((ImageView) findViewById(R.id.ivPhoto));
                 }
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());

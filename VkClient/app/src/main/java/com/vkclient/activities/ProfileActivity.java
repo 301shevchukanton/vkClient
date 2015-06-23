@@ -34,10 +34,10 @@ public class ProfileActivity extends VkSdkActivity {
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_profile);
         findViewById(R.id.relLayout).setVisibility(View.VISIBLE);
-        findViewById(R.id.friendsButton).setOnClickListener(new ProfileClickListener());
-        findViewById(R.id.sendMessageButton).setOnClickListener(new ProfileClickListener());
-        findViewById(R.id.profileWallPost).setOnClickListener(new ProfileClickListener());
-        findViewById(R.id.profilePhoto).setOnClickListener(new ProfileClickListener());
+        findViewById(R.id.btProfileFriends).setOnClickListener(new ProfileClickListener());
+        findViewById(R.id.btSendMessage).setOnClickListener(new ProfileClickListener());
+        findViewById(R.id.btWallPost).setOnClickListener(new ProfileClickListener());
+        findViewById(R.id.ivProfilePhoto).setOnClickListener(new ProfileClickListener());
     }
 
     private void startActivityCall(Class <?> cls)
@@ -76,19 +76,19 @@ public class ProfileActivity extends VkSdkActivity {
         }
         private void setLayoutsVisibility(User u)
         {
-            setViewText(R.id.nameText, u.getName());
-            setViewText(R.id.languagesText, u.getLangs());
-            if(u.getStatus()!=null)  setViewText(R.id.statusText, u.getStatus());
-            if(u.getBdDateString()!=null) setViewText(R.id.bdText, u.getBdDateString());
-            else hideLayout(R.id.bdLayout);
-            if(u.getCity()!=null) setViewText(R.id.townText, u.getCity());
-            else hideLayout(R.id.homeTownLayout);
-            if(u.getRelationship()!=null) setViewText(R.id.relationshipText, u.getRelationship());
-            else hideLayout(R.id.relationshipLayout);
-            if(u.getUnivers()!=null) setViewText(R.id.studiedAtText, u.getUnivers());
-            else hideLayout(R.id.studiedAtLayout);
-            if(u.getLangs()!=null) setViewText(R.id.languagesText, u.getLangs());
-            else hideLayout(R.id.langLayout);
+            setViewText(R.id.tvProfileName, u.getName());
+            setViewText(R.id.tvLanguages, u.getLangs());
+            if(u.getStatus()!=null)  setViewText(R.id.tvProfileStatus, u.getStatus());
+            if(u.getBdDateString()!=null) setViewText(R.id.tvProfileBirthDate, u.getBdDateString());
+            else hideLayout(R.id.llBirthDate);
+            if(u.getCity()!=null) setViewText(R.id.tvProfileTown, u.getCity());
+            else hideLayout(R.id.llHomeTown);
+            if(u.getRelationship()!=null) setViewText(R.id.tvRelationship, u.getRelationship());
+            else hideLayout(R.id.llRelationships);
+            if(u.getUnivers()!=null) setViewText(R.id.tvStudiedAt, u.getUnivers());
+            else hideLayout(R.id.llStudiedAt);
+            if(u.getLangs()!=null) setViewText(R.id.tvLanguages, u.getLangs());
+            else hideLayout(R.id.llLanguages);
         }
         private void setUserInfo(VKResponse response) {
             try {
@@ -99,7 +99,7 @@ public class ProfileActivity extends VkSdkActivity {
                 if(r.getString("photo_200")!=null) {
                     Picasso.with(getApplicationContext())
                             .load(r.getString("photo_200"))
-                            .into((ImageView) findViewById(R.id.profilePhoto));
+                            .into((ImageView) findViewById(R.id.ivProfilePhoto));
                 }
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());
@@ -111,10 +111,10 @@ public class ProfileActivity extends VkSdkActivity {
         @Override
         public void onClick(final View v)
         {
-            if(v==findViewById(R.id.friendsButton))    startActivityCall(FriendsListActivity.class);
-            if(v==findViewById(R.id.sendMessageButton))startActivityCall(SendMessageActivity.class);
-            if(v==findViewById(R.id.profileWallPost))  startActivityCall(WallPostActivity.class);
-            if(v==findViewById(R.id.profilePhoto)) startActivityCall(PhotoViewActivity.class, profileId);
+            if(v==findViewById(R.id.btProfileFriends))    startActivityCall(FriendsListActivity.class);
+            if(v==findViewById(R.id.btSendMessage))startActivityCall(SendMessageActivity.class);
+            if(v==findViewById(R.id.btWallPost))  startActivityCall(WallPostActivity.class);
+            if(v==findViewById(R.id.ivProfilePhoto)) startActivityCall(PhotoViewActivity.class, profileId);
         }
     }
 

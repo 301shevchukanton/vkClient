@@ -48,8 +48,8 @@ public class FriendsListActivity extends VkSdkActivity {
          Loger.log("profid", "profile id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
-        friendsList = (ListView)findViewById(R.id.friendsListView);
-        filterText = (EditText) findViewById(R.id.searchView);
+        friendsList = (ListView)findViewById(R.id.lvFriends);
+        filterText = (EditText) findViewById(R.id.etSearchFriends);
         filterText.addTextChangedListener(filterTextWatcher);
         VKUIHelper.onCreate(this);
         if (VKSdk.wakeUpSession()) {
@@ -60,13 +60,13 @@ public class FriendsListActivity extends VkSdkActivity {
             users =  ((ArrayList<User>) items);
         }
         listAdapter = new FriendListViewAdapter(this,users);
-        filterText = (EditText) findViewById(R.id.searchView);
+        filterText = (EditText) findViewById(R.id.etSearchFriends);
         filterText.addTextChangedListener(filterTextWatcher);
-        ((ListView) findViewById(R.id.friendsListView)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ((ListView) findViewById(R.id.lvFriends)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 for (int i = 0; i < users.size(); i++) {
-                    if (users.get(i).getName().equals(((TextView) view.findViewById(R.id.text1)).getText())) {
+                    if (users.get(i).getName().equals(((TextView) view.findViewById(R.id.tvFriendName)).getText())) {
                         startUserApiCall(users.get(i).getId());
                         break;
                     }
@@ -88,7 +88,7 @@ public class FriendsListActivity extends VkSdkActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             List<User> temp = new ArrayList<User>();
-            filterText = (EditText) findViewById(R.id.searchView);
+            filterText = (EditText) findViewById(R.id.etSearchFriends);
             int textlength = filterText.getText().length();
             temp.clear();
             for (int i = 0; i < users.size(); i++)

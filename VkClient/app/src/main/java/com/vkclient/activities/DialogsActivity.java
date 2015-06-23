@@ -13,7 +13,6 @@ import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKBatchRequest;
-import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
@@ -82,7 +81,7 @@ public class DialogsActivity extends VkSdkActivity {
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_dialogs);
 
-        listView = (ListView)findViewById(R.id.dialogsListView);
+        listView = (ListView)findViewById(R.id.lwDialogs);
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
             dialogs =  ((List<Dialog>) items);
@@ -94,12 +93,12 @@ public class DialogsActivity extends VkSdkActivity {
             startLoading();
         }
 
-        ((ListView) findViewById(R.id.dialogsListView)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ((ListView) findViewById(R.id.lwDialogs)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                ((TextView) view.findViewById(R.id.dialog_name)).getText();
+                ((TextView) view.findViewById(R.id.tvDialogName)).getText();
                 for (int i = 0; i < dialogs.size(); i++) {
-                    if (dialogs.get(i).getUsername() == ((TextView) view.findViewById(R.id.dialog_name)).getText()) {
+                    if (dialogs.get(i).getUsername() == ((TextView) view.findViewById(R.id.tvDialogName)).getText()) {
                         startSingleDialogApiCall(dialogs.get(i).getUser_id());
                         break;
                     }

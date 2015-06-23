@@ -31,10 +31,10 @@ public class SendMessageActivity extends VkSdkActivity {
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_send_message);
-        findViewById(R.id.sendMessage).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btSendMessage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Message.sendMessage((TextView) findViewById(R.id.msg), profileId);
+                Message.sendMessage((TextView) findViewById(R.id.etMessageText), profileId);
             }
         });
 
@@ -58,10 +58,10 @@ public class SendMessageActivity extends VkSdkActivity {
                      Loger.log("profid", "seting inf " + profileId);
                     JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
                     if (r.getString("last_name") != null && r.getString("first_name") != null)
-                        ((TextView) findViewById(R.id.msg_name)).setText(r.getString("first_name") + " " + r.getString("last_name"));
+                        ((TextView) findViewById(R.id.tvRecipientName)).setText(r.getString("first_name") + " " + r.getString("last_name"));
                   if(r.getString("photo_200")!=null) Picasso.with(getApplicationContext())
                             .load(r.getString("photo_200"))
-                            .into((ImageView)findViewById(R.id.msg_photo));
+                            .into((ImageView)findViewById(R.id.ivMessagePhoto));
                 } catch (JSONException e) {
                     Log.e(e.getMessage(), e.toString());
                 }

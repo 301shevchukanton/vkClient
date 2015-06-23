@@ -19,19 +19,19 @@ import java.util.List;
 public class DialogsListViewAdapter extends ArrayAdapter<Dialog> {
     public DialogsListViewAdapter(Context context, List<Dialog> models)
     {
-        super(context, R.layout.dialogs_list_item, R.id.dialog_name, models);
+        super(context, R.layout.dialogs_list_item, R.id.tvDialogName, models);
         JodaTimeAndroid.init(context);
     }
     @Override
     public View getView(int position, final View convertView, ViewGroup parent) {
         final View view = super.getView(position, convertView, parent);
 
-        TextView text = ((TextView) view.findViewById(R.id.dialog_text));
-        ImageView photo = ((ImageView) view.findViewById(R.id.dialog_photo));
+        TextView text = ((TextView) view.findViewById(R.id.tvDialogText));
+        ImageView photo = ((ImageView) view.findViewById(R.id.ivDialogPhoto));
         final Dialog dialog = getItem(position);
-        ((TextView) view.findViewById(R.id.dialog_name)).setText(dialog.getUsername());
+        ((TextView) view.findViewById(R.id.tvDialogName)).setText(dialog.getUsername());
 
-        ((TextView) view.findViewById(R.id.dialog_date)).setText(dialog.getParsedDate().toString("dd.MM - HH:mm"));
+        ((TextView) view.findViewById(R.id.tvDialogDate)).setText(dialog.getParsedDate().toString("dd.MM - HH:mm"));
         photo.setImageResource(R.drawable.ic_user100);
         text.setText(dialog.getBody());
         text.setBackgroundColor(!dialog.getReadState() ? Color.LTGRAY : Color.TRANSPARENT);
@@ -39,7 +39,7 @@ public class DialogsListViewAdapter extends ArrayAdapter<Dialog> {
     {
         Picasso.with(getContext())
                 .load(dialog.getGetPhoto())
-                .into(((ImageView) view.findViewById(R.id.dialog_photo)));
+                .into(((ImageView) view.findViewById(R.id.ivDialogPhoto)));
     }
         return view;
 

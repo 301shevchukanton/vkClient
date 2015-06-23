@@ -16,13 +16,13 @@ import java.util.List;
 public class MessagesAdapter extends ArrayAdapter<Message> {
     public MessagesAdapter(Context context, List<Message> models)
     {
-        super(context, R.layout.single_dialog_list_item, R.id.single_dialog_name, models);
+        super(context, R.layout.single_dialog_list_item, R.id.tvSingleDialogName, models);
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
-        TextView nameText=((TextView) view.findViewById(R.id.single_dialog_name));
-        ImageView photo=((ImageView)view.findViewById(R.id.single_dialog_photo));
+        TextView nameText=((TextView) view.findViewById(R.id.tvSingleDialogName));
+        ImageView photo=((ImageView)view.findViewById(R.id.tvSingleDialogPhoto));
         final Message msg = getItem(position);
          if(msg.getUser_id()==msg.getFrom_id())  nameText.setText(msg.getUsername());
          else nameText.setText(msg.getFromname());
@@ -46,8 +46,8 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 
         }
         String Date  = msg.getParsedDate().toString("dd.MM - HH:mm");
-        ((TextView) view.findViewById(R.id.single_dialog_date)).setText(Date);
-        ((TextView) view.findViewById(R.id.single_dialog_text)).setText(msg.getBody());
+        ((TextView) view.findViewById(R.id.tvSingleDialogDate)).setText(Date);
+        ((TextView) view.findViewById(R.id.tvSingleDialogText)).setText(msg.getBody());
         return view;
 
     }

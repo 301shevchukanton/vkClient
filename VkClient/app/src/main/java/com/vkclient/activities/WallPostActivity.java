@@ -58,8 +58,8 @@ public class WallPostActivity extends VkSdkActivity
         @Override
         public void onClick(final View v)
         {
-          if(v==findViewById(R.id.addPhotoButton)) pickPhoto();
-            if(v==findViewById(R.id.wallPostButton))   post();
+          if(v==findViewById(R.id.ibAddPhoto)) pickPhoto();
+            if(v==findViewById(R.id.btWallPost))   post();
         }
     }
     @Override
@@ -70,8 +70,8 @@ public class WallPostActivity extends VkSdkActivity
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_wall_post);
-        findViewById(R.id.addPhotoButton).setOnClickListener(new WallPostClickListener());
-        findViewById(R.id.wallPostButton).setOnClickListener(new WallPostClickListener());
+        findViewById(R.id.ibAddPhoto).setOnClickListener(new WallPostClickListener());
+        findViewById(R.id.btWallPost).setOnClickListener(new WallPostClickListener());
     }
 
     @Override
@@ -136,11 +136,11 @@ public class WallPostActivity extends VkSdkActivity
                      Loger.log("profid", "seting inf " + profileId);
                     JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
                     if (r.getString("last_name") != null && r.getString("first_name") != null)
-                        ((TextView) findViewById(R.id.post_name)).setText(r.getString("first_name") + " " + r.getString("last_name"));
+                        ((TextView) findViewById(R.id.tvPostName)).setText(r.getString("first_name") + " " + r.getString("last_name"));
                     try {
                         Picasso.with(getApplicationContext())
                                 .load(r.getString("photo_200"))
-                                .into((ImageView) findViewById(R.id.post_photo));
+                                .into((ImageView) findViewById(R.id.ivPostPhoto));
                     } catch (Exception e) {
                     }
                 } catch (JSONException e) {

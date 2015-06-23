@@ -1,10 +1,8 @@
 package com.vkclient.activities;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,8 +32,8 @@ public class LoginActivity extends VkSdkActivity {
         @Override
         public void onClick(final View v)
         {
-            if(v==findViewById(R.id.sign_in_button))      VKSdk.authorize(vkPermissionScope, true, true);
-            if(v==findViewById(R.id.force_oauth_button))  VKSdk.authorize(vkPermissionScope, true, true);
+            if(v==findViewById(R.id.btSignIn))      VKSdk.authorize(vkPermissionScope, true, true);
+            if(v==findViewById(R.id.btForceAuth))  VKSdk.authorize(vkPermissionScope, true, true);
         }
     }
     @Override
@@ -46,21 +44,12 @@ public class LoginActivity extends VkSdkActivity {
         VKSdk.initialize(sdkListener, APPLICATION_ID);
         String[] fingerprint = VKUtil.getCertificateFingerprint(this, this.getPackageName());
          Loger.log("Fingerprint", fingerprint[0]);
-        findViewById(R.id.sign_in_button).setOnClickListener(new LoginClickListener());
-        findViewById(R.id.force_oauth_button).setOnClickListener(new LoginClickListener());
+        findViewById(R.id.btSignIn).setOnClickListener(new LoginClickListener());
+        findViewById(R.id.btForceAuth).setOnClickListener(new LoginClickListener());
         if (VKSdk.wakeUpSession()) {
             startClientActivity();
             return;
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
     private final VKSdkListener sdkListener = new VKSdkListener() {
         @Override

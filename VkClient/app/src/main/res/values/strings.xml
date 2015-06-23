@@ -15,16 +15,16 @@
     <string name="parents__profile_label">Parents:</string>
     <string name="siblings_profile_label">Siblings:</string>
     <string name="title_activity_friends_list">FriendsListActivity</string>
-    <string name="sendMessage">Send a message</string>
-    <string name="viewFriends">Friends</string>
-    <string name="wallPost">Wall post</string>
-    <string name="messageSend">Send</string>
+    <string name="send_message">Send a message</string>
+    <string name="view_friends">Friends</string>
+    <string name="wall_post">Wall post</string>
+    <string name="message_send">Send</string>
     <string name="title_activity_send_message">SendMessageActivity</string>
     <string name="title_activity_wall_post">WallPostActivity</string>
-    <string name="Dialogs">Get dialogs</string>
+    <string name="dialogs">Get dialogs</string>
     <string name="title_activity_dialogs">DialogsActivity</string>
     <string name="title_activity_single_dialog">SingleDialogActivity</string>
     <string name="title_activity_photo_view">PhotoViewActivity</string>
-    <string name="Share">Share</string>
-    <string name="Like">Like</string>
+    <string name="share">Share</string>
+    <string name="like">Like</string>
 </resources>

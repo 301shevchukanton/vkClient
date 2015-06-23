@@ -1,47 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?attr/listPreferredItemHeight"
-    android:mode="twoLine">
-
-
+    style="@style/TwoLinesItemStyle">
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ZeroPaddingLayoutStyle"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:id="@+id/single_dialog_name"
+        android:id="@+id/tvSingleDialogName"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+       style="@style/ZeroPaddingLayoutStyle"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:id="@+id/single_dialog_date"
-        android:layout_alignBaseline="@+id/single_dialog_name"
-        android:layout_alignBottom="@+id/single_dialog_text"
-        android:layout_toRightOf="@+id/single_dialog_name"
+        android:id="@+id/tvSingleDialogDate"
+        android:layout_alignBaseline="@+id/tvSingleDialogName"
+        android:layout_alignBottom="@+id/tvSingleDialogText"
+        android:layout_toRightOf="@+id/tvSingleDialogName"
         android:layout_marginLeft="10dp"
-        android:layout_toLeftOf="@+id/single_dialog_photo"
-        android:layout_toStartOf="@+id/single_dialog_photo" />
+        android:layout_toLeftOf="@+id/tvSingleDialogPhoto"
+        android:layout_toStartOf="@+id/tvSingleDialogPhoto" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/single_dialog_text"
+        style="@style/ZeroPaddingLayoutStyle"
+        android:id="@+id/tvSingleDialogText"
         android:paddingTop="25dp"
-        android:layout_toLeftOf="@+id/single_dialog_photo"
-        android:layout_toStartOf="@+id/single_dialog_photo" />
+        android:layout_toLeftOf="@+id/tvSingleDialogPhoto"
+        android:layout_toStartOf="@+id/tvSingleDialogPhoto" />
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/single_dialog_photo"
-        android:layout_alignTop="@+id/single_dialog_name"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        style="@style/PhotoPreview"
+        android:id="@+id/tvSingleDialogPhoto"
+        android:layout_alignTop="@+id/tvSingleDialogName"
         android:src="@drawable/ic_user75" />
-
 </TwoLineListItem>

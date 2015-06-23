@@ -39,9 +39,9 @@ public class SingleDialogActivity extends VkSdkActivity {
         @Override
         public void onClick(final View v)
         {
-            if(v==findViewById(R.id.single_sendButton))
+            if(v==findViewById(R.id.btSendDialogMessage))
                 {
-                    Message.sendMessage((TextView) findViewById(R.id.single_msgText), profileId);
+                    Message.sendMessage((TextView) findViewById(R.id.etMessageText), profileId);
                     try {
                         Thread.sleep(50,0);
                     } catch (InterruptedException e) {
@@ -58,7 +58,7 @@ public class SingleDialogActivity extends VkSdkActivity {
          Loger.log("profid", "ic_user id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_dialog);
-        listView = (ListView)findViewById(R.id.singleDialogListView);
+        listView = (ListView)findViewById(R.id.lvSingleDialog);
         VKUIHelper.onCreate(this);
         if (VKSdk.wakeUpSession()) {
             startLoading();
@@ -69,7 +69,7 @@ public class SingleDialogActivity extends VkSdkActivity {
         }
         listAdapter = new MessagesAdapter(this,messages);
         listView.setAdapter(listAdapter);
-        findViewById(R.id.single_sendButton).setOnClickListener(new SingleDialogClickListener());
+        findViewById(R.id.btSendDialogMessage).setOnClickListener(new SingleDialogClickListener());
     }
     @Override
     protected void onResume() {
@@ -126,7 +126,8 @@ public class SingleDialogActivity extends VkSdkActivity {
 
     }
     final class SingleDialogOwnerRequest extends RequestListenerMaster
-    {   private int arrayLength;
+    {
+        private int arrayLength;
         public SingleDialogOwnerRequest(int length)
         {
             this.arrayLength=length;
