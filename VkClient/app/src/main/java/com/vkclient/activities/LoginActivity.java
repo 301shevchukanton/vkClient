@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.podkaifom.vkclient.R;
@@ -19,6 +20,8 @@ import com.vkclient.supports.Loger;
 
 public class LoginActivity extends VkSdkActivity {
     final String APPLICATION_ID = "4929437";
+    private Button signIn;
+    private Button forceAuth;
     private static final String[] vkPermissionScope = new String[] {
             VKScope.FRIENDS,
             VKScope.WALL,
@@ -32,8 +35,8 @@ public class LoginActivity extends VkSdkActivity {
         @Override
         public void onClick(final View v)
         {
-            if(v==findViewById(R.id.btSignIn))      VKSdk.authorize(vkPermissionScope, true, true);
-            if(v==findViewById(R.id.btForceAuth))  VKSdk.authorize(vkPermissionScope, true, true);
+            if(v==signIn)     VKSdk.authorize(vkPermissionScope, true, true);
+            if(v==forceAuth)  VKSdk.authorize(vkPermissionScope, true, true);
         }
     }
     @Override
@@ -41,11 +44,13 @@ public class LoginActivity extends VkSdkActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         VKUIHelper.onCreate(this);
-        VKSdk.initialize(sdkListener, APPLICATION_ID);
+        VKSdk.initialize(sdkListener, this.APPLICATION_ID);
         String[] fingerprint = VKUtil.getCertificateFingerprint(this, this.getPackageName());
-         Loger.log("Fingerprint", fingerprint[0]);
-        findViewById(R.id.btSignIn).setOnClickListener(new LoginClickListener());
-        findViewById(R.id.btForceAuth).setOnClickListener(new LoginClickListener());
+        Loger.log("Fingerprint", fingerprint[0]);
+        this.signIn =((Button)findViewById(R.id.btSignIn));
+        this.signIn.setOnClickListener(new LoginClickListener());
+        this.forceAuth=((Button)findViewById(R.id.btForceAuth));
+        this.forceAuth.setOnClickListener(new LoginClickListener());
         if (VKSdk.wakeUpSession()) {
             startClientActivity();
             return;
@@ -79,7 +84,6 @@ public class LoginActivity extends VkSdkActivity {
         }
     };
     private void startClientActivity() {
-        Intent intent = new Intent(LoginActivity.this, ClientActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(LoginActivity.this, ClientActivity.class));
     }
 }
