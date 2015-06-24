@@ -3,7 +3,6 @@ package com.vkclient.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKUIHelper;
 

@@ -45,10 +45,6 @@ public class User {
         this.photoMax=photoMax;
         this.id=id;
     }
-    public DateTime getBirthDate() {
-        return birthDate;
-    }
-
 
     public void setId(int id) {
         this.id = id;
@@ -128,9 +124,11 @@ public class User {
             for (int i = 0; i < langsArray.length(); i++)
                 langs += langsArray.getString(i) + "; ";
             return langs;
-        } catch (JSONException e) {
-            return "-";
-        }
+            }
+        catch (JSONException e)
+            {
+             return "-";
+            }
     }
 
     public void setLangs(String langs) {
@@ -161,5 +159,13 @@ public class User {
 
     public String getPhotoMax() {
         return photoMax;
+    }
+
+    public void setBirthDate(DateTime birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public DateTime getBirthDate() {
+        return birthDate;
     }
 }

@@ -34,7 +34,7 @@ import java.util.List;
 public class FriendsListActivity extends VkSdkActivity {
     private EditText filterText = null;
     private VKRequest currentRequest;
-    ListView friendsList;
+    private ListView friendsList;
     private List<User> users = new ArrayList<User>();
     private FriendListViewAdapter listAdapter;
 
@@ -44,36 +44,23 @@ public class FriendsListActivity extends VkSdkActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-            profileId=getIntent().getStringExtra("id");
-         Loger.log("profid", "profile id taked" + profileId);
+        profileId=getIntent().getStringExtra("id");
+        Loger.log("profid", "profile id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
-        friendsList = (ListView)findViewById(R.id.lvFriends);
-        filterText = (EditText) findViewById(R.id.etSearchFriends);
-        filterText.addTextChangedListener(filterTextWatcher);
+        this.friendsList = (ListView)findViewById(R.id.lvFriends);
+        this.filterText = (EditText) findViewById(R.id.etSearchFriends);
+        this.filterText.addTextChangedListener(filterTextWatcher);
         VKUIHelper.onCreate(this);
         if (VKSdk.wakeUpSession()) {
             startLoading();
         }
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
-            users =  ((ArrayList<User>) items);
+            this.users =  ((ArrayList<User>) items);
         }
-        listAdapter = new FriendListViewAdapter(this,users);
-        filterText = (EditText) findViewById(R.id.etSearchFriends);
-        filterText.addTextChangedListener(filterTextWatcher);
-        ((ListView) findViewById(R.id.lvFriends)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                for (int i = 0; i < users.size(); i++) {
-                    if (users.get(i).getName().equals(((TextView) view.findViewById(R.id.tvFriendName)).getText())) {
-                        startUserApiCall(users.get(i).getId());
-                        break;
-                    }
-                }
-                 Loger.log("VkList", "id: " + id);
-            }
-        });
+        this.listAdapter = new FriendListViewAdapter(this,this.users);
+        this.friendsList.setOnItemClickListener(new FriendClickListener());
         friendsList.setAdapter(listAdapter);
     }
     private TextWatcher filterTextWatcher = new TextWatcher() {
@@ -88,7 +75,6 @@ public class FriendsListActivity extends VkSdkActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             List<User> temp = new ArrayList<User>();
-            filterText = (EditText) findViewById(R.id.etSearchFriends);
             int textlength = filterText.getText().length();
             temp.clear();
             for (int i = 0; i < users.size(); i++)
@@ -100,7 +86,7 @@ public class FriendsListActivity extends VkSdkActivity {
                                     users.get(i).getName().subSequence(0,
                                             textlength)))
                     {
-                        temp.add(new User(users.get(i).getId(),users.get(i).getName(),users.get(i).getBirthDate(),users.get(i).getPhoto(),users.get(i).getPhotoMax(),"dd.MM"));
+                            temp.add(users.get(i));
                     }
                 }
             }
@@ -119,8 +105,19 @@ public class FriendsListActivity extends VkSdkActivity {
         i.putExtra("id", String.valueOf(id));
         startActivity(i);
     }
-    public final class GetFriendsRequestListener extends RequestListenerMaster
-    {
+    public final class FriendClickListener implements AdapterView.OnItemClickListener{
+        public void onItemClick(AdapterView<?> parent, View view,
+                                int position, long id) {
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getName().equals(((TextView) view.findViewById(R.id.tvFriendName)).getText())) {
+                    startUserApiCall(users.get(i).getId());
+                    break;
+                }
+            }
+            Loger.log("VkList", "id: " + id);
+        }
+    }
+    public final class GetFriendsRequestListener extends RequestListenerMaster {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
@@ -144,9 +141,19 @@ public class FriendsListActivity extends VkSdkActivity {
                         }
                     }
                 }
-                users.add(new User(userFull.id, userFull.toString(), birthDate, userFull.photo_200, userFull.photo_200, format));
+                users.add(setUser(userFull,birthDate,format));
             }
             listAdapter.notifyDataSetChanged();
+        }
+        private User setUser(VKApiUserFull userFull, DateTime birthDate,String format)
+        {
+            User user = new User();
+            user.setId(userFull.id);
+            user.setName(userFull.toString());
+            user.setBirthDate(birthDate);
+            user.setPhoto(userFull.photo_200);
+            user.setDateFormat(format);
+            return user;
         }
     }
     public void startApiCall(Class <?> cls,String date){
