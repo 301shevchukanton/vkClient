@@ -128,9 +128,12 @@ public class SingleDialogActivity extends VkSdkActivity {
         }
     }
     final class SingleDialogFromRequest extends AbstractRequestListener
-    { private int arrayLength;
+    {
+        private int arrayLength;
         public SingleDialogFromRequest(int length)
-        {this.arrayLength=length;}
+        {
+            this.arrayLength=length;
+        }
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);

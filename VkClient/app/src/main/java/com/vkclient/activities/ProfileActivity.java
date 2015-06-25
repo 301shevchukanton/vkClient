@@ -75,21 +75,22 @@ public class ProfileActivity extends VkSdkActivity {
         {
             findViewById(id).setVisibility(View.GONE);
         }
+        private void setLayoutState(String data, int viewId, int layoutId){
+            if(data!=null) setViewText(viewId, data);
+            else hideLayout(layoutId);
+        }
+        private void setLayoutState(String data, int viewId){
+            if(data!=null) setViewText(viewId, data);
+        }
         private void setLayoutsVisibility(User u)
         {
-            setViewText(R.id.tvProfileName, u.getName());
-            setViewText(R.id.tvLanguages, u.getLangs());
-            if(u.getStatus()!=null)  setViewText(R.id.tvProfileStatus, u.getStatus());
-            if(u.getBdDateString()!=null) setViewText(R.id.tvProfileBirthDate, u.getBdDateString());
-            else hideLayout(R.id.llBirthDate);
-            if(u.getCity()!=null) setViewText(R.id.tvProfileTown, u.getCity());
-            else hideLayout(R.id.llHomeTown);
-            if(u.getRelationship()!=null) setViewText(R.id.tvRelationship, u.getRelationship());
-            else hideLayout(R.id.llRelationships);
-            if(u.getUnivers()!=null) setViewText(R.id.tvStudiedAt, u.getUnivers());
-            else hideLayout(R.id.llStudiedAt);
-            if(u.getLangs()!=null) setViewText(R.id.tvLanguages, u.getLangs());
-            else hideLayout(R.id.llLanguages);
+            setLayoutState(u.getName(),R.id.tvProfileName);
+            setLayoutState(u.getStatus(),R.id.tvProfileStatus);
+            setLayoutState(u.getBdDateString(),R.id.tvProfileBirthDate,R.id.llBirthDate);
+            setLayoutState(u.getCity(),R.id.tvProfileTown,R.id.llHomeTown);
+            setLayoutState(u.getRelationship(),R.id.tvRelationship,R.id.llRelationships);
+            setLayoutState(u.getUnivers(), R.id.tvStudiedAt, R.id.llStudiedAt);
+            setLayoutState(u.getLangs(), R.id.tvLanguages,R.id.llLanguages);
         }
         private void setUserInfo(VKResponse response) {
             try {
@@ -98,24 +99,33 @@ public class ProfileActivity extends VkSdkActivity {
                 setLayoutsVisibility(temp);
                 profileId = r.getString("id");
                 if(r.getString("photo_200")!=null) {
-                    PhotoLoader.loadPhoto(getApplicationContext(),r.getString("photo_200"),(ImageView) findViewById(R.id.ivProfilePhoto));
+                    PhotoLoader.loadPhoto(getApplicationContext(), r.getString("photo_200"), (ImageView) findViewById(R.id.ivProfilePhoto));
                 }
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());
             }
         }
     }
-    public final class ProfileClickListener implements View.OnClickListener
-    {
+    public final class ProfileClickListener implements View.OnClickListener {
         @Override
-        public void onClick(final View v)
-        {
-            if(v==findViewById(R.id.btProfileFriends))    startActivityCall(FriendsListActivity.class);
-            if(v==findViewById(R.id.btSendMessage))startActivityCall(SendMessageActivity.class);
-            if(v==findViewById(R.id.btWallPost))  startActivityCall(WallPostActivity.class);
-            if(v==findViewById(R.id.ivProfilePhoto)) startActivityCall(PhotoViewActivity.class, profileId);
+        public void onClick(final View v) {
+            Class activityClass = getActivityClassForId(v.getId());
+            if(activityClass != null)
+            startActivityCall(getActivityClassForId(v.getId()));
+        }
+        private Class getActivityClassForId(int id) {
+            switch (id) {
+                case R.id.btProfileFriends:
+                    return FriendsListActivity.class;
+                case R.id.btSendMessage:
+                    return SendMessageActivity.class;
+                case R.id.btWallPost:
+                    return WallPostActivity.class;
+                case R.id.ivProfilePhoto: {startActivityCall(PhotoViewActivity.class, profileId);
+                    return null;}
+                default:
+                    return null;
+            }
         }
     }
-
-
 }
