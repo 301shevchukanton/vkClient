@@ -8,6 +8,9 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import org.joda.time.DateTime;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.TimeZone;
 
 public class Message {
@@ -127,6 +130,15 @@ public class Message {
             super.onProgress(progressType, bytesLoaded, bytesTotal);
             Log.d("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
         }
+    }
+
+    public static Message parseMessageFromJSON(JSONObject messageJSON) throws JSONException {
+    return new Message(Integer.parseInt(messageJSON.getString("id")),
+            Integer.parseInt(messageJSON.getString("user_id")),
+            Integer.parseInt(messageJSON.getString("from_id")),
+            Long.parseLong(messageJSON.getString("date")),
+            (messageJSON.getString("read_state").equals("1")),
+            messageJSON.getString("body"));
     }
 
 }

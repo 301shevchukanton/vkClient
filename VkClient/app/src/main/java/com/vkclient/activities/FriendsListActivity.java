@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.vkclient.adapters.FriendListViewAdapter;
 import com.example.podkaifom.vkclient.R;
-import com.vkclient.entities.RequestListenerMaster;
+import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.User;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
@@ -117,7 +117,7 @@ public class FriendsListActivity extends VkSdkActivity {
             Loger.log("VkList", "id: " + id);
         }
     }
-    public final class GetFriendsRequestListener extends RequestListenerMaster {
+    public final class GetFriendsRequestListener extends AbstractRequestListener {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);

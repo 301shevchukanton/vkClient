@@ -15,7 +15,7 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
-import com.vkclient.entities.RequestListenerMaster;
+import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.supports.Loger;
 
 import org.json.JSONArray;
@@ -28,47 +28,28 @@ import java.util.List;
 
 public class SingleDialogActivity extends VkSdkActivity {
     private final String COUNT="50";
-
-    private String profileId;
-    ListView listView;
+    private ListView listView;
     private VKRequest currentRequest;
     private List<Message> messages = new ArrayList<>();
     private MessagesAdapter listAdapter;
-    public final class SingleDialogClickListener implements View.OnClickListener
-    {
-        @Override
-        public void onClick(final View v)
-        {
-            if(v==findViewById(R.id.btSendDialogMessage))
-                {
-                    Message.sendMessage((TextView) findViewById(R.id.etMessageText), profileId);
-                    try {
-                        Thread.sleep(50,0);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    startLoading();
-                }
-            }
-        }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId=getIntent().getStringExtra("userid");
-         Loger.log("profid", "ic_user id taked" + profileId);
+        Loger.log("profid", "ic_user id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_dialog);
-        listView = (ListView)findViewById(R.id.lvSingleDialog);
+        this.listView = (ListView)findViewById(R.id.lvSingleDialog);
         VKUIHelper.onCreate(this);
         if (VKSdk.wakeUpSession()) {
             startLoading();
         }
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
-            messages =  ((ArrayList<Message>) items);
+            this.messages =  ((ArrayList<Message>) items);
         }
-        listAdapter = new MessagesAdapter(this,messages);
-        listView.setAdapter(listAdapter);
+        this.listAdapter = new MessagesAdapter(this,this.messages);
+        this.listView.setAdapter(this.listAdapter);
         findViewById(R.id.btSendDialogMessage).setOnClickListener(new SingleDialogClickListener());
     }
     @Override
@@ -81,51 +62,46 @@ public class SingleDialogActivity extends VkSdkActivity {
     }
 
     private void startLoading() {
-        if (currentRequest != null) {
-            currentRequest.cancel();
+        if (this.currentRequest != null) {
+            this.currentRequest.cancel();
         }
-        messages.clear();
-        currentRequest  = new VKRequest ("messages.getHistory", VKParameters.from(VKApiConst.COUNT, this.COUNT, VKApiConst.USER_ID, this.profileId), VKRequest.HttpMethod.GET);
-        currentRequest.executeWithListener(new RequestListenerMaster() {
-            @Override
-            public void onComplete(final VKResponse response) {
-                super.onComplete(response);
-                try {
-                    final JSONArray messagesArray = response.json.getJSONObject("response").getJSONArray("items");
-
-                    VKRequest ownRequest = null;
-                    VKRequest fromRequest = null;
-                    for (int i = 0; i < messagesArray.length(); i++) {
-                        messages.add(new Message(Integer.parseInt(messagesArray.getJSONObject(i).getString("id")),
-                                Integer.parseInt(messagesArray.getJSONObject(i).getString("user_id")),
-                                Integer.parseInt(messagesArray.getJSONObject(i).getString("from_id")),
-                                Long.parseLong(messagesArray.getJSONObject(i).getString("date")),
-                                (messagesArray.getJSONObject(i).getString("read_state").equals("1")),
-                                messagesArray.getJSONObject(i).getString("body")));
-                        ownRequest = RequestCreator.getUserById(messagesArray.getJSONObject(i).getString("user_id"));
-                        if (Integer.parseInt(messagesArray.getJSONObject(i).getString("user_id")) !=
-                                Integer.parseInt(messagesArray.getJSONObject(i).getString("from_id")))
-                            fromRequest = RequestCreator.getUserById(messagesArray.getJSONObject(i).getString("from_id"));
-                    }
-                    if (ownRequest != null) ownRequestExecution(ownRequest, messagesArray.length());
-                    if (fromRequest != null)
-                        fromRequestExecution(fromRequest, messagesArray.length());
-                } catch (Exception e) {
-                }
-                listAdapter.notifyDataSetChanged();
-            }
-
-            private void ownRequestExecution(VKRequest request, final int arrayLength) {
-                request.executeWithListener(new SingleDialogOwnerRequest(arrayLength));
-            }
-
-            private void fromRequestExecution(VKRequest request, final int arrayLength) {
-                request.executeWithListener(new SingleDialogFromRequest(arrayLength));
-            }
-        });
-
+        this.messages.clear();
+        this.currentRequest  = new VKRequest ("messages.getHistory", VKParameters.from(VKApiConst.COUNT, this.COUNT, VKApiConst.USER_ID, this.profileId), VKRequest.HttpMethod.GET);
+        this.currentRequest.executeWithListener(new GetHistoryRequest());
     }
-    final class SingleDialogOwnerRequest extends RequestListenerMaster
+    final class GetHistoryRequest extends AbstractRequestListener
+    {
+        @Override
+        public void onComplete(final VKResponse response) {
+            super.onComplete(response);
+            try {
+                final JSONArray messagesArray = response.json.getJSONObject("response").getJSONArray("items");
+                VKRequest ownRequest = null;
+                VKRequest fromRequest = null;
+                for (int i = 0; i < messagesArray.length(); i++) {
+                    messages.add(Message.parseMessageFromJSON(messagesArray.getJSONObject(i)));
+                    ownRequest = RequestCreator.getUserById(messagesArray.getJSONObject(i).getString("user_id"));
+                    if (Integer.parseInt(messagesArray.getJSONObject(i).getString("user_id")) !=
+                            Integer.parseInt(messagesArray.getJSONObject(i).getString("from_id")))
+                        fromRequest = RequestCreator.getUserById(messagesArray.getJSONObject(i).getString("from_id"));
+                }
+                if (ownRequest != null) ownRequestExecution(ownRequest, messagesArray.length());
+                if (fromRequest != null)fromRequestExecution(fromRequest, messagesArray.length());
+            }
+            catch (Exception e) {
+            }
+            listAdapter.notifyDataSetChanged();
+        }
+
+        private void ownRequestExecution(VKRequest request, final int arrayLength) {
+            request.executeWithListener(new SingleDialogOwnerRequest(arrayLength));
+        }
+
+        private void fromRequestExecution(VKRequest request, final int arrayLength) {
+            request.executeWithListener(new SingleDialogFromRequest(arrayLength));
+        }
+    }
+    final class SingleDialogOwnerRequest extends AbstractRequestListener
     {
         private int arrayLength;
         public SingleDialogOwnerRequest(int length)
@@ -151,7 +127,7 @@ public class SingleDialogActivity extends VkSdkActivity {
             }
         }
     }
-    final class SingleDialogFromRequest extends RequestListenerMaster
+    final class SingleDialogFromRequest extends AbstractRequestListener
     { private int arrayLength;
         public SingleDialogFromRequest(int length)
         {this.arrayLength=length;}
@@ -171,6 +147,23 @@ public class SingleDialogActivity extends VkSdkActivity {
             for (int i = 0; i < arrayLength; i++) {
                 messages.get(i).setFromname(r.getString("first_name") + " " + r.getString("last_name"));
                 messages.get(i).setFromPhoto_200(r.getString("photo_200"));
+            }
+        }
+    }
+    public final class SingleDialogClickListener implements View.OnClickListener
+    {
+        @Override
+        public void onClick(final View v)
+        {
+            if(v==findViewById(R.id.btSendDialogMessage))
+            {
+                Message.sendMessage((TextView) findViewById(R.id.etMessageText), profileId);
+                try {
+                    Thread.sleep(50,0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                startLoading();
             }
         }
     }

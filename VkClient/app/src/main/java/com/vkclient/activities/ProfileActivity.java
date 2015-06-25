@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.vkclient.entities.RequestListenerMaster;
+import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.User;
 import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
@@ -59,7 +59,7 @@ public class ProfileActivity extends VkSdkActivity {
         currentRequest = RequestCreator.getFullUserById(profileId);
         currentRequest.executeWithListener(new ProfileRequestListener());
     }
-    public final class ProfileRequestListener extends RequestListenerMaster {
+    public final class ProfileRequestListener extends AbstractRequestListener {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);

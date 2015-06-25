@@ -10,7 +10,7 @@ import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
-import com.vkclient.entities.RequestListenerMaster;
+import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.supports.Loger;
 
 import org.json.JSONException;
@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class PhotoViewActivity extends VkSdkActivity {
 
     private VKRequest currentRequest;
-    public  String photoUrl;
+    public String photoUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +37,7 @@ public class PhotoViewActivity extends VkSdkActivity {
         currentRequest = RequestCreator.getBigUserPhoto(photoUrl);
         currentRequest.executeWithListener(new bigPhotoRequestListener());
     }
-    public final class bigPhotoRequestListener extends RequestListenerMaster {
+    public final class bigPhotoRequestListener extends AbstractRequestListener {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);

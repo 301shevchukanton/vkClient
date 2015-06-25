@@ -13,7 +13,7 @@ import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
-import com.vkclient.entities.RequestListenerMaster;
+import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.supports.Loger;
 
 import org.json.JSONException;
@@ -45,7 +45,7 @@ public class SendMessageActivity extends VkSdkActivity {
         }
          Loger.log("profid", "onComplete " + profileId);
            currentRequest = RequestCreator.getFullUserById(profileId);
-        currentRequest.executeWithListener(new RequestListenerMaster() {
+        currentRequest.executeWithListener(new AbstractRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
