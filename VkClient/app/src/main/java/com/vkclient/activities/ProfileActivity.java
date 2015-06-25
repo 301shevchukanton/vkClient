@@ -95,11 +95,11 @@ public class ProfileActivity extends VkSdkActivity {
         private void setUserInfo(VKResponse response) {
             try {
                 JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
-                User temp = User.parseUserFromJSON(r);
-                setLayoutsVisibility(temp);
-                profileId = r.getString("id");
-                if(r.getString("photo_200")!=null) {
-                    PhotoLoader.loadPhoto(getApplicationContext(), r.getString("photo_200"), (ImageView) findViewById(R.id.ivProfilePhoto));
+                User user = User.parseUserFromJSON(r);
+                setLayoutsVisibility(user);
+                profileId = String.valueOf(user.getId());
+                if(user.getPhoto()!=null) {
+                    PhotoLoader.loadPhoto(getApplicationContext(), user.getPhoto(), (ImageView) findViewById(R.id.ivProfilePhoto));
                 }
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());

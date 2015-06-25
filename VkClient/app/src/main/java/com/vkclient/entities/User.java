@@ -149,6 +149,7 @@ public class User {
         if(r.has("city")) result.setCity(r.getJSONObject("city").getString("title"));
         if(r.has("relation")) result.setRelationship(User.relationshipStatus[Integer.parseInt(r.getString("relation"))]);
         if(r.has("universities")) result.setUnivers(r.getJSONArray("universities").getJSONObject(0).getString("name"));
+        if(r.has("photo_200")) result.setPhoto(r.getString("photo_200"));
         result.setLangs(User.getLangs(r));
         return result;
     }

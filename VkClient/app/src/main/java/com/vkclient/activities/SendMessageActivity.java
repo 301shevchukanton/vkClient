@@ -14,6 +14,7 @@ import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
+import com.vkclient.supports.JSONParser;
 import com.vkclient.supports.Loger;
 import com.vkclient.supports.PhotoLoader;
 
@@ -53,10 +54,9 @@ public class SendMessageActivity extends VkSdkActivity {
         private void setUserInfo(VKResponse response) {
             try {
                 Loger.log("profid", "seting inf " + profileId);
-                JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
-                if (r.getString("last_name") != null && r.getString("first_name") != null)
-                    ((TextView) findViewById(R.id.tvRecipientName)).setText(r.getString("first_name") + " " + r.getString("last_name"));
-                if(r.getString("photo_200")!=null) PhotoLoader.loadPhoto(getApplicationContext(),r.getString("photo_200"),(ImageView)findViewById(R.id.ivMessagePhoto));
+                JSONParser userInfo = new JSONParser(response.json);
+                ((TextView) findViewById(R.id.tvRecipientName)).setText(userInfo.getUserName());
+                if(userInfo.photoAvailable()) PhotoLoader.loadPhoto(getApplicationContext(), userInfo.getPhoto(), (ImageView) findViewById(R.id.ivMessagePhoto));
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());
             }
