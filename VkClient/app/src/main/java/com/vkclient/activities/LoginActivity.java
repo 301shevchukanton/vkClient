@@ -16,6 +16,7 @@ import com.vk.sdk.VKSdkListener;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.util.VKUtil;
+import com.vkclient.supports.AlertBuilder;
 import com.vkclient.supports.Loger;
 
 public class LoginActivity extends VkSdkActivity {
@@ -65,12 +66,9 @@ public class LoginActivity extends VkSdkActivity {
         public void onTokenExpired(VKAccessToken expiredToken) {
             VKSdk.authorize(vkPermissionScope);
         }
-
         @Override
         public void onAccessDenied(final VKError authorizationError) {
-            new AlertDialog.Builder(VKUIHelper.getTopActivity())
-                    .setMessage(authorizationError.toString())
-                    .show();
+            AlertBuilder.showErrorMessage(VKUIHelper.getTopActivity(), authorizationError.toString());
         }
         @Override
         public void onReceiveNewToken(VKAccessToken newToken) {

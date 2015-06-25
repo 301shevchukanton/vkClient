@@ -27,6 +27,7 @@ import com.vk.sdk.api.model.VKPhotoArray;
 import com.vk.sdk.api.model.VKWallPostResult;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
+import com.vkclient.supports.AlertBuilder;
 import com.vkclient.supports.Loger;
 
 import org.json.JSONException;
@@ -71,11 +72,7 @@ public class WallPostActivity extends VkSdkActivity
         post.executeWithListener(this.wallPostRequestListener);
     }
     private void showError(VKError error) {
-        new AlertDialog.Builder(WallPostActivity.this)
-                .setMessage(error.errorMessage)
-                .setPositiveButton("OK", null)
-                .show();
-
+        AlertBuilder.showErrorMessage(WallPostActivity.this,error.errorMessage);
         if (error.httpError != null) {
             Log.w("Test", "Error in request or upload", error.httpError);
         }
