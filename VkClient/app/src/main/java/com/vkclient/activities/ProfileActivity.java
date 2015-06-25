@@ -16,6 +16,7 @@ import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.supports.Loger;
+import com.vkclient.supports.PhotoLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,9 +98,7 @@ public class ProfileActivity extends VkSdkActivity {
                 setLayoutsVisibility(temp);
                 profileId = r.getString("id");
                 if(r.getString("photo_200")!=null) {
-                    Picasso.with(getApplicationContext())
-                            .load(r.getString("photo_200"))
-                            .into((ImageView) findViewById(R.id.ivProfilePhoto));
+                    PhotoLoader.loadPhoto(getApplicationContext(),r.getString("photo_200"),(ImageView) findViewById(R.id.ivProfilePhoto));
                 }
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());

@@ -12,6 +12,7 @@ import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.supports.Loger;
+import com.vkclient.supports.PhotoLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,23 +20,23 @@ import org.json.JSONObject;
 public class PhotoViewActivity extends VkSdkActivity {
 
     private VKRequest currentRequest;
-    public String photoUrl;
+    private String photoUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_view);
         VKUIHelper.onCreate(this);
-        photoUrl=getIntent().getStringExtra("photo");
+        this.photoUrl=getIntent().getStringExtra("photo");
         startLoading();
 
     }
     private void startLoading() {
-        if (currentRequest != null) {
-            currentRequest.cancel();
+        if (this.currentRequest != null) {
+            this.currentRequest.cancel();
         }
         Loger.log("profid", "onComplete " + profileId);
-        currentRequest = RequestCreator.getBigUserPhoto(photoUrl);
-        currentRequest.executeWithListener(new bigPhotoRequestListener());
+        this.currentRequest = RequestCreator.getBigUserPhoto(this.photoUrl);
+        this.currentRequest.executeWithListener(new bigPhotoRequestListener());
     }
     public final class bigPhotoRequestListener extends AbstractRequestListener {
         @Override
@@ -48,9 +49,7 @@ public class PhotoViewActivity extends VkSdkActivity {
             try {
                 JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
                 if(r.getString("photo_max_orig")!=null) {
-                    Picasso.with(getApplicationContext())
-                            .load(r.getString("photo_max_orig"))
-                            .into((ImageView) findViewById(R.id.ivPhoto));
+                    PhotoLoader.loadPhoto(getApplicationContext(),r.getString("photo_max_orig"),(ImageView) findViewById(R.id.ivPhoto));
                 }
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());

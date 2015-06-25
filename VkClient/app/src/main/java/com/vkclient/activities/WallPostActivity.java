@@ -1,6 +1,5 @@
 package com.vkclient.activities;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.podkaifom.vkclient.R;
-import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
@@ -29,6 +27,7 @@ import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.supports.AlertBuilder;
 import com.vkclient.supports.Loger;
+import com.vkclient.supports.PhotoLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +41,7 @@ public class WallPostActivity extends VkSdkActivity
     private VKRequest currentRequest;
     private Bitmap photo;
     private Bitmap selectedBitmap=null;
+    protected String msg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId=getIntent().getStringExtra("id");
@@ -72,7 +72,7 @@ public class WallPostActivity extends VkSdkActivity
         post.executeWithListener(this.wallPostRequestListener);
     }
     private void showError(VKError error) {
-        AlertBuilder.showErrorMessage(WallPostActivity.this,error.errorMessage);
+        AlertBuilder.showErrorMessage(WallPostActivity.this, error.errorMessage);
         if (error.httpError != null) {
             Log.w("Test", "Error in request or upload", error.httpError);
         }
@@ -83,31 +83,7 @@ public class WallPostActivity extends VkSdkActivity
         }
          Loger.log("profid", "onComplete " + profileId);
         this.currentRequest = RequestCreator.getFullUserById(profileId);
-        this.currentRequest.executeWithListener(new AbstractRequestListener() {
-            @Override
-            public void onComplete(VKResponse response) {
-                super.onComplete(response);
-                 Loger.log("profid", "onComplete " + response);
-                setUserInfo(response);
-            }
-
-            private void setUserInfo(VKResponse response) {
-                try {
-                     Loger.log("profid", "seting inf " + profileId);
-                    JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
-                    if (r.getString("last_name") != null && r.getString("first_name") != null)
-                        ((TextView) findViewById(R.id.tvPostName)).setText(r.getString("first_name") + " " + r.getString("last_name"));
-                    try {
-                        Picasso.with(getApplicationContext())
-                                .load(r.getString("photo_200"))
-                                .into((ImageView) findViewById(R.id.ivPostPhoto));
-                    } catch (Exception e) {
-                    }
-                } catch (JSONException e) {
-                    Log.e(e.getMessage(), e.toString());
-                }
-            }
-        });
+        this.currentRequest.executeWithListener(this.userFullRequestListener);
     }
     private void pickPhoto(){
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -125,27 +101,49 @@ public class WallPostActivity extends VkSdkActivity
         }
     }
     private void post(){
-        final String msg = ((TextView) findViewById(R.id.post)).getText().toString();
+        this.msg = ((TextView) findViewById(R.id.post)).getText().toString();
         Toast.makeText(getApplicationContext(), "posted successful", Toast.LENGTH_LONG).show();
         ((TextView) findViewById(R.id.post)).setText("");
         if(this.photo!=null){
         VKRequest request = RequestCreator.uploadPhotoToUser(profileId, this.photo);
-        request.executeWithListener(new AbstractRequestListener() {
-            @Override
-            public void onComplete(VKResponse response) {
-                photo.recycle();
-                VKApiPhoto photoModel = ((VKPhotoArray) response.parsedModel).get(0);
-                makePost(new VKAttachments(photoModel), msg);
-            }
-            @Override
-            public void onError(VKError error) {
-                showError(error);
-            }
-        });}
-        else{
-            makePost(msg);
+        request.executeWithListener(this.uploadPhotoRequestListener);
+        }
+        else {
+            makePost(this.msg);
         }
     }
+    private AbstractRequestListener uploadPhotoRequestListener = new AbstractRequestListener() {
+        @Override
+        public void onComplete(VKResponse response) {
+            photo.recycle();
+            VKApiPhoto photoModel = ((VKPhotoArray) response.parsedModel).get(0);
+            makePost(new VKAttachments(photoModel), msg);
+        }
+        @Override
+        public void onError(VKError error) {
+            showError(error);
+        }
+    };
+    private AbstractRequestListener userFullRequestListener = new AbstractRequestListener() {
+        @Override
+        public void onComplete(VKResponse response) {
+            super.onComplete(response);
+            Loger.log("profid", "onComplete " + response);
+            setUserInfo(response);
+        }
+
+        private void setUserInfo(VKResponse response) {
+            try {
+                Loger.log("profid", "seting inf " + profileId);
+                JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
+                if (r.getString("last_name") != null && r.getString("first_name") != null)
+                    ((TextView) findViewById(R.id.tvPostName)).setText(r.getString("first_name") + " " + r.getString("last_name"));
+                PhotoLoader.loadPhoto(getApplicationContext(),r.getString("photo_200"),(ImageView) findViewById(R.id.ivPostPhoto));
+            } catch (JSONException e) {
+                Log.e(e.getMessage(), e.toString());
+            }
+        }
+    };
     private VKRequest.VKRequestListener wallPostRequestListener = new VKRequest.VKRequestListener() {
         @Override
         public void onComplete(VKResponse response) {

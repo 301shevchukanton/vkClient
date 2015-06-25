@@ -60,8 +60,8 @@ public class FriendsListActivity extends VkSdkActivity {
             this.users =  ((ArrayList<User>) items);
         }
         this.listAdapter = new FriendListViewAdapter(this,this.users);
-        this.friendsList.setOnItemClickListener(new FriendClickListener());
-        friendsList.setAdapter(listAdapter);
+        this.friendsList.setOnItemClickListener(this.friendClickListener);
+        this.friendsList.setAdapter(this.listAdapter);
     }
     private TextWatcher filterTextWatcher = new TextWatcher() {
 
@@ -94,18 +94,18 @@ public class FriendsListActivity extends VkSdkActivity {
         }
     };
     private void startLoading() {
-        if (currentRequest != null) {
-            currentRequest.cancel();
+        if (this.currentRequest != null) {
+            this.currentRequest.cancel();
         }
-        currentRequest = RequestCreator.getFriends(profileId);
-        currentRequest.executeWithListener(new GetFriendsRequestListener());
+        this.currentRequest = RequestCreator.getFriends(profileId);
+        this.currentRequest.executeWithListener(this.getFriendsRequestListener);
     }
     private void startUserApiCall(int id) {
         Intent i = new Intent(this, ProfileActivity.class);
         i.putExtra("id", String.valueOf(id));
         startActivity(i);
     }
-    public final class FriendClickListener implements AdapterView.OnItemClickListener{
+    private final AdapterView.OnItemClickListener friendClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view,
                                 int position, long id) {
             for (int i = 0; i < users.size(); i++) {
@@ -116,8 +116,8 @@ public class FriendsListActivity extends VkSdkActivity {
             }
             Loger.log("VkList", "id: " + id);
         }
-    }
-    public final class GetFriendsRequestListener extends AbstractRequestListener {
+    };
+    private final AbstractRequestListener getFriendsRequestListener = new AbstractRequestListener() {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
@@ -155,7 +155,7 @@ public class FriendsListActivity extends VkSdkActivity {
             user.setDateFormat(format);
             return user;
         }
-    }
+    };
     public void startApiCall(Class <?> cls,String date){
         Intent i = new Intent(this, cls);
         i.putExtra("photo",date);

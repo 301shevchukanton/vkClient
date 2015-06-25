@@ -15,6 +15,7 @@ import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.supports.Loger;
+import com.vkclient.supports.PhotoLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,9 +56,7 @@ public class SendMessageActivity extends VkSdkActivity {
                 JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
                 if (r.getString("last_name") != null && r.getString("first_name") != null)
                     ((TextView) findViewById(R.id.tvRecipientName)).setText(r.getString("first_name") + " " + r.getString("last_name"));
-                if(r.getString("photo_200")!=null) Picasso.with(getApplicationContext())
-                        .load(r.getString("photo_200"))
-                        .into((ImageView)findViewById(R.id.ivMessagePhoto));
+                if(r.getString("photo_200")!=null) PhotoLoader.loadPhoto(getApplicationContext(),r.getString("photo_200"),(ImageView)findViewById(R.id.ivMessagePhoto));
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());
             }

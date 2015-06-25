@@ -48,22 +48,11 @@ public class DialogsActivity extends VkSdkActivity {
             startLoading();
         }
 
-        this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                ((TextView) view.findViewById(R.id.tvDialogName)).getText();
-                for (int i = 0; i < dialogs.size(); i++) {
-                    if (dialogs.get(i).getUsername() == ((TextView) view.findViewById(R.id.tvDialogName)).getText()) {
-                        startSingleDialogApiCall(dialogs.get(i).getUser_id());
-                        break;
-                    }
-                }
-                Loger.log("VkList", "id: " + id);
-            }
-        });
+        this.listView.setOnItemClickListener(this.dialogClickListener);
         this.listAdapter = new DialogsListViewAdapter(this,this.dialogs);
         this.listView.setAdapter(this.listAdapter);
     }
+
     private void startSingleDialogApiCall(int user_id){
             Intent i = new Intent(this, SingleDialogActivity.class);
             i.putExtra("userid", String.valueOf(user_id));
@@ -74,10 +63,10 @@ public class DialogsActivity extends VkSdkActivity {
             this.currentRequest.cancel();
         }
             this.currentRequest  = RequestCreator.getDialogs();
-            this.currentRequest.executeWithListener(new GetHistoryRequestListener());
+            this.currentRequest.executeWithListener(this.getHistoryRequestListener);
     }
-    public final class GetHistoryRequestListener extends AbstractRequestListener {
-        @Override
+    private final AbstractRequestListener getHistoryRequestListener = new AbstractRequestListener() {
+            @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
             Loger.log("profid", response.responseString);
@@ -98,25 +87,38 @@ public class DialogsActivity extends VkSdkActivity {
             }
             listAdapter.notifyDataSetChanged();
         }
-        private final VKBatchRequest.VKBatchRequestListener batchListener = new VKBatchRequest.VKBatchRequestListener(){
-            @Override
-            public void onComplete(VKResponse[] responses) {
-                super.onComplete(responses);
-                try {
-                    setUserInfo(responses);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+    };
+    private final VKBatchRequest.VKBatchRequestListener batchListener = new VKBatchRequest.VKBatchRequestListener(){
+        @Override
+        public void onComplete(VKResponse[] responses) {
+            super.onComplete(responses);
+            try {
+                setUserInfo(responses);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        private void setUserInfo(VKResponse[] responses) throws JSONException {
+            for(int i=0;i<responses.length;i++) {
+                JSONParser userParser = new JSONParser(responses[i].json);
+                dialogs.get(i).setUsername(userParser.getUserName());
+                if(userParser.photoAvailable()) dialogs.get(i).setPhoto(userParser.getPhoto());
+            }
+            listAdapter.notifyDataSetChanged();
+        }
+    };
+    private final AdapterView.OnItemClickListener dialogClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view,
+                                int position, long id) {
+            ((TextView) view.findViewById(R.id.tvDialogName)).getText();
+            for (int i = 0; i < dialogs.size(); i++) {
+                if (dialogs.get(i).getUsername() == ((TextView) view.findViewById(R.id.tvDialogName)).getText()) {
+                    startSingleDialogApiCall(dialogs.get(i).getUser_id());
+                    break;
                 }
             }
-            private void setUserInfo(VKResponse[] responses) throws JSONException {
-                for(int i=0;i<responses.length;i++) {
-                    JSONParser userParser = new JSONParser(responses[i].json);
-                    dialogs.get(i).setUsername(userParser.getUserName());
-                    if(userParser.photoAvailable()) dialogs.get(i).setPhoto(userParser.getPhoto());
-                }
-                listAdapter.notifyDataSetChanged();
-            }
-        };
-
-    }
+            Loger.log("VkList", "id: " + id);
+        }
+    };
 }
