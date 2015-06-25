@@ -4,7 +4,7 @@ import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vkclient.supports.Loger;
 
-public class AbstractRequestListener extends VKRequest.VKRequestListener{
+public abstract class AbstractRequestListener extends VKRequest.VKRequestListener{
     @Override
     public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
         super.attemptFailed(request, attemptNumber, totalAttempts);
