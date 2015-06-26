@@ -140,5 +140,4 @@ public class Message {
             (messageJSON.getString("read_state").equals("1")),
             messageJSON.getString("body"));
     }
-
 }

@@ -7,8 +7,6 @@ import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKUIHelper;
 
 public class ClientActivity extends VkSdkActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -29,16 +29,16 @@ public class ProfileActivity extends VkSdkActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId=getIntent().getStringExtra("id");
-         Loger.log("profid", "profileid " + profileId);
+        Loger.log("profid", "profileid " + profileId);
         startLoading();
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_profile);
         findViewById(R.id.relLayout).setVisibility(View.VISIBLE);
-        findViewById(R.id.btProfileFriends).setOnClickListener(new ProfileClickListener());
-        findViewById(R.id.btSendMessage).setOnClickListener(new ProfileClickListener());
-        findViewById(R.id.btWallPost).setOnClickListener(new ProfileClickListener());
-        findViewById(R.id.ivProfilePhoto).setOnClickListener(new ProfileClickListener());
+        findViewById(R.id.btProfileFriends).setOnClickListener(profileClickListener);
+        findViewById(R.id.btSendMessage).setOnClickListener(profileClickListener);
+        findViewById(R.id.btWallPost).setOnClickListener(profileClickListener);
+        findViewById(R.id.ivProfilePhoto).setOnClickListener(profileClickListener);
     }
 
     private void startActivityCall(Class <?> cls)
@@ -106,12 +106,12 @@ public class ProfileActivity extends VkSdkActivity {
             }
         }
     }
-    public final class ProfileClickListener implements View.OnClickListener {
+    private final View.OnClickListener profileClickListener = new View.OnClickListener(){
         @Override
         public void onClick(final View v) {
             Class activityClass = getActivityClassForId(v.getId());
             if(activityClass != null)
-            startActivityCall(getActivityClassForId(v.getId()));
+                startActivityCall(getActivityClassForId(v.getId()));
         }
         private Class getActivityClassForId(int id) {
             switch (id) {
@@ -121,11 +121,13 @@ public class ProfileActivity extends VkSdkActivity {
                     return SendMessageActivity.class;
                 case R.id.btWallPost:
                     return WallPostActivity.class;
-                case R.id.ivProfilePhoto: {startActivityCall(PhotoViewActivity.class, profileId);
-                    return null;}
+                case R.id.ivProfilePhoto: {
+                    startActivityCall(PhotoViewActivity.class, profileId);
+                    return null;
+                }
                 default:
                     return null;
             }
         }
-    }
+    };
 }

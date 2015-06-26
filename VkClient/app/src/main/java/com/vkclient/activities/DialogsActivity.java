@@ -62,8 +62,8 @@ public class DialogsActivity extends VkSdkActivity {
         if (this.currentRequest != null) {
             this.currentRequest.cancel();
         }
-            this.currentRequest  = RequestCreator.getDialogs();
-            this.currentRequest.executeWithListener(this.getHistoryRequestListener);
+        this.currentRequest  = RequestCreator.getDialogs();
+        this.currentRequest.executeWithListener(this.getHistoryRequestListener);
     }
     private final AbstractRequestListener getHistoryRequestListener = new AbstractRequestListener() {
             @Override

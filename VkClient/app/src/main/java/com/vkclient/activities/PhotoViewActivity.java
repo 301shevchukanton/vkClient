@@ -5,7 +5,6 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.podkaifom.vkclient.R;
-import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;

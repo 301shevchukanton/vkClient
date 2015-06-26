@@ -1,10 +1,8 @@
 package com.vkclient.supports;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 
-import com.vkclient.activities.WallPostActivity;
 
 public class AlertBuilder {
 

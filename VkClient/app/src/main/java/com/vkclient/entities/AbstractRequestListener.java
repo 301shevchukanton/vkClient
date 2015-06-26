@@ -22,5 +22,4 @@ public abstract class AbstractRequestListener extends VKRequest.VKRequestListene
         super.onProgress(progressType, bytesLoaded, bytesTotal);
         Loger.log("VkDemoApp", "onProgress " + progressType + " " + bytesLoaded + " " + bytesTotal);
     }
-
 }
