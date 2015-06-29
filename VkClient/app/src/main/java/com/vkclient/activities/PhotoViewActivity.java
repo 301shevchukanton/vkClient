@@ -24,6 +24,7 @@ public class PhotoViewActivity extends VkSdkActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_view);
+        super.onCreateDrawer();
         VKUIHelper.onCreate(this);
         this.photoUrl=getIntent().getStringExtra("photo");
         startLoading();

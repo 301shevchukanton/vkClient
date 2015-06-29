@@ -48,6 +48,7 @@ public class FriendsListActivity extends VkSdkActivity {
         Loger.log("profid", "profile id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
+        super.onCreateDrawer();
         this.friendsList = (ListView)findViewById(R.id.lvFriends);
         this.filterText = (EditText) findViewById(R.id.etSearchFriends);
         this.filterText.addTextChangedListener(filterTextWatcher);

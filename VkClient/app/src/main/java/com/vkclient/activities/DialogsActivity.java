@@ -35,7 +35,7 @@ public class DialogsActivity extends VkSdkActivity {
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_dialogs);
-
+        super.onCreateDrawer();
         listView = (ListView)findViewById(R.id.lwDialogs);
         Object items = getLastNonConfigurationInstance();
         if (items != null) {

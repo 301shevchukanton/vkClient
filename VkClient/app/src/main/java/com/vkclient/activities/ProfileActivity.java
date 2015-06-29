@@ -2,10 +2,15 @@ package com.vkclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.User;
@@ -25,7 +30,6 @@ import org.json.JSONObject;
 public class ProfileActivity extends VkSdkActivity {
 
     private VKRequest currentRequest;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId=getIntent().getStringExtra("id");
@@ -34,7 +38,8 @@ public class ProfileActivity extends VkSdkActivity {
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_profile);
-        findViewById(R.id.relLayout).setVisibility(View.VISIBLE);
+        super.onCreateDrawer();
+        findViewById(R.id.drawer_layout).setVisibility(View.VISIBLE);
         findViewById(R.id.btProfileFriends).setOnClickListener(profileClickListener);
         findViewById(R.id.btSendMessage).setOnClickListener(profileClickListener);
         findViewById(R.id.btWallPost).setOnClickListener(profileClickListener);

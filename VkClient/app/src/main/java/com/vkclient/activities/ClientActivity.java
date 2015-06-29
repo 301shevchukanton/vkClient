@@ -12,6 +12,7 @@ public class ClientActivity extends VkSdkActivity {
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_client);
+        super.onCreateDrawer();
         findViewById(R.id.btGetUserInfo).setOnClickListener(clientClickListener);
         findViewById(R.id.btGetFriends).setOnClickListener(clientClickListener);
         findViewById(R.id.btGetDialogs).setOnClickListener(clientClickListener);
@@ -19,7 +20,6 @@ public class ClientActivity extends VkSdkActivity {
     private void startApiCall(Class <?> cls){
         Intent i = new Intent(this, cls);
         startActivity(i);
-
     }
     private final View.OnClickListener clientClickListener = new View.OnClickListener() {
         @Override

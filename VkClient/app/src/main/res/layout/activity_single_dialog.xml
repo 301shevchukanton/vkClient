@@ -1,44 +1,61 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/MainLayoutStyle"
-    tools:context="com.vkclient.activities.SingleDialogActivity"
-    android:orientation="vertical"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/llTextMessage"
-            android:layout_below="@+id/llSendMessageInfo"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" >
+    android:layout_height="match_parent">
 
-            <EditText
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        style="@style/MainLayoutStyle"
+        tools:context="com.vkclient.activities.SingleDialogActivity"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llTextMessage"
+                android:layout_below="@+id/llSendMessageInfo"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/etMessageText"
+                    android:layout_alignTop="@+id/llMessageBody"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/message_send"
+                    android:id="@+id/btSendDialogMessage" />
+            </LinearLayout>
+
+            <ListView
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/etMessageText"
-                android:layout_alignTop="@+id/llMessageBody"
+                android:id="@+id/lvSingleDialog"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/message_send"
-                android:id="@+id/btSendDialogMessage" />
         </LinearLayout>
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:id="@+id/lvSingleDialog"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+    <ListView android:id="@+id/left_drawer"
+    android:layout_width="240dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:choiceMode="singleChoice"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0dp"
+    android:background="#fff"/>
 
-    </LinearLayout>
-
+        </android.support.v4.widget.DrawerLayout>

@@ -27,4 +27,11 @@
     <string name="title_activity_photo_view">PhotoViewActivity</string>
     <string name="share">Share</string>
     <string name="like">Like</string>
+    <string-array name="drawer_menu">
+        <item>My Profile</item>
+        <item>News feed</item>
+        <item>Messages</item>
+        <item>Friends</item>
+    </string-array>
+
 </resources>

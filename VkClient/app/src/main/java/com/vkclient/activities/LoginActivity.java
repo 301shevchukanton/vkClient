@@ -43,6 +43,7 @@ public class LoginActivity extends VkSdkActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        super.onCreateDrawer();
         VKUIHelper.onCreate(this);
         VKSdk.initialize(this.sdkListener, this.APPLICATION_ID);
         String[] fingerprint = VKUtil.getCertificateFingerprint(this, this.getPackageName());

@@ -39,6 +39,7 @@ public class SingleDialogActivity extends VkSdkActivity {
         Loger.log("profid", "ic_user id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_dialog);
+        super.onCreateDrawer();
         this.listView = (ListView)findViewById(R.id.lvSingleDialog);
         VKUIHelper.onCreate(this);
         if (VKSdk.wakeUpSession()) {

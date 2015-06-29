@@ -33,6 +33,7 @@ public class SendMessageActivity extends VkSdkActivity {
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_send_message);
+        super.onCreateDrawer();
         findViewById(R.id.btSendMessage).setOnClickListener(this.sendMessageClick);
     }
     private void startLoading() {

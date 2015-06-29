@@ -49,6 +49,7 @@ public class WallPostActivity extends VkSdkActivity
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_wall_post);
+        super.onCreateDrawer();
         findViewById(R.id.ibAddPhoto).setOnClickListener(this.wallPostClickListener);
         findViewById(R.id.btWallPost).setOnClickListener(this.wallPostClickListener);
     }
