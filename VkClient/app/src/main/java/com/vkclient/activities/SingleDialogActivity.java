@@ -6,7 +6,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.vkclient.entities.Message;
-import com.vkclient.adapters.MessagesAdapter;
+import com.vkclient.adapters.MessagesListAdapter;
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
@@ -31,7 +31,7 @@ public class SingleDialogActivity extends VkSdkActivity {
     private ListView listView;
     private VKRequest currentRequest;
     private List<Message> messages = new ArrayList<>();
-    private MessagesAdapter listAdapter;
+    private MessagesListAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class SingleDialogActivity extends VkSdkActivity {
         if (items != null) {
             this.messages =  ((ArrayList<Message>) items);
         }
-        this.listAdapter = new MessagesAdapter(this,this.messages);
+        this.listAdapter = new MessagesListAdapter(this,this.messages);
         this.listView.setAdapter(this.listAdapter);
         findViewById(R.id.btSendDialogMessage).setOnClickListener(new SingleDialogClickListener());
     }

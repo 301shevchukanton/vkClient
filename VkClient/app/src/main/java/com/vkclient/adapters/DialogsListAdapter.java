@@ -16,8 +16,8 @@ import net.danlew.android.joda.JodaTimeAndroid;
 
 import java.util.List;
 
-public class DialogsListViewAdapter extends ArrayAdapter<Dialog> {
-    public DialogsListViewAdapter(Context context, List<Dialog> models)
+public class DialogsListAdapter extends ArrayAdapter<Dialog> {
+    public DialogsListAdapter(Context context, List<Dialog> models)
     {
         super(context, R.layout.dialogs_list_item, R.id.tvDialogName, models);
         JodaTimeAndroid.init(context);

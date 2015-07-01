@@ -18,12 +18,12 @@ import com.squareup.picasso.Picasso;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-public class FriendListViewAdapter extends ArrayAdapter<User> {
+public class FriendListAdapter extends ArrayAdapter<User> {
     private List<User> mModels;
     public Object getItems() {
         return mModels;
     }
-    public FriendListViewAdapter(Context context, List<User> models)
+    public FriendListAdapter(Context context, List<User> models)
     {
         super(context, R.layout.friends_list_item, R.id.tvFriendName, models);
         mModels = models;
@@ -50,8 +50,6 @@ public class FriendListViewAdapter extends ArrayAdapter<User> {
             }
             ((TextView) view.findViewById(R.id.tvFriendBirthDate)).setText(birthDateStr);
             return view;
-
         }
-
     }
 

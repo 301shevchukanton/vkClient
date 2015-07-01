@@ -9,4 +9,6 @@
     <dimen name="preview_photo_height">60dp</dimen>
     <dimen name="button_text_size">20sp</dimen>
     <dimen name="small_image_button">50dp</dimen>
+    <dimen name="drawer_width">200dp</dimen>
+    <dimen name="drawer_separator_height">1dp</dimen>
 </resources>

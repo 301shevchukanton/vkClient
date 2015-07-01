@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.vkclient.adapters.DialogsListViewAdapter;
+import com.vkclient.adapters.DialogsListAdapter;
 import com.vkclient.entities.Dialog;
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
@@ -29,7 +29,7 @@ public class DialogsActivity extends VkSdkActivity {
     private VKRequest currentRequest;
     private ListView listView;
     private List<Dialog> dialogs = new ArrayList<>();
-    private DialogsListViewAdapter listAdapter;
+    private DialogsListAdapter listAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,7 @@ public class DialogsActivity extends VkSdkActivity {
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
             this.dialogs =  ((List<Dialog>) items);
-            this.listAdapter = new DialogsListViewAdapter(this,this.dialogs);
+            this.listAdapter = new DialogsListAdapter(this,this.dialogs);
             this.listView.setAdapter(this.listAdapter);
             this.listAdapter.notifyDataSetChanged();
         }
@@ -49,7 +49,7 @@ public class DialogsActivity extends VkSdkActivity {
         }
 
         this.listView.setOnItemClickListener(this.dialogClickListener);
-        this.listAdapter = new DialogsListViewAdapter(this,this.dialogs);
+        this.listAdapter = new DialogsListAdapter(this,this.dialogs);
         this.listView.setAdapter(this.listAdapter);
     }
 

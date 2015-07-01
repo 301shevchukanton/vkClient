@@ -15,14 +15,16 @@ public class Dialog {
     private final String body;
     private String photo_200="";
     private  String username="";
-public Dialog(int id, long date, int user_id, boolean readState, String title, String body){
-    this.id = id;
-    this.date=date;
-    this.user_id=user_id;
-    this.readState=readState;
-    this.title=title;
-    this.body=body;
-}
+
+    public Dialog(int id, long date, int user_id, boolean readState, String title, String body){
+        this.id = id;
+        this.date=date;
+        this.user_id=user_id;
+        this.readState=readState;
+        this.title=title;
+        this.body=body;
+    }
+
     public int getId() {
         return this.id;
     }

@@ -13,8 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MessagesAdapter extends ArrayAdapter<Message> {
-    public MessagesAdapter(Context context, List<Message> models)
+public class MessagesListAdapter extends ArrayAdapter<Message> {
+    public MessagesListAdapter(Context context, List<Message> models)
     {
         super(context, R.layout.single_dialog_list_item, R.id.tvSingleDialogName, models);
     }

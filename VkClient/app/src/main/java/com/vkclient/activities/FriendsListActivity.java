@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.vkclient.adapters.FriendListViewAdapter;
+import com.vkclient.adapters.FriendListAdapter;
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.User;
@@ -36,12 +36,9 @@ public class FriendsListActivity extends VkSdkActivity {
     private VKRequest currentRequest;
     private ListView friendsList;
     private List<User> users = new ArrayList<User>();
-    private FriendListViewAdapter listAdapter;
+    private FriendListAdapter listAdapter;
 
-    @Override
-    public Object onRetainNonConfigurationInstance() {
-        return this.listAdapter.getItems();
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId=getIntent().getStringExtra("id");
@@ -60,7 +57,7 @@ public class FriendsListActivity extends VkSdkActivity {
         if (items != null) {
             this.users =  ((ArrayList<User>) items);
         }
-        this.listAdapter = new FriendListViewAdapter(this,this.users);
+        this.listAdapter = new FriendListAdapter(this,this.users);
         this.friendsList.setOnItemClickListener(this.friendClickListener);
         this.friendsList.setAdapter(this.listAdapter);
     }
@@ -91,7 +88,7 @@ public class FriendsListActivity extends VkSdkActivity {
                     }
                 }
             }
-            friendsList.setAdapter(listAdapter = new FriendListViewAdapter(FriendsListActivity.this, temp));
+            friendsList.setAdapter(listAdapter = new FriendListAdapter(FriendsListActivity.this, temp));
         }
     };
     private void startLoading() {

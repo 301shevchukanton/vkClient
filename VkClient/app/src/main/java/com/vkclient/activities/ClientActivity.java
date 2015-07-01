@@ -1,7 +1,12 @@
 package com.vkclient.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKUIHelper;
@@ -16,6 +21,7 @@ public class ClientActivity extends VkSdkActivity {
         findViewById(R.id.btGetUserInfo).setOnClickListener(clientClickListener);
         findViewById(R.id.btGetFriends).setOnClickListener(clientClickListener);
         findViewById(R.id.btGetDialogs).setOnClickListener(clientClickListener);
+        getSupportActionBar().show();
     }
     private void startApiCall(Class <?> cls){
         Intent i = new Intent(this, cls);

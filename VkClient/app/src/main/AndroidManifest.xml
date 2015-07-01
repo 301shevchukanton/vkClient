@@ -7,6 +7,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:logo="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateHidden" >
@@ -19,7 +20,8 @@
         </activity>
         <activity
             android:name="com.vkclient.activities.ClientActivity"
-            android:label="@string/title_activity_client" >
+            android:logo="@mipmap/ic_launcher"
+            android:label="@string/title_activity_client">
         </activity>
         <activity android:name="com.vkclient.activities.ProfileActivity" >
         </activity>
@@ -47,6 +49,10 @@
         <activity
             android:name="com.vkclient.activities.PhotoViewActivity"
             android:label="@string/title_activity_photo_view" >
+        </activity>
+        <activity
+            android:name="com.vkclient.activities.NewsActivity"
+            android:label="@string/title_activity_news" >
         </activity>
     </application>
 

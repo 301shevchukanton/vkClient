@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:displayOptions="useLogo|showHome|showTitle">
+
+    <item
+        android:id="@+id/item1"
+        app:showAsAction="always"
+        android:title="@string/item1">
+    </item>
+    <item
+        android:id="@+id/item2"
+        android:icon="@android:drawable/ic_menu_call"
+        app:showAsAction="ifRoom"
+        android:title="@string/item2">
+    </item>
+    <item
+        android:id="@+id/item3"
+        android:icon="@android:drawable/ic_menu_info_details"
+        app:showAsAction="ifRoom|withText"
+        android:title="@string/item3">
+    </item>
+    <item
+        android:id="@+id/item4"
+        android:icon="@android:drawable/ic_menu_view"
+        app:showAsAction="ifRoom"
+        android:title="@string/item4">
+    </item>
+
+</menu>

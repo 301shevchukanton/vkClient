@@ -2,6 +2,10 @@ package com.vkclient.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,18 +16,18 @@ import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKApiConst;
 
-public abstract class VkSdkActivity extends Activity {
+public abstract class VkSdkActivity extends ActionBarActivity {
     protected String profileId= VKApiConst.OWNER_ID;
     private String[] drawerTitles;
     private ListView drawerList;
 
     protected void onCreateDrawer() {
-
         drawerTitles = getResources().getStringArray(R.array.drawer_menu);
         drawerList = (ListView) findViewById(R.id.left_drawer);
         drawerList.setAdapter(new ArrayAdapter<String>(getApplicationContext(),
                 R.layout.drawer_list_item, drawerTitles));
         drawerList.setOnItemClickListener(drawerListener);
+        getSupportActionBar().hide();
     }
     @Override
     protected void onResume() {
@@ -62,7 +66,12 @@ public abstract class VkSdkActivity extends Activity {
                     startApiCall(FriendsListActivity.class);
                     break;
                 }
+                case "News feed": {
+                    startApiCall(NewsActivity.class);
+                    break;
+                }
             }
         }
     };
+
 }
