@@ -1,25 +1,19 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.vkclient.activities.ProfileActivity"
     android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.vkclient.activities.ProfileActivity">
+    style="@style/DrawerLayoutStyle">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/svProfile"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+      style="@style/ScrollViewSyle"
+        android:id="@+id/svProfile">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            style="@style/ZeroPaddingLayoutStyle">
 
             <LinearLayout
+                style="@style/ZeroPaddingLayoutStyle"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_below="@+id/llInfo"
                 android:id="@+id/llButtonsPanel">
 
@@ -36,19 +30,12 @@
                 <Button
                     style="@style/CentralGravityButtonStyle"
                     android:text="@string/view_friends"
-                    android:id="@+id/btProfileFriends"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:id="@+id/btProfileFriends" />
             </LinearLayout>
 
             <LinearLayout
                 style="@style/ZeroPaddingLayoutStyle"
                 android:orientation="horizontal"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:weightSum="1"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:id="@+id/llInfo">
 
                 <ImageView
@@ -58,29 +45,22 @@
                     android:src="@drawable/ic_user100" />
 
                 <LinearLayout
+                    style="@style/ZeroPaddingLayoutStyle"
                     android:orientation="vertical"
-                    style="@style/ZeroPaddingLayoutStyle">
+                    android:paddingStart="5dp">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Large Text"
+                       style="@style/LargeLabel"
+                        android:text="@string/default_name_text"
                         android:id="@+id/tvProfileName"
-                        android:layout_gravity="center_horizontal"
-                        android:focusableInTouchMode="true" />
+                        android:layout_gravity="center_horizontal"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Medium Text"
+                        style="@style/MiddleLabel"
                         android:id="@+id/tvProfileStatus"
                         android:layout_gravity="center_horizontal" />
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        style="@style/ZeroPaddingLayoutStyle"
-                        android:layout_gravity="center_horizontal"
+                        style="@style/CentralHorizontalLayout"
                         android:id="@+id/llBirthDate">
 
                         <TextView
@@ -89,14 +69,11 @@
 
                         <TextView
                             style="@style/SmallLabel"
-                            android:text="Small Text"
                             android:id="@+id/tvProfileBirthDate" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        style="@style/ZeroPaddingLayoutStyle"
-                        android:layout_gravity="center_horizontal"
+                        style="@style/CentralHorizontalLayout"
                         android:id="@+id/llHomeTown">
 
                         <TextView
@@ -105,14 +82,11 @@
 
                         <TextView
                             style="@style/SmallLabel"
-                            android:text="Small Text"
                             android:id="@+id/tvProfileTown" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        style="@style/ZeroPaddingLayoutStyle"
-                        android:layout_gravity="center_horizontal"
+                        style="@style/CentralHorizontalLayout"
                         android:id="@+id/llRelationships">
 
                         <TextView
@@ -121,14 +95,11 @@
 
                         <TextView
                             style="@style/SmallLabel"
-                            android:text="Small Text"
                             android:id="@+id/tvRelationship" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        style="@style/ZeroPaddingLayoutStyle"
-                        android:layout_gravity="center_horizontal"
+                        style="@style/CentralHorizontalLayout"
                         android:id="@+id/llStudiedAt">
 
                         <TextView
@@ -137,14 +108,11 @@
 
                         <TextView
                             style="@style/SmallLabel"
-                            android:text="Small Text"
                             android:id="@+id/tvStudiedAt" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        style="@style/ZeroPaddingLayoutStyle"
-                        android:layout_gravity="center_horizontal"
+                        style="@style/CentralHorizontalLayout"
                         android:id="@+id/llLanguages">
 
                         <TextView
@@ -153,7 +121,6 @@
 
                         <TextView
                             style="@style/SmallLabel"
-                            android:text="Small Text"
                             android:id="@+id/tvLanguages" />
                     </LinearLayout>
 

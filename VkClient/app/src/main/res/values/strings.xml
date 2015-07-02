@@ -41,4 +41,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="drawer_close"></string>
     <string name="drawer_open">Select:</string>
+    <string name="name_input_hint">name:</string>
+    <string name="default_name_text">Wait please!</string>
+    <string name="loading_text">Loading</string>
 </resources>

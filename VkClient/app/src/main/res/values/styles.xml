@@ -35,11 +35,24 @@
     <style name="SmallLabel" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/loading_text</item>
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
     </style>
+    <style name="MiddleLabel" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/loading_text</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+    <style name="LargeLabel" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/loading_text</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+    </style>
     <style name="PhotoPreview" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:layout_width">60dp</item>
-        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">@dimen/photo_preview_size</item>
+        <item name="android:layout_height">@dimen/photo_preview_size</item>
         <item name="android:layout_alignParentRight">true</item>
     </style>
     <style name="TwoLinesItemStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
@@ -57,4 +70,47 @@
         <item name="android:dividerHeight">@dimen/drawer_separator_height</item>
         <item name="android:background">#fff</item>
     </style>
+    <style name="DrawerLayoutStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="LargeListViewStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="SearchTextStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:ems">10</item>
+    </style>
+    <style name="LargeImageViewStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+    <style name="ScrollViewSyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="CentralHorizontalLayout" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+    <style name="MultiLaneInput" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:inputType">textMultiLine</item>
+        <item name="android:ems">10</item>
+    </style>
+    <style name="ActionProfilePhoto" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_width">122dp</item>
+        <item name="android:layout_height">140dp</item>
+    </style>
+
+
 </resources>
