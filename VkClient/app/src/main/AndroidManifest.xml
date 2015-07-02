@@ -23,10 +23,11 @@
             android:logo="@mipmap/ic_launcher"
             android:label="@string/title_activity_client">
         </activity>
-        <activity android:name="com.vkclient.activities.ProfileActivity" >
+        <activity android:name="com.vkclient.activities.ProfileActivity" android:label="@string/title_activity_profile">
         </activity>
         <activity
             android:name="com.vkclient.activities.FriendsListActivity"
+            android:label="@string/title_activity_friends_list"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity

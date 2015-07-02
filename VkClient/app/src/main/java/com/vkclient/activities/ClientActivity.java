@@ -21,7 +21,7 @@ public class ClientActivity extends VkSdkActivity {
         findViewById(R.id.btGetUserInfo).setOnClickListener(clientClickListener);
         findViewById(R.id.btGetFriends).setOnClickListener(clientClickListener);
         findViewById(R.id.btGetDialogs).setOnClickListener(clientClickListener);
-        getSupportActionBar().show();
+        getSupportActionBar().hide();
     }
     private void startApiCall(Class <?> cls){
         Intent i = new Intent(this, cls);

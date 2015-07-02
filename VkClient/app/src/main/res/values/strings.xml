@@ -6,7 +6,7 @@
     <string name="title_activity_client">Select option:</string>
     <string name="users_get">Get user info</string>
     <string name="friends_get">Get friends</string>
-    <string name="title_activity_profile">Get friends</string>
+    <string name="title_activity_profile">Profile info:</string>
     <string name="birthday_profile_label">Birthday:</string>
     <string name="hometown_profile_label">Hometown:</string>
     <string name="relationship_status_label">Relationship status:</string>
@@ -14,17 +14,17 @@
     <string name="languages_profile_label">Languages:</string>
     <string name="parents__profile_label">Parents:</string>
     <string name="siblings_profile_label">Siblings:</string>
-    <string name="title_activity_friends_list">FriendsListActivity</string>
+    <string name="title_activity_friends_list">Friends list:</string>
     <string name="send_message">Send a message</string>
     <string name="view_friends">Friends</string>
     <string name="wall_post">Wall post</string>
     <string name="message_send">Send</string>
-    <string name="title_activity_send_message">SendMessageActivity</string>
-    <string name="title_activity_wall_post">WallPostActivity</string>
+    <string name="title_activity_send_message">Send message to:</string>
+    <string name="title_activity_wall_post">Wall post to:</string>
     <string name="dialogs">Get dialogs</string>
-    <string name="title_activity_dialogs">DialogsActivity</string>
-    <string name="title_activity_single_dialog">SingleDialogActivity</string>
-    <string name="title_activity_photo_view">PhotoViewActivity</string>
+    <string name="title_activity_dialogs">Dialogs history:</string>
+    <string name="title_activity_single_dialog">Dialog</string>
+    <string name="title_activity_photo_view">Photo view:</string>
     <string name="share">Share</string>
     <string name="like">Like</string>
     <string-array name="drawer_menu">
@@ -39,5 +39,6 @@
     <string name="item3">Item3</string>
     <string name="item4">Item4</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="drawer_close"></string>
+    <string name="drawer_open">Select:</string>
 </resources>

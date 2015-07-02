@@ -36,7 +36,7 @@ public class DialogsActivity extends VkSdkActivity {
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_dialogs);
         super.onCreateDrawer();
-        listView = (ListView)findViewById(R.id.lwDialogs);
+        listView = (ListView)findViewById(R.id.lvDialogs);
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
             this.dialogs =  ((List<Dialog>) items);
@@ -62,7 +62,7 @@ public class DialogsActivity extends VkSdkActivity {
         if (this.currentRequest != null) {
             this.currentRequest.cancel();
         }
-        this.currentRequest  = RequestCreator.getDialogs();
+        this.currentRequest = RequestCreator.getDialogs();
         this.currentRequest.executeWithListener(this.getHistoryRequestListener);
     }
     private final AbstractRequestListener getHistoryRequestListener = new AbstractRequestListener() {

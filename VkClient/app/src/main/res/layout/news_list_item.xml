@@ -1,7 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
+style="@style/TwoLinesItemStyle">
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:id="@+id/tvPostSource"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        style="@style/ZeroPaddingLayoutStyle"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:id="@+id/tvPostDate"
+        android:paddingLeft="5dp"
+        android:layout_below="@+id/tvPostSource"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        style="@style/ZeroPaddingLayoutStyle"
+        android:id="@+id/tvPostText"
+        android:maxHeight="150dp"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/ivPostSourcePhoto"
+        android:layout_below="@+id/ivPostSourcePhoto"
+        android:layout_alignRight="@+id/ivPostSourcePhoto"
+        android:layout_alignEnd="@+id/ivPostSourcePhoto" />
+
+    <ImageView
+        style="@style/PhotoPreview"
+        android:id="@+id/ivPostSourcePhoto"
+        android:layout_alignTop="@+id/tvDialogName"
+        android:src="@drawable/ic_user75" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ibLikePost"
+        android:layout_below="@+id/tvPostText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_like_20dp"
+        android:baselineAlignBottom="false"
+        android:cropToPadding="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/tvLikesCount"
+        android:paddingBottom="0dp"
+        android:layout_alignTop="@+id/ibLikePost"
+        android:layout_toRightOf="@+id/ibLikePost"
+        android:layout_toEndOf="@+id/ibLikePost"
+        android:paddingTop="7dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ibSharePost"
+        android:src="@drawable/ic_share_20dp"
+        android:baselineAlignBottom="false"
+        android:cropToPadding="false"
+        android:layout_alignTop="@+id/ibLikePost"
+        android:layout_toLeftOf="@+id/tvSharesCount"
+        android:layout_toStartOf="@+id/tvSharesCount" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/tvSharesCount"
+        android:layout_alignBottom="@+id/ibLikePost"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</TwoLineListItem>

@@ -7,14 +7,21 @@ import org.json.JSONObject;
 public class JSONParser {
     private JSONObject object;
     public JSONArray messagesArray;
+    public JSONArray postsArray;
     public JSONParser(JSONObject object) {
         this.object=object;
     }
     public void parseMessages() throws JSONException {
         this.messagesArray=this.object.getJSONObject("response").getJSONArray("items");
     }
+    public void parsePosts() throws JSONException {
+        this.postsArray=this.object.getJSONObject("response").getJSONArray("items");
+    }
     public JSONObject getMessage(int i) throws JSONException {
         return this.messagesArray.getJSONObject(i).getJSONObject("message");
+    }
+    public JSONObject getPost(int i) throws JSONException {
+        return this.postsArray.getJSONObject(i);
     }
 
     public String getUser(int i) throws JSONException {
@@ -23,6 +30,10 @@ public class JSONParser {
     public int length()
     {
         return this.messagesArray.length();
+    }
+    public int feedLength()
+    {
+        return this.postsArray.length();
     }
     public String getUserName() throws JSONException {
         return this.object.getJSONArray("response").getJSONObject(0).getString("first_name") + " " +

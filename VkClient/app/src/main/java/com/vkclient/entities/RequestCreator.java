@@ -32,7 +32,9 @@ public class RequestCreator {
                         "universities,schools,can_post,can_see_all_posts,can_see_audio,can_write_private_message," +
                         "status,last_seen,common_count,relation,relatives,counters,langs,personal"));
     }
-
+    public static VKRequest getNewsFeed(){
+        return new VKRequest("newsfeed.get", VKParameters.from(VKApiConst.COUNT, "26", "filters", "post",VKApiConst.FIELDS,"photo_200" ), VKRequest.HttpMethod.GET);
+    }
     public static VKRequest getDialogs()
     {
         return new VKRequest("messages.getDialogs", VKParameters.from(VKApiConst.COUNT, "30", "preview_length", "50"), VKRequest.HttpMethod.GET);
