@@ -32,13 +32,13 @@ public class MessagesListAdapter extends ArrayAdapter<Message> {
         if(msg.getUser_id()==msg.getFrom_id())
         {
             Picasso.with(getContext())
-                    .load(msg.getUserPhoto_200())
+                    .load(msg.getUserPhotoLink_200())
                     .into(photo);
         }
         else
         {
                 Picasso.with(getContext())
-                        .load(msg.getFromPhoto_200())
+                        .load(msg.getFromPhotoLink_200())
                         .into(photo);
 
         }}

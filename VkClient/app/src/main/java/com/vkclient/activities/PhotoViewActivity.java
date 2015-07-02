@@ -34,7 +34,7 @@ public class PhotoViewActivity extends VkSdkActivity {
         if (this.currentRequest != null) {
             this.currentRequest.cancel();
         }
-        Loger.log("profid", "onComplete " + profileId);
+        Loger.logDebug("profid", "onComplete " + profileId);
         this.currentRequest = RequestCreator.getBigUserPhoto(this.photoUrl);
         this.currentRequest.executeWithListener(new bigPhotoRequestListener());
     }
@@ -42,7 +42,7 @@ public class PhotoViewActivity extends VkSdkActivity {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
-            Loger.log("profid", "onComplete " + response);
+            Loger.logDebug("profid", "onComplete " + response);
             setPhoto(response);
         }
         private void setPhoto(VKResponse response) {

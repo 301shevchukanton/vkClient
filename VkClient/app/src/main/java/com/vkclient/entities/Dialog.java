@@ -13,7 +13,7 @@ public class Dialog {
     private final boolean readState;
     private final String title;
     private final String body;
-    private String photo_200="";
+    private String photoLink_200 ="";
     private  String username="";
 
     public Dialog(int id, long date, int user_id, boolean readState, String title, String body){
@@ -61,10 +61,10 @@ public class Dialog {
        return this.username;
     }
     public void setPhoto(String photo){
-        this.photo_200=photo;
+        this.photoLink_200 =photo;
     }
     public String getGetPhoto(){
-        return this.photo_200;
+        return this.photoLink_200;
     }
     public static Dialog parseDialog(JSONObject object){
         Dialog result=null;

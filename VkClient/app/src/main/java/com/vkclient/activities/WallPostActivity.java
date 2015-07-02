@@ -82,7 +82,7 @@ public class WallPostActivity extends VkSdkActivity
         if (this.currentRequest != null) {
             this.currentRequest.cancel();
         }
-         Loger.log("profid", "onComplete " + profileId);
+         Loger.logDebug("profid", "onComplete " + profileId);
         this.currentRequest = RequestCreator.getFullUserById(profileId);
         this.currentRequest.executeWithListener(this.userFullRequestListener);
     }
@@ -129,13 +129,13 @@ public class WallPostActivity extends VkSdkActivity
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
-            Loger.log("profid", "onComplete " + response);
+            Loger.logDebug("profid", "onComplete " + response);
             setUserInfo(response);
         }
 
         private void setUserInfo(VKResponse response) {
             try {
-                Loger.log("profid", "seting inf " + profileId);
+                Loger.logDebug("profid", "seting inf " + profileId);
                 JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
                 if (r.getString("last_name") != null && r.getString("first_name") != null)
                     ((TextView) findViewById(R.id.tvPostName)).setText(r.getString("first_name") + " " + r.getString("last_name"));

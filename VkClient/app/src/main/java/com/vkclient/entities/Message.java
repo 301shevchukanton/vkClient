@@ -20,8 +20,8 @@ public class Message {
     private final long date;
     private final boolean readState;
     private final String body;
-    private String userPhoto_200="";
-    private String fromPhoto_200="";
+    private String userPhotoLink_200 ="";
+    private String fromPhotoLink_200 ="";
     private  String username="";
     private  String fromname="";
     public Message(int id, int user_id, int from_id, long date, boolean readState, String body) {
@@ -80,20 +80,20 @@ public class Message {
         return fromname;
     }
 
-    public void setFromPhoto_200(String fromPhoto_200) {
-        this.fromPhoto_200 = fromPhoto_200;
+    public void setFromPhotoLink_200(String fromPhotoLink_200) {
+        this.fromPhotoLink_200 = fromPhotoLink_200;
     }
 
-    public void setUserPhoto_200(String userPhoto_200) {
-        this.userPhoto_200 = userPhoto_200;
+    public void setUserPhotoLink_200(String userPhotoLink_200) {
+        this.userPhotoLink_200 = userPhotoLink_200;
     }
 
-    public String getUserPhoto_200() {
-        return userPhoto_200;
+    public String getUserPhotoLink_200() {
+        return userPhotoLink_200;
     }
 
-    public String getFromPhoto_200() {
-        return fromPhoto_200;
+    public String getFromPhotoLink_200() {
+        return fromPhotoLink_200;
     }
 
     static public void sendMessage(final TextView msgView, String profileId){

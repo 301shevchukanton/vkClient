@@ -47,7 +47,7 @@ public class LoginActivity extends VkSdkActivity {
         VKUIHelper.onCreate(this);
         VKSdk.initialize(this.sdkListener, this.APPLICATION_ID);
         String[] fingerprint = VKUtil.getCertificateFingerprint(this, this.getPackageName());
-        Loger.log("Fingerprint", fingerprint[0]);
+        Loger.logDebug("Fingerprint", fingerprint[0]);
         this.signIn =((Button)findViewById(R.id.btSignIn));
         this.signIn.setOnClickListener(new LoginClickListener());
         this.forceAuth=((Button)findViewById(R.id.btForceAuth));

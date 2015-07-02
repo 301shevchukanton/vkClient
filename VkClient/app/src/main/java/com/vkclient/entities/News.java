@@ -15,7 +15,7 @@ public class News {
     private String type;
     private String text;
     private String sourceName="";
-    private String photo_200="";
+    private String photoLink_200 ="";
     private String likesCount="";
     private String repostsCount="";
     public News(String type, String sourceId, long date, String postId, String postType)
@@ -94,10 +94,10 @@ public class News {
         return sourceName;
     }
     public void setPhoto(String photo){
-        this.photo_200=photo;
+        this.photoLink_200 =photo;
     }
     public String getGetPhoto(){
-        return this.photo_200;
+        return this.photoLink_200;
     }
    public static News parse(JSONObject object) {
        News result = null;
@@ -126,7 +126,7 @@ public class News {
                 for (int i = 0; i < source.length(); i++) {
                     if (source.getJSONObject(i).getString("id").equals(this.getSourceId())) {
                         this.setSourceName(source.getJSONObject(i).getString("name"));
-                        this.setPhoto(source.getJSONObject(i).getString("photo_200"));
+                        this.setPhoto(source.getJSONObject(i).getString("photoLink_200"));
                     }
                 }
             }

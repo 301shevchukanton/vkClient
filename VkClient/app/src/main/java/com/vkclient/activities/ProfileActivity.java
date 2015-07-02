@@ -2,20 +2,14 @@ package com.vkclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.User;
 import com.example.podkaifom.vkclient.R;
-import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
@@ -33,7 +27,7 @@ public class ProfileActivity extends VkSdkActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId=getIntent().getStringExtra("id");
-        Loger.log("profid", "profileid " + profileId);
+        Loger.logDebug("profid", "profileid " + profileId);
         startLoading();
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
@@ -61,7 +55,7 @@ public class ProfileActivity extends VkSdkActivity {
         if (currentRequest != null) {
             currentRequest.cancel();
         }
-         Loger.log("profid", "onComplete " + profileId);
+         Loger.logDebug("profid", "onComplete " + profileId);
         currentRequest = RequestCreator.getFullUserById(profileId);
         currentRequest.executeWithListener(new ProfileRequestListener());
     }
@@ -69,7 +63,7 @@ public class ProfileActivity extends VkSdkActivity {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
-            Loger.log("profid", "onComplete " + response);
+            Loger.logDebug("profid", "onComplete " + response);
             setUserInfo(response);
         }
         private void setViewText(int id, String text)

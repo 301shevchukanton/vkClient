@@ -1,21 +1,15 @@
 package com.vkclient.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
-import com.vk.sdk.api.VKBatchRequest;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
-import com.vkclient.adapters.DialogsListAdapter;
 import com.vkclient.adapters.NewsListAdapter;
 import com.vkclient.entities.AbstractRequestListener;
-import com.vkclient.entities.Dialog;
 import com.vkclient.entities.News;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.supports.JSONParser;
@@ -63,7 +57,7 @@ public class NewsActivity extends VkSdkActivity {
         @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
-            Loger.log("profid", response.responseString);
+            Loger.logDebug("profid", response.responseString);
             news.clear();
             try {
                 JSONParser newsFeed = new JSONParser(response.json);
@@ -75,7 +69,7 @@ public class NewsActivity extends VkSdkActivity {
                 }
             }
             catch (Exception e){
-                Loger.log("profid", e.toString());
+                Loger.logDebug("profid", e.toString());
             }
             listAdapter.notifyDataSetChanged();
         }

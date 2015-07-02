@@ -69,7 +69,7 @@ public class DialogsActivity extends VkSdkActivity {
             @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
-            Loger.log("profid", response.responseString);
+            Loger.logDebug("profid", response.responseString);
             dialogs.clear();
             try {
                 JSONParser history = new JSONParser(response.json);
@@ -83,7 +83,7 @@ public class DialogsActivity extends VkSdkActivity {
                 batch.executeWithListener(batchListener);
             }
             catch (Exception e){
-                Loger.log("profid", e.toString());
+                Loger.logDebug("profid", e.toString());
             }
             listAdapter.notifyDataSetChanged();
         }
@@ -118,7 +118,7 @@ public class DialogsActivity extends VkSdkActivity {
                     break;
                 }
             }
-            Loger.log("VkList", "id: " + id);
+            Loger.logDebug("VkList", "id: " + id);
         }
     };
 }

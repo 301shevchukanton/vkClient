@@ -42,7 +42,7 @@ public class FriendsListActivity extends VkSdkActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId=getIntent().getStringExtra("id");
-        Loger.log("profid", "profile id taked" + profileId);
+        Loger.logDebug("profid", "profile id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
         super.onCreateDrawer();
@@ -112,7 +112,7 @@ public class FriendsListActivity extends VkSdkActivity {
                     break;
                 }
             }
-            Loger.log("VkList", "id: " + id);
+            Loger.logDebug("VkList", "id: " + id);
         }
     };
     private final AbstractRequestListener getFriendsRequestListener = new AbstractRequestListener() {

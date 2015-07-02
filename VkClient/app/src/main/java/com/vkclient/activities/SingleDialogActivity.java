@@ -36,7 +36,7 @@ public class SingleDialogActivity extends VkSdkActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId=getIntent().getStringExtra("userid");
-        Loger.log("profid", "ic_user id taked" + profileId);
+        Loger.logDebug("profid", "ic_user id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_dialog);
         super.onCreateDrawer();
@@ -124,7 +124,7 @@ public class SingleDialogActivity extends VkSdkActivity {
             JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
             for (int i = 0; i < arrayLength; i++) {
                 messages.get(i).setUsername(r.getString("first_name") + " " + r.getString("last_name"));
-                messages.get(i).setUserPhoto_200(r.getString("photo_200"));
+                messages.get(i).setUserPhotoLink_200(r.getString("photo_200"));
             }
         }
     }
@@ -150,7 +150,7 @@ public class SingleDialogActivity extends VkSdkActivity {
             JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
             for (int i = 0; i < arrayLength; i++) {
                 messages.get(i).setFromname(r.getString("first_name") + " " + r.getString("last_name"));
-                messages.get(i).setFromPhoto_200(r.getString("photo_200"));
+                messages.get(i).setFromPhotoLink_200(r.getString("photo_200"));
             }
         }
     }
