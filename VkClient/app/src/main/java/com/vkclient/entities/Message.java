@@ -132,12 +132,5 @@ public class Message {
         }
     }
 
-    public static Message parseMessageFromJSON(JSONObject messageJSON) throws JSONException {
-    return new Message(Integer.parseInt(messageJSON.getString("id")),
-            Integer.parseInt(messageJSON.getString("user_id")),
-            Integer.parseInt(messageJSON.getString("from_id")),
-            Long.parseLong(messageJSON.getString("date")),
-            (messageJSON.getString("read_state").equals("1")),
-            messageJSON.getString("body"));
-    }
+
 }

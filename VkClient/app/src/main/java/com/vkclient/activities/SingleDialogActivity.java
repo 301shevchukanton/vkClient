@@ -16,6 +16,7 @@ import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
+import com.vkclient.supports.JsonResponseParser;
 import com.vkclient.supports.Loger;
 
 import org.json.JSONArray;
@@ -80,10 +81,10 @@ public class SingleDialogActivity extends VkSdkActivity {
                 VKRequest ownRequest = null;
                 VKRequest fromRequest = null;
                 for (int i = 0; i < messagesArray.length(); i++) {
-                    messages.add(Message.parseMessageFromJSON(messagesArray.getJSONObject(i)));
+                    messages.add(JsonResponseParser.parseMessageFromJSON(messagesArray.getJSONObject(i)));
                     ownRequest = RequestCreator.getUserById(messagesArray.getJSONObject(i).getString("user_id"));
-                    if (Integer.parseInt(messagesArray.getJSONObject(i).getString("user_id")) !=
-                            Integer.parseInt(messagesArray.getJSONObject(i).getString("from_id")))
+                    if (!messagesArray.getJSONObject(i).getString("user_id").equals(
+                            messagesArray.getJSONObject(i).getString("from_id")))
                         fromRequest = RequestCreator.getUserById(messagesArray.getJSONObject(i).getString("from_id"));
                 }
                 if (ownRequest != null) ownRequestExecution(ownRequest, messagesArray.length());

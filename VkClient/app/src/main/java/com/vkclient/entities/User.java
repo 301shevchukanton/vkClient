@@ -139,21 +139,6 @@ public class User {
         return langs;
     }
 
-    public static User parseUserFromJSON(JSONObject r) throws JSONException {
-        User result = new User();
-        result.setId(Integer.parseInt(r.getString("id")));
-        if (r.getString("last_name") != null && r.getString("first_name") != null)
-            result.setName(r.getString("first_name") + " " + r.getString("last_name"));
-        if(r.has("status"))result.setStatus(r.getString("status"));
-        if(r.has("bdate")) result.setBdDateString(r.getString("bdate"));
-        if(r.has("city")) result.setCity(r.getJSONObject("city").getString("title"));
-        if(r.has("relation")) result.setRelationship(User.relationshipStatus[Integer.parseInt(r.getString("relation"))]);
-        if(r.has("universities")) result.setUnivers(r.getJSONArray("universities").getJSONObject(0).getString("name"));
-        if(r.has("photo_200")) result.setPhoto(r.getString("photo_200"));
-        result.setLangs(User.getLangs(r));
-        return result;
-    }
-
     public void setPhotoMax(String photoMax) {
         this.photoMax = photoMax;
     }

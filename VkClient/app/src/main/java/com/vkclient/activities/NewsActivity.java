@@ -12,7 +12,7 @@ import com.vkclient.adapters.NewsListAdapter;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.News;
 import com.vkclient.entities.RequestCreator;
-import com.vkclient.supports.JSONParser;
+import com.vkclient.supports.JsonResponseParser;
 import com.vkclient.supports.Loger;
 
 import java.util.ArrayList;
@@ -60,11 +60,11 @@ public class NewsActivity extends VkSdkActivity {
             Loger.logDebug("profid", response.responseString);
             news.clear();
             try {
-                JSONParser newsFeed = new JSONParser(response.json);
+                JsonResponseParser newsFeed = new JsonResponseParser(response.json);
                 newsFeed.parsePosts();
                 VKRequest[] myrequests = new VKRequest[newsFeed.feedLength()];
                 for (int i = 0; i < newsFeed.feedLength(); i++ ) {
-                    news.add(News.parse(newsFeed.getPost(i)));
+                    news.add(JsonResponseParser.parse(newsFeed.getPost(i)));
                     news.get(i).getPostSourceDate(response.json);
                 }
             }

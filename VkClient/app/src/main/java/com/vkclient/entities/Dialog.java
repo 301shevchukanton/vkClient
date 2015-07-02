@@ -66,18 +66,5 @@ public class Dialog {
     public String getGetPhoto(){
         return this.photoLink_200;
     }
-    public static Dialog parseDialog(JSONObject object){
-        Dialog result=null;
-        try{
-                result = new Dialog(Integer.parseInt(object.getString("id")),
-                        Long.parseLong(object.getString("date")),
-                        Integer.parseInt(object.getString("user_id")),
-                        (object.getString("read_state").equals("1")),
-                        object.getString("title"),
-                        object.getString("body"));
-            } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+
 }

@@ -13,7 +13,7 @@ import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
-import com.vkclient.supports.JSONParser;
+import com.vkclient.supports.JsonResponseParser;
 import com.vkclient.supports.Loger;
 import com.vkclient.supports.PhotoLoader;
 
@@ -53,7 +53,7 @@ public class SendMessageActivity extends VkSdkActivity {
         private void setUserInfo(VKResponse response) {
             try {
                 Loger.logDebug("profid", "seting inf " + profileId);
-                JSONParser userInfo = new JSONParser(response.json);
+                JsonResponseParser userInfo = new JsonResponseParser(response.json);
                 ((TextView) findViewById(R.id.tvRecipientName)).setText(userInfo.getUserName());
                 if(userInfo.photoAvailable()) PhotoLoader.loadPhoto(getApplicationContext(), userInfo.getPhoto(), (ImageView) findViewById(R.id.ivMessagePhoto));
             } catch (JSONException e) {

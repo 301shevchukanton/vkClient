@@ -99,23 +99,7 @@ public class News {
     public String getGetPhoto(){
         return this.photoLink_200;
     }
-   public static News parse(JSONObject object) {
-       News result = null;
-       try {
-           result = new News(object.getString("type"),
-                   object.getString("source_id"),
-                   Long.parseLong(object.getString("date")),
-                   object.getString("post_id"),
-                   object.getString("post_type"));
-           result.setText(object.getString("text"));
-           result.setLikesCount(object.getJSONObject("likes").getString("count"));
-           result.setRepostsCount(object.getJSONObject("reposts").getString("count"));
 
-       } catch (JSONException e) {
-           e.printStackTrace();
-       }
-       return result;
-   }
     public void getPostSourceDate(JSONObject newsFeedObject)
     {
         JSONArray source;
