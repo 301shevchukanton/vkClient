@@ -27,21 +27,24 @@ public class JSONParser {
     public String getUser(int i) throws JSONException {
         return String.valueOf(this.messagesArray.getJSONObject(i).getJSONObject("message").getString("user_id"));
     }
-    public int length()
-    {
+
+    public int length() {
         return this.messagesArray.length();
     }
-    public int feedLength()
-    {
+
+    public int feedLength() {
         return this.postsArray.length();
     }
+
     public String getUserName() throws JSONException {
         return this.object.getJSONArray("response").getJSONObject(0).getString("first_name") + " " +
                 this.object.getJSONArray("response").getJSONObject(0).getString("last_name");
     }
+
     public boolean photoAvailable() throws JSONException {
         return !this.object.getJSONArray("response").getJSONObject(0).getString("photo_200").isEmpty();
     }
+
     public String getPhoto() throws JSONException {
         return this.object.getJSONArray("response").getJSONObject(0).getString("photo_200");
     }

@@ -10,7 +10,7 @@ public class AlertBuilder {
     {
         new AlertDialog.Builder(con)
                 .setMessage(message)
-                .setPositiveButton("OK", null)
+                .setPositiveButton(android.R.string.ok, null)
                 .show();
     }
 }
