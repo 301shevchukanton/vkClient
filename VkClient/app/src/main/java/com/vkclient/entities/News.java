@@ -129,7 +129,6 @@ public class News {
                         this.setPhoto(source.getJSONObject(i).getString("photo_200"));
                     }
                 }
-
             }
             catch (JSONException e) {
             e.printStackTrace();
