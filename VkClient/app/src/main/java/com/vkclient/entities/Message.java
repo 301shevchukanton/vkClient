@@ -65,13 +65,6 @@ public class Message {
         this.username = username;
     }
 
-    public DateTime getParsedDate()
-    {
-        DateTime dateTime = new DateTime( ( this.date * 1000L + TimeZone.getDefault().getRawOffset()));
-
-        return dateTime;
-    }
-
     public void setFromname(String fromname) {
         this.fromname = fromname;
     }

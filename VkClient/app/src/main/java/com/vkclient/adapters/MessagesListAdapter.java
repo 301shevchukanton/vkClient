@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.vkclient.entities.Message;
 import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
+import com.vkclient.supports.JsonResponseParser;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class MessagesListAdapter extends ArrayAdapter<Message> {
         catch (Exception e) {
 
         }
-        String Date  = msg.getParsedDate().toString("dd.MM - HH:mm");
+        String Date  = JsonResponseParser.getParsedDate(msg.getDate()).toString("dd.MM - HH:mm");
         ((TextView) view.findViewById(R.id.tvSingleDialogDate)).setText(Date);
         ((TextView) view.findViewById(R.id.tvSingleDialogText)).setText(msg.getBody());
         return view;

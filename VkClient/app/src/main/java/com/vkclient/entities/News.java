@@ -79,12 +79,7 @@ public class News {
     public String getText() {
         return text;
     }
-    public DateTime getParsedDate()
-    {
-        DateTime dateTime = new DateTime( ( this.date * 1000L + TimeZone.getDefault().getRawOffset()));
 
-        return dateTime;
-    }
 
     public void setSourceName(String sourceName) {
         this.sourceName = sourceName;
@@ -108,7 +103,8 @@ public class News {
                 source = newsFeedObject.getJSONObject("response").getJSONArray("groups");
                 this.setSourceId(this.getSourceId().replace("-", ""));
                 for (int i = 0; i < source.length(); i++) {
-                    if (source.getJSONObject(i).getString("id").equals(this.getSourceId())) {
+                    if (source.getJSONObject(i).getString("id").equals(this.getSourceId()))
+                    {
                         this.setSourceName(source.getJSONObject(i).getString("name"));
                         this.setPhoto(source.getJSONObject(i).getString("photoLink_200"));
                     }
@@ -122,7 +118,8 @@ public class News {
             try {
             source = newsFeedObject.getJSONObject("response").getJSONArray("profiles");
             for(int i = 0; i < source.length(); i++){
-                if(source.getJSONObject(i).getString("id").equals(this.getSourceId())) {
+                if(source.getJSONObject(i).getString("id").equals(this.getSourceId()))
+                {
                     this.setSourceName(source.getJSONObject(i).getString("first_name") + " "
                             + source.getJSONObject(i).getString("last_name"));
                     this.setPhoto(source.getJSONObject(i).getString("photo_100"));

@@ -5,9 +5,12 @@ import com.vkclient.entities.Message;
 import com.vkclient.entities.News;
 import com.vkclient.entities.User;
 
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.TimeZone;
 
 public class JsonResponseParser {
     private JSONObject object;
@@ -107,6 +110,9 @@ public class JsonResponseParser {
         result.setLangs(User.getLangs(r));
         return result;
     }
-
+    public static DateTime getParsedDate(long date) {
+        DateTime dateTime = new DateTime(date * 1000L + TimeZone.getDefault().getRawOffset());
+        return dateTime;
+    }
 }
 
