@@ -76,7 +76,7 @@ public class ProfileActivity extends VkSdkActivity {
             findViewById(id).setVisibility(View.GONE);
         }
         private void setLayoutState(String data, int viewId, int layoutId){
-            if(data!=null) setViewText(viewId, data);
+            if(data!=null&&!data.equals("")) setViewText(viewId, data);
             else hideLayout(layoutId);
         }
         private void setLayoutState(String data, int viewId){
@@ -90,11 +90,12 @@ public class ProfileActivity extends VkSdkActivity {
             setLayoutState(u.getCity(),R.id.tvProfileTown,R.id.llHomeTown);
             setLayoutState(u.getRelationship(),R.id.tvRelationship,R.id.llRelationships);
             setLayoutState(u.getUnivers(), R.id.tvStudiedAt, R.id.llStudiedAt);
-            setLayoutState(u.getLangs(), R.id.tvLanguages,R.id.llLanguages);
+            setLayoutState(u.getLangs(), R.id.tvLanguages, R.id.llLanguages);
         }
         private void setUserInfo(VKResponse response) {
             try {
                 JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
+                Loger.logDebug("responseshit",response.json.getString("response"));
                 User user = JsonResponseParser.parseUserFromJSON(r);
                 setLayoutsVisibility(user);
                 profileId = String.valueOf(user.getId());

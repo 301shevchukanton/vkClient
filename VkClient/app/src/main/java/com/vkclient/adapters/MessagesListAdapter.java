@@ -11,6 +11,7 @@ import com.vkclient.entities.Message;
 import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
 import com.vkclient.supports.JsonResponseParser;
+import com.vkclient.supports.PhotoLoader;
 
 import java.util.List;
 
@@ -32,16 +33,11 @@ public class MessagesListAdapter extends ArrayAdapter<Message> {
         try {
         if(msg.getUser_id()==msg.getFrom_id())
         {
-            Picasso.with(getContext())
-                    .load(msg.getUserPhotoLink_200())
-                    .into(photo);
+            PhotoLoader.loadPhoto(getContext(), msg.getUserPhotoLink_200(), photo);
         }
         else
         {
-                Picasso.with(getContext())
-                        .load(msg.getFromPhotoLink_200())
-                        .into(photo);
-
+            PhotoLoader.loadPhoto(getContext(), msg.getFromPhotoLink_200(), photo);
         }}
         catch (Exception e) {
 

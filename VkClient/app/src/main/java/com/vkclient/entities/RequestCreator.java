@@ -39,6 +39,18 @@ public class RequestCreator {
     {
         return new VKRequest("messages.getDialogs", VKParameters.from(VKApiConst.COUNT, "30", "preview_length", "50"), VKRequest.HttpMethod.GET);
     }
+    public static VKRequest likePost(String ownerId, String itemId)
+    {
+        return new VKRequest("likes.add", VKParameters.from("type", "post", "owner_id", ownerId, "item_id", itemId), VKRequest.HttpMethod.GET);
+    }
+    public static VKRequest dislikePost(String ownerId, String itemId)
+    {
+        return new VKRequest("likes.delete", VKParameters.from("type", "post", "owner_id", ownerId, "item_id", itemId), VKRequest.HttpMethod.GET);
+    }
+    public static VKRequest postIsLiked(String ownerId, String itemId)
+    {
+        return new VKRequest("likes.isLiked", VKParameters.from("type", "post", "owner_id", ownerId, "item_id", itemId), VKRequest.HttpMethod.GET);
+    }
     public static VKRequest getFriends(String user_id)
     {
         return VKApi.friends().get(VKParameters.from(VKApiConst.USER_ID, user_id, "order", SORT_BY, VKApiConst.COUNT, FRIENDS_COUNT,  VKApiConst.FIELDS, REQUEST_PARAMS));

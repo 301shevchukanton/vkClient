@@ -1,5 +1,6 @@
 package com.vkclient.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
@@ -18,7 +19,7 @@ import com.vk.sdk.util.VKUtil;
 import com.vkclient.supports.AlertBuilder;
 import com.vkclient.supports.Loger;
 
-public class LoginActivity extends VkSdkActivity {
+public class LoginActivity extends Activity {
     final String APPLICATION_ID = "4929437";
     private Button signIn;
     private Button forceAuth;
@@ -43,7 +44,6 @@ public class LoginActivity extends VkSdkActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        super.onCreateDrawer();
         VKUIHelper.onCreate(this);
         VKSdk.initialize(this.sdkListener, this.APPLICATION_ID);
         String[] fingerprint = VKUtil.getCertificateFingerprint(this, this.getPackageName());
@@ -82,6 +82,21 @@ public class LoginActivity extends VkSdkActivity {
         }
     };
     private void startClientActivity() {
-        startActivity(new Intent(LoginActivity.this, ClientActivity.class));
+        startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        VKUIHelper.onResume(this);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        VKUIHelper.onDestroy(this);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        VKUIHelper.onActivityResult(this, requestCode, resultCode, data);
     }
 }

@@ -33,7 +33,7 @@
         <item>Messages</item>
         <item>Friends</item>
     </string-array>
-    <string name="title_activity_news">NewsActivity</string>
+    <string name="title_activity_news">News feed:</string>
     <string name="item1">Item1</string>
     <string name="item2">Item2</string>
     <string name="item3">Item3</string>
@@ -44,4 +44,5 @@
     <string name="name_input_hint">name:</string>
     <string name="default_name_text">Wait please!</string>
     <string name="loading_text">Loading</string>
+    <string name="not_set">not set</string>
 </resources>

@@ -127,7 +127,7 @@ public class User {
             }
         catch (JSONException e)
             {
-             return "-";
+             return "";
             }
     }
 

@@ -2,7 +2,9 @@ package com.vkclient.adapters;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -43,7 +45,7 @@ public class FriendListAdapter extends ArrayAdapter<User> {
          Picasso.with(getContext())
                 .load(user.getPhoto())
                 .into((ImageView)view.findViewById(R.id.ivFriendPhoto));
-        String birthDateStr = "Не задано";
+        String birthDateStr = String.valueOf(R.string.not_set);
         DateTime dt = user.getBirthDate();
         if (dt != null) {
             birthDateStr = dt.toString(DateTimeFormat.forPattern(user.getDateFormat()));
@@ -51,5 +53,6 @@ public class FriendListAdapter extends ArrayAdapter<User> {
         ((TextView) view.findViewById(R.id.tvFriendBirthDate)).setText(birthDateStr);
         return view;
     }
+
 }
 

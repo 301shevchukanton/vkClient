@@ -79,7 +79,7 @@ public class News extends AbstractContentEntity {
                     if (source.getJSONObject(i).getString("id").equals(this.getSourceId()))
                     {
                         this.setSourceName(source.getJSONObject(i).getString("name"));
-                        this.setUserPhotoLink_200(source.getJSONObject(i).getString("userPhotoLink_200"));
+                        this.setUserPhotoLink_200(source.getJSONObject(i).getString("photo_200"));
                     }
                 }
             }

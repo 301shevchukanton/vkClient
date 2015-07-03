@@ -12,6 +12,7 @@ import com.vkclient.entities.Dialog;
 import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
 import com.vkclient.supports.JsonResponseParser;
+import com.vkclient.supports.PhotoLoader;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -38,9 +39,7 @@ public class DialogsListAdapter extends ArrayAdapter<Dialog> {
         text.setBackgroundColor(!dialog.getReadState() ? Color.LTGRAY : Color.TRANSPARENT);
     if ((!dialog.getUserPhotoLink_200().isEmpty()) && dialog.getUserPhotoLink_200() != null)
     {
-        Picasso.with(getContext())
-                .load(dialog.getUserPhotoLink_200())
-                .into(((ImageView) view.findViewById(R.id.ivDialogPhoto)));
+        PhotoLoader.loadPhoto(getContext(),dialog.getUserPhotoLink_200(),(ImageView) view.findViewById(R.id.ivDialogPhoto));
     }
         return view;
 

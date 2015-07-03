@@ -11,6 +11,8 @@ import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
 import com.vkclient.entities.News;
 import com.vkclient.supports.JsonResponseParser;
+import com.vkclient.supports.PhotoLoader;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 import java.util.List;
 
@@ -36,9 +38,7 @@ public class NewsListAdapter extends ArrayAdapter<News> {
         text.setText(post.getText());
         if ((!post.getUserPhotoLink_200().isEmpty()) && post.getUserPhotoLink_200() != null)
         {
-            Picasso.with(getContext())
-                    .load(post.getUserPhotoLink_200())
-                    .into(((ImageView) view.findViewById(R.id.ivPostSourcePhoto)));
+            PhotoLoader.loadPhoto(getContext(),post.getUserPhotoLink_200(),(ImageView) view.findViewById(R.id.ivPostSourcePhoto));
         }
         return view;
     }

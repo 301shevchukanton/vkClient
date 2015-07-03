@@ -8,13 +8,13 @@ public abstract class AbstractRequestListener extends VKRequest.VKRequestListene
     @Override
     public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
         super.attemptFailed(request, attemptNumber, totalAttempts);
-        Loger.logDebug("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
+        Loger.logError("VkDemoApp", "attemptFailed " + request + " " + attemptNumber + " " + totalAttempts);
     }
 
     @Override
     public void onError(VKError error) {
         super.onError(error);
-        Loger.logDebug("VkDemoApp", "onError: " + error);
+        Loger.logError("VkDemoApp", "onError: " + error);
     }
 
     @Override
