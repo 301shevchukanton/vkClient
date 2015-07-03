@@ -7,21 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
-import com.vkclient.activities.FriendsListActivity;
-import com.vkclient.activities.PhotoViewActivity;
-import com.vkclient.entities.Dialog;
 import com.vkclient.entities.News;
-import com.vkclient.entities.User;
 import com.vkclient.supports.JsonResponseParser;
-
 import net.danlew.android.joda.JodaTimeAndroid;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-
 import java.util.List;
 
 
@@ -44,9 +34,10 @@ public class NewsListAdapter extends ArrayAdapter<News> {
         ((TextView)view.findViewById(R.id.tvSharesCount)).setText(post.getRepostsCount());
         photo.setImageResource(R.drawable.ic_user100);
         text.setText(post.getText());
-        if ((!post.getGetPhoto().isEmpty()) && post.getGetPhoto() != null) {
+        if ((!post.getUserPhotoLink_200().isEmpty()) && post.getUserPhotoLink_200() != null)
+        {
             Picasso.with(getContext())
-                    .load(post.getGetPhoto())
+                    .load(post.getUserPhotoLink_200())
                     .into(((ImageView) view.findViewById(R.id.ivPostSourcePhoto)));
         }
         return view;

@@ -1,40 +1,25 @@
 package com.vkclient.entities;
 
-import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.TimeZone;
-
-public class News {
+public class News extends AbstractContentEntity {
     private String sourceId;
-    private final long date;
     private String postId;
     private String postType;
     private String type;
     private String text;
     private String sourceName="";
-    private String photoLink_200 ="";
     private String likesCount="";
     private String repostsCount="";
-    public News(String type, String sourceId, long date, String postId, String postType)
-    {
+    public News(String type, String sourceId, long date, String postId, String postType) {
         this.sourceId=sourceId;
         this.postId=postId;
         this.date=date;
         this.type=type;
         this.postType=postType;
     }
-    public News()
-    {
-        this.sourceId="";
-        this.postId="";
-        this.date=0;
-        this.type="";
-        this.postType="";
-    }
-
 
     public void setSourceId(String sourceId) {
         this.sourceId = sourceId;
@@ -42,10 +27,6 @@ public class News {
 
     public String getSourceId() {
         return sourceId;
-    }
-
-    public long getDate() {
-        return date;
     }
 
     public void setPostId(String postId) {
@@ -80,7 +61,6 @@ public class News {
         return text;
     }
 
-
     public void setSourceName(String sourceName) {
         this.sourceName = sourceName;
     }
@@ -88,15 +68,8 @@ public class News {
     public String getSourceName() {
         return sourceName;
     }
-    public void setPhoto(String photo){
-        this.photoLink_200 =photo;
-    }
-    public String getGetPhoto(){
-        return this.photoLink_200;
-    }
 
-    public void getPostSourceDate(JSONObject newsFeedObject)
-    {
+    public void getPostSourceDate(JSONObject newsFeedObject) {
         JSONArray source;
         if(this.getSourceId().contains("-")) {
             try {
@@ -106,7 +79,7 @@ public class News {
                     if (source.getJSONObject(i).getString("id").equals(this.getSourceId()))
                     {
                         this.setSourceName(source.getJSONObject(i).getString("name"));
-                        this.setPhoto(source.getJSONObject(i).getString("photoLink_200"));
+                        this.setUserPhotoLink_200(source.getJSONObject(i).getString("userPhotoLink_200"));
                     }
                 }
             }
@@ -122,7 +95,7 @@ public class News {
                 {
                     this.setSourceName(source.getJSONObject(i).getString("first_name") + " "
                             + source.getJSONObject(i).getString("last_name"));
-                    this.setPhoto(source.getJSONObject(i).getString("photo_100"));
+                    this.setUserPhotoLink_200(source.getJSONObject(i).getString("photo_100"));
                 }
             }
             }

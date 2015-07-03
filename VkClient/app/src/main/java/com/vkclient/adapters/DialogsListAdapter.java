@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.vkclient.entities.Dialog;
 import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
+import com.vkclient.supports.JsonResponseParser;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -31,14 +32,14 @@ public class DialogsListAdapter extends ArrayAdapter<Dialog> {
         final Dialog dialog = getItem(position);
         ((TextView) view.findViewById(R.id.tvDialogName)).setText(dialog.getUsername());
 
-        ((TextView) view.findViewById(R.id.tvDialogDate)).setText(dialog.getParsedDate().toString("dd.MM - HH:mm"));
+        ((TextView) view.findViewById(R.id.tvDialogDate)).setText(JsonResponseParser.getParsedDate(dialog.getDate()).toString("dd.MM - HH:mm"));
         photo.setImageResource(R.drawable.ic_user100);
         text.setText(dialog.getBody());
         text.setBackgroundColor(!dialog.getReadState() ? Color.LTGRAY : Color.TRANSPARENT);
-    if ((!dialog.getGetPhoto().isEmpty()) && dialog.getGetPhoto() != null)
+    if ((!dialog.getUserPhotoLink_200().isEmpty()) && dialog.getUserPhotoLink_200() != null)
     {
         Picasso.with(getContext())
-                .load(dialog.getGetPhoto())
+                .load(dialog.getUserPhotoLink_200())
                 .into(((ImageView) view.findViewById(R.id.ivDialogPhoto)));
     }
         return view;

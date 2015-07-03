@@ -1,21 +1,7 @@
 package com.vkclient.entities;
 
-import org.joda.time.DateTime;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.TimeZone;
-
-public class Dialog {
-    private final int id;
-    private final long date;
-    private final int user_id;
-    private final boolean readState;
+public class Dialog extends AbstractContentEntity{
     private final String title;
-    private final String body;
-    private String photoLink_200 ="";
-    private  String username="";
-
     public Dialog(int id, long date, int user_id, boolean readState, String title, String body){
         this.id = id;
         this.date=date;
@@ -25,46 +11,7 @@ public class Dialog {
         this.body=body;
     }
 
-    public int getId() {
-        return this.id;
-    }
-
-    public long getDate() {
-        return this.date;
-    }
-
-    public int getUser_id() {
-        return this.user_id;
-    }
-
-    public boolean getReadState() {
-        return this.readState;
-    }
-
     public String getTitle() {
         return this.title;
     }
-
-    public String getBody() {
-        return this.body;
-    }
-    public  DateTime getParsedDate()
-    {
-        DateTime dateTime = new DateTime( ( this.date * 1000L + TimeZone.getDefault().getRawOffset()));
-
-        return dateTime;
-    }
-    public void setUsername(String name){
-        this.username=name;
-    }
-    public String getUsername(){
-       return this.username;
-    }
-    public void setPhoto(String photo){
-        this.photoLink_200 =photo;
-    }
-    public String getGetPhoto(){
-        return this.photoLink_200;
-    }
-
 }

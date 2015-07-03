@@ -102,7 +102,7 @@ public class DialogsActivity extends VkSdkActivity {
             for(int i=0;i<responses.length;i++) {
                 JsonResponseParser userParser = new JsonResponseParser(responses[i].json);
                 dialogs.get(i).setUsername(userParser.getUserName());
-                if(userParser.photoAvailable()) dialogs.get(i).setPhoto(userParser.getPhoto());
+                if(userParser.photoAvailable()) dialogs.get(i).setUserPhotoLink_200(userParser.getPhoto());
             }
             listAdapter.notifyDataSetChanged();
         }
