@@ -15,8 +15,8 @@ import java.util.TimeZone;
 
 public class Message extends AbstractContentEntity {
     private final int from_id;
-    private String fromPhotoLink_200 ="";
-    private  String fromname="";
+    private String fromPhotoLink_200 = "";
+    private  String fromname = "";
     public Message(int mId, int mUser_id, int mFrom_id, long mDate, boolean mReadState, String mBody) {
         id = mId;
         user_id = mUser_id;
@@ -53,9 +53,8 @@ public class Message extends AbstractContentEntity {
     public static final class SendMessageListener extends VKRequest.VKRequestListener
     {
         private TextView msgView;
-        public SendMessageListener(TextView msgView)
-        {
-            this.msgView=msgView;
+        public SendMessageListener(TextView msgView) {
+            this.msgView = msgView;
         }
         @Override
         public void onComplete(VKResponse response) {

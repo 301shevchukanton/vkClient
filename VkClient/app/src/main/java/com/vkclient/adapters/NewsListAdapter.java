@@ -19,8 +19,7 @@ import java.util.List;
 
 public class NewsListAdapter extends ArrayAdapter<News> {
 
-    public NewsListAdapter(Context context, List<News> models)
-    {
+    public NewsListAdapter(Context context, List<News> models) {
         super(context, R.layout.news_list_item, R.id.tvPostSource, models);
         JodaTimeAndroid.init(context);
     }
@@ -36,9 +35,8 @@ public class NewsListAdapter extends ArrayAdapter<News> {
         ((TextView)view.findViewById(R.id.tvSharesCount)).setText(post.getRepostsCount());
         photo.setImageResource(R.drawable.ic_user100);
         text.setText(post.getText());
-        if ((!post.getUserPhotoLink_200().isEmpty()) && post.getUserPhotoLink_200() != null)
-        {
-            PhotoLoader.loadPhoto(getContext(),post.getUserPhotoLink_200(),(ImageView) view.findViewById(R.id.ivPostSourcePhoto));
+        if ((!post.getUserPhotoLink_200().isEmpty()) && post.getUserPhotoLink_200() != null) {
+            PhotoLoader.loadPhoto(getContext(), post.getUserPhotoLink_200(), photo);
         }
         return view;
     }

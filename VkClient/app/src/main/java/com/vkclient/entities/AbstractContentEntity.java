@@ -5,8 +5,8 @@ public abstract class AbstractContentEntity {
     protected long date;
     protected int user_id;
     protected String body;
-    protected  String username="";
-    protected String userPhotoLink_200 ="";
+    protected  String username = "";
+    protected String userPhotoLink_200 = "";
     protected boolean readState;
 
     protected AbstractContentEntity(int id, long date, int user_id, String body, boolean readState) {
@@ -16,14 +16,14 @@ public abstract class AbstractContentEntity {
         this.body = body;
         this.readState = readState;
     }
-    protected AbstractContentEntity()
-    {
+    protected AbstractContentEntity() {
         this.id = 0;
         this.date = 0;
         this.user_id = 0;
         this.body = null;
         this.readState = false;
     }
+
     public int getId() {
         return id;
     }
@@ -31,6 +31,7 @@ public abstract class AbstractContentEntity {
     public int getUser_id() {
         return user_id;
     }
+
     public long getDate() {
         return date;
     }

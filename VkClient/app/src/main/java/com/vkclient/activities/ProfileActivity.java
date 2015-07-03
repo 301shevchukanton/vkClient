@@ -41,8 +41,7 @@ public class ProfileActivity extends VkSdkActivity {
         findViewById(R.id.ivProfilePhoto).setOnClickListener(profileClickListener);
     }
 
-    private void startActivityCall(Class <?> cls)
-    {
+    private void startActivityCall(Class <?> cls) {
         Intent i = new Intent(this, cls);
         i.putExtra("id", profileId);
         startActivity(i);
@@ -67,12 +66,10 @@ public class ProfileActivity extends VkSdkActivity {
             Loger.logDebug("profid", "onComplete " + response);
             setUserInfo(response);
         }
-        private void setViewText(int id, String text)
-        {
+        private void setViewText(int id, String text) {
             ((TextView) findViewById(id)).setText(text);
         }
-        private void hideLayout(int id)
-        {
+        private void hideLayout(int id) {
             findViewById(id).setVisibility(View.GONE);
         }
         private void setLayoutState(String data, int viewId, int layoutId){
@@ -82,8 +79,7 @@ public class ProfileActivity extends VkSdkActivity {
         private void setLayoutState(String data, int viewId){
             if(data!=null) setViewText(viewId, data);
         }
-        private void setLayoutsVisibility(User u)
-        {
+        private void setLayoutsVisibility(User u){
             setLayoutState(u.getName(),R.id.tvProfileName);
             setLayoutState(u.getStatus(),R.id.tvProfileStatus);
             setLayoutState(u.getBdDateString(),R.id.tvProfileBirthDate,R.id.llBirthDate);

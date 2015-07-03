@@ -20,10 +20,10 @@ public class JsonResponseParser {
         this.object=object;
     }
     public void parseMessages() throws JSONException {
-        this.messagesArray=this.object.getJSONObject("response").getJSONArray("items");
+        this.messagesArray = this.object.getJSONObject("response").getJSONArray("items");
     }
     public void parsePosts() throws JSONException {
-        this.postsArray=this.object.getJSONObject("response").getJSONArray("items");
+        this.postsArray = this.object.getJSONObject("response").getJSONArray("items");
     }
     public JSONObject getMessage(int i) throws JSONException {
         return this.messagesArray.getJSONObject(i).getJSONObject("message");
@@ -65,7 +65,7 @@ public class JsonResponseParser {
                 messageJSON.getString("body"));
     }
     public static Dialog parseDialog(JSONObject object){
-        Dialog result=null;
+        Dialog result = null;
         try{
             result = new Dialog(Integer.parseInt(object.getString("id")),
                     Long.parseLong(object.getString("date")),
@@ -99,8 +99,9 @@ public class JsonResponseParser {
     public static User parseUserFromJSON(JSONObject r) throws JSONException {
         User result = new User();
         result.setId(Integer.parseInt(r.getString("id")));
-        if (r.getString("last_name") != null && r.getString("first_name") != null)
+        if (r.getString("last_name") != null && r.getString("first_name") != null){
             result.setName(r.getString("first_name") + " " + r.getString("last_name"));
+        }
         if(r.has("status"))result.setStatus(r.getString("status"));
         if(r.has("bdate")) result.setBdDateString(r.getString("bdate"));
         if(r.has("city")) result.setCity(r.getJSONObject("city").getString("title"));

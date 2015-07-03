@@ -16,6 +16,7 @@ import com.vkclient.activities.FriendsListActivity;
 import com.vkclient.activities.PhotoViewActivity;
 import com.vkclient.entities.User;
 import com.squareup.picasso.Picasso;
+import com.vkclient.supports.PhotoLoader;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -25,26 +26,25 @@ public class FriendListAdapter extends ArrayAdapter<User> {
     public Object getItems() {
         return mModels;
     }
-    public FriendListAdapter(Context context, List<User> models)
-    {
+    public FriendListAdapter(Context context, List<User> models) {
         super(context, R.layout.friends_list_item, R.id.tvFriendName, models);
         mModels = models;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
+        ImageView friendPhoto = (ImageView) view.findViewById(R.id.ivFriendPhoto);
         final User user = getItem(position);
         ((TextView) view.findViewById(R.id.tvFriendName)).setText(user.getName());
-        view.findViewById(R.id.ivFriendPhoto).setOnClickListener(new ImageView.OnClickListener() {
-            public void onClick(View v) {
-                ((FriendsListActivity)getContext()).startApiCall(PhotoViewActivity.class, String.valueOf(user.getId()));
-            }
-        }
+        friendPhoto.setOnClickListener(
+                new ImageView.OnClickListener() {
+                     public void onClick(View v) {
+                         ((FriendsListActivity) getContext()).startApiCall(PhotoViewActivity.class, String.valueOf(user.getId()));
+                     }
+                }
         );
-                ((ImageView) view.findViewById(R.id.ivFriendPhoto)).setImageResource(R.drawable.ic_user100);
-         Picasso.with(getContext())
-                .load(user.getPhoto())
-                .into((ImageView)view.findViewById(R.id.ivFriendPhoto));
+        friendPhoto.setImageResource(R.drawable.ic_user100);
+        PhotoLoader.loadPhoto(getContext(), user.getPhoto(), friendPhoto);
         String birthDateStr = String.valueOf(R.string.not_set);
         DateTime dt = user.getBirthDate();
         if (dt != null) {

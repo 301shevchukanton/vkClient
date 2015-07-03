@@ -25,25 +25,25 @@ public class User {
         this.name = null;
         this.birthDate = null;
         this.dateFormat = null;
-        this.photo=null;
-        this.photoMax=null;
-        this.id=1;
+        this.photo = null;
+        this.photoMax = null;
+        this.id = 1;
     }
     public User(int id,String name, DateTime birthDate, String dateFormat) {
         this.name = name;
         this.birthDate = birthDate;
         this.dateFormat = dateFormat;
-        this.photo=null;
-        this.id=id;
+        this.photo = null;
+        this.id = id;
     }
 
     public User(int id,String name, DateTime birthDate, String photo, String photoMax, String dateFormat ) {
         this.name = name;
         this.birthDate = birthDate;
         this.dateFormat = dateFormat;
-        this.photo=photo;
-        this.photoMax=photoMax;
-        this.id=id;
+        this.photo = photo;
+        this.photoMax = photoMax;
+        this.id = id;
     }
 
     public void setId(int id) {

@@ -41,7 +41,6 @@ public class NewsActivity extends VkSdkActivity {
         else if (VKSdk.wakeUpSession()) {
             startLoading();
         }
-       // this.listView.setOnItemClickListener(this.dialogClickListener);
         this.listAdapter = new NewsListAdapter(this,this.news);
         this.listView.setAdapter(this.listAdapter);
     }

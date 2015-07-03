@@ -113,6 +113,7 @@ public class WallPostActivity extends VkSdkActivity
             makePost(this.msg);
         }
     }
+
     private AbstractRequestListener uploadPhotoRequestListener = new AbstractRequestListener() {
         @Override
         public void onComplete(VKResponse response) {
@@ -125,6 +126,7 @@ public class WallPostActivity extends VkSdkActivity
             showError(error);
         }
     };
+
     private AbstractRequestListener userFullRequestListener = new AbstractRequestListener() {
         @Override
         public void onComplete(VKResponse response) {

@@ -105,7 +105,9 @@ public class DialogsActivity extends VkSdkActivity {
             for(int i=0;i<responses.length;i++) {
                 JsonResponseParser userParser = new JsonResponseParser(responses[i].json);
                 dialogs.get(i).setUsername(userParser.getUserName());
-                if(userParser.photoAvailable()) dialogs.get(i).setUserPhotoLink_200(userParser.getPhoto());
+                if(userParser.photoAvailable()) {
+                    dialogs.get(i).setUserPhotoLink_200(userParser.getPhoto());
+                }
             }
             listAdapter.notifyDataSetChanged();
         }
@@ -125,17 +127,14 @@ public class DialogsActivity extends VkSdkActivity {
         }
     };
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_messages, menu);
         return true;
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.refresh_messages: startLoading();
                 return true;
             default:

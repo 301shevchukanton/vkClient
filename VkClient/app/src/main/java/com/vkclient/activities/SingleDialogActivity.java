@@ -71,8 +71,7 @@ public class SingleDialogActivity extends VkSdkActivity {
         this.currentRequest  = new VKRequest ("messages.getHistory", VKParameters.from(VKApiConst.COUNT, this.COUNT, VKApiConst.USER_ID, this.profileId), VKRequest.HttpMethod.GET);
         this.currentRequest.executeWithListener(new GetHistoryRequest());
     }
-    final class GetHistoryRequest extends AbstractRequestListener
-    {
+    final class GetHistoryRequest extends AbstractRequestListener {
         @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
@@ -84,8 +83,9 @@ public class SingleDialogActivity extends VkSdkActivity {
                     messages.add(JsonResponseParser.parseMessageFromJSON(messagesArray.getJSONObject(i)));
                     ownRequest = RequestCreator.getUserById(messagesArray.getJSONObject(i).getString("user_id"));
                     if (!messagesArray.getJSONObject(i).getString("user_id").equals(
-                            messagesArray.getJSONObject(i).getString("from_id")))
+                            messagesArray.getJSONObject(i).getString("from_id"))) {
                         fromRequest = RequestCreator.getUserById(messagesArray.getJSONObject(i).getString("from_id"));
+                    }
                 }
                 if (ownRequest != null) ownRequestExecution(ownRequest, messagesArray.length());
                 if (fromRequest != null)fromRequestExecution(fromRequest, messagesArray.length());
@@ -103,11 +103,9 @@ public class SingleDialogActivity extends VkSdkActivity {
             request.executeWithListener(new SingleDialogFromRequest(arrayLength));
         }
     }
-    final class SingleDialogOwnerRequest extends AbstractRequestListener
-    {
+    final class SingleDialogOwnerRequest extends AbstractRequestListener {
         private int arrayLength;
-        public SingleDialogOwnerRequest(int length)
-        {
+        public SingleDialogOwnerRequest(int length) {
             this.arrayLength=length;
         }
         @Override
@@ -129,11 +127,9 @@ public class SingleDialogActivity extends VkSdkActivity {
             }
         }
     }
-    final class SingleDialogFromRequest extends AbstractRequestListener
-    {
+    final class SingleDialogFromRequest extends AbstractRequestListener {
         private int arrayLength;
-        public SingleDialogFromRequest(int length)
-        {
+        public SingleDialogFromRequest(int length){
             this.arrayLength=length;
         }
         @Override
@@ -155,13 +151,10 @@ public class SingleDialogActivity extends VkSdkActivity {
             }
         }
     }
-    public final class SingleDialogClickListener implements View.OnClickListener
-    {
+    public final class SingleDialogClickListener implements View.OnClickListener {
         @Override
-        public void onClick(final View v)
-        {
-            if(v==findViewById(R.id.btSendDialogMessage))
-            {
+        public void onClick(final View v) {
+            if(v==findViewById(R.id.btSendDialogMessage)) {
                 Message.sendMessage((TextView) findViewById(R.id.etMessageText), profileId);
                 try {
                     Thread.sleep(50,0);
