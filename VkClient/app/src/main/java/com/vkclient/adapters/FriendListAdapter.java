@@ -26,6 +26,15 @@ public class FriendListAdapter extends ArrayAdapter<User> {
     public Object getItems() {
         return mModels;
     }
+    public interface OnPhotoClickListener {
+        void onClick(String photoUrl);
+    }
+    private OnPhotoClickListener photoClickListener;
+
+    public void setOnPhotoClickListener(OnPhotoClickListener photoClickListener) {
+        this.photoClickListener = photoClickListener;
+    }
+
     public FriendListAdapter(Context context, List<User> models) {
         super(context, R.layout.friends_list_item, R.id.tvFriendName, models);
         mModels = models;
@@ -39,7 +48,9 @@ public class FriendListAdapter extends ArrayAdapter<User> {
         friendPhoto.setOnClickListener(
                 new ImageView.OnClickListener() {
                      public void onClick(View v) {
-                         ((FriendsListActivity) getContext()).startApiCall(PhotoViewActivity.class, String.valueOf(user.getId()));
+                         if (FriendListAdapter.this.photoClickListener != null) {
+                             photoClickListener.onClick(String.valueOf(user.getId()));
+                         }
                      }
                 }
         );

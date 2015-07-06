@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -59,8 +60,10 @@ public class FriendsListActivity extends VkSdkActivity {
         }
         this.listAdapter = new FriendListAdapter(this,this.users);
         this.friendsList.setOnItemClickListener(this.friendClickListener);
-        this.friendsList.setAdapter(this.listAdapter);
+        listAdapter.setOnPhotoClickListener(photoClickListener);
+                this.friendsList.setAdapter(this.listAdapter);
     }
+
     private TextWatcher filterTextWatcher = new TextWatcher() {
 
         public void afterTextChanged(Editable s) {
@@ -75,22 +78,20 @@ public class FriendsListActivity extends VkSdkActivity {
             List<User> temp = new ArrayList<User>();
             int textlength = filterText.getText().length();
             temp.clear();
-            for (int i = 0; i < users.size(); i++)
-            {
-                if (textlength <= users.get(i).getName().length())
-                {
-                    if(filterText.getText().toString().equalsIgnoreCase(
+            for (int i = 0; i < users.size(); i++) {
+                if (textlength <= users.get(i).getName().length()) {
+                    if (filterText.getText().toString().equalsIgnoreCase(
                             (String)
                                     users.get(i).getName().subSequence(0,
-                                            textlength)))
-                    {
-                            temp.add(users.get(i));
+                                            textlength))) {
+                        temp.add(users.get(i));
                     }
                 }
             }
             friendsList.setAdapter(listAdapter = new FriendListAdapter(FriendsListActivity.this, temp));
         }
     };
+
     private void startLoading() {
         if (this.currentRequest != null) {
             this.currentRequest.cancel();
@@ -98,11 +99,13 @@ public class FriendsListActivity extends VkSdkActivity {
         this.currentRequest = RequestCreator.getFriends(profileId);
         this.currentRequest.executeWithListener(this.getFriendsRequestListener);
     }
+
     private void startUserApiCall(int id) {
         Intent i = new Intent(this, ProfileActivity.class);
         i.putExtra("id", String.valueOf(id));
         startActivity(i);
     }
+
     private final AdapterView.OnItemClickListener friendClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view,
                                 int position, long id) {
@@ -139,12 +142,12 @@ public class FriendsListActivity extends VkSdkActivity {
                         }
                     }
                 }
-                users.add(setUser(userFull,birthDate,format));
+                users.add(setUser(userFull, birthDate, format));
             }
             listAdapter.notifyDataSetChanged();
         }
-        private User setUser(VKApiUserFull userFull, DateTime birthDate,String format)
-        {
+
+        private User setUser(VKApiUserFull userFull, DateTime birthDate, String format) {
             User user = new User();
             user.setId(userFull.id);
             user.setName(userFull.toString());
@@ -154,9 +157,16 @@ public class FriendsListActivity extends VkSdkActivity {
             return user;
         }
     };
-    public void startApiCall(Class <?> cls,String date){
-        Intent i = new Intent(this, cls);
-        i.putExtra("photo",date);
+
+    public void startPhotoViewCall(String userId) {
+        Intent i = new Intent(this, PhotoViewActivity.class);
+        i.putExtra("photo", userId);
         startActivity(i);
     }
+    private final FriendListAdapter.OnPhotoClickListener photoClickListener = new FriendListAdapter.OnPhotoClickListener() {
+        @Override
+        public void onClick(String userId) {
+           startPhotoViewCall(userId);
+        }
+    };
 }
