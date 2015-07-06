@@ -13,6 +13,7 @@ public class News extends AbstractContentEntity {
     private String sourceName = "";
     private String likesCount = "";
     private String repostsCount = "";
+
     public News(String type, String sourceId, long date, String postId, String postType) {
         this.sourceId = sourceId;
         this.postId = postId;
@@ -71,7 +72,7 @@ public class News extends AbstractContentEntity {
 
     public void getPostSourceDate(JSONObject newsFeedObject) {
         JSONArray source;
-        if(this.getSourceId().contains("-")) {
+        if (this.getSourceId().contains("-")) {
             try {
                 source = newsFeedObject.getJSONObject("response").getJSONArray("groups");
                 this.setSourceId(this.getSourceId().replace("-", ""));
@@ -81,23 +82,20 @@ public class News extends AbstractContentEntity {
                         this.setUserPhotoLink_200(source.getJSONObject(i).getString("photo_200"));
                     }
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            catch (JSONException e) {
-            e.printStackTrace();
-            }
-        }
-        else {
+        } else {
             try {
-            source = newsFeedObject.getJSONObject("response").getJSONArray("profiles");
-            for(int i = 0; i < source.length(); i++){
-                if(source.getJSONObject(i).getString("id").equals(this.getSourceId())) {
-                    this.setSourceName(source.getJSONObject(i).getString("first_name") + " "
-                            + source.getJSONObject(i).getString("last_name"));
-                    this.setUserPhotoLink_200(source.getJSONObject(i).getString("photo_100"));
+                source = newsFeedObject.getJSONObject("response").getJSONArray("profiles");
+                for (int i = 0; i < source.length(); i++) {
+                    if (source.getJSONObject(i).getString("id").equals(this.getSourceId())) {
+                        this.setSourceName(source.getJSONObject(i).getString("first_name") + " "
+                                + source.getJSONObject(i).getString("last_name"));
+                        this.setUserPhotoLink_200(source.getJSONObject(i).getString("photo_100"));
+                    }
                 }
-            }
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }

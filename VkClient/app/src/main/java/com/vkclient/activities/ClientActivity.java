@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKUIHelper;
 
@@ -23,24 +24,30 @@ public class ClientActivity extends VkSdkActivity {
         findViewById(R.id.btGetDialogs).setOnClickListener(clientClickListener);
         getSupportActionBar().hide();
     }
-    private void startApiCall(Class <?> cls){
+
+    private void startApiCall(Class<?> cls) {
         Intent i = new Intent(this, cls);
         startActivity(i);
     }
+
     private final View.OnClickListener clientClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.btGetFriends:{
+                case R.id.btGetFriends: {
                     startApiCall(FriendsListActivity.class);
-                    break;}
-                case R.id.btGetUserInfo:{
+                    break;
+                }
+                case R.id.btGetUserInfo: {
                     startApiCall(ProfileActivity.class);
-                    break;}
-                case R.id.btGetDialogs:{
+                    break;
+                }
+                case R.id.btGetDialogs: {
                     startApiCall(DialogsActivity.class);
-                    break;}
+                    break;
+                }
             }
-        }};
+        }
+    };
 
 }

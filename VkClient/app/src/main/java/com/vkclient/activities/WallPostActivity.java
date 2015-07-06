@@ -26,7 +26,7 @@ import com.vk.sdk.api.model.VKWallPostResult;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.supports.AlertBuilder;
-import com.vkclient.supports.Loger;
+import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 
 import org.json.JSONException;
@@ -36,15 +36,15 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 
-public class WallPostActivity extends VkSdkActivity
-{
+public class WallPostActivity extends VkSdkActivity {
     private VKRequest currentRequest;
     private Bitmap photo;
-    private Bitmap selectedBitmap=null;
+    private Bitmap selectedBitmap = null;
     protected String msg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        profileId=getIntent().getStringExtra("id");
+        profileId = getIntent().getStringExtra("id");
         startLoading();
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
@@ -57,40 +57,46 @@ public class WallPostActivity extends VkSdkActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-            if(resultCode == RESULT_OK&&requestCode==1){
-                Uri selectedImage = data.getData();
-                selectPhoto(selectedImage);
-            }
+        if (resultCode == RESULT_OK && requestCode == 1) {
+            Uri selectedImage = data.getData();
+            selectPhoto(selectedImage);
+        }
     }
+
     private void makePost(String message) {
         VKRequest post = VKApi.wall().post(VKParameters.from(VKApiConst.OWNER_ID, profileId, VKApiConst.MESSAGE, message));
         post.setModelClass(VKWallPostResult.class);
         post.executeWithListener(this.wallPostRequestListener);
     }
+
     private void makePost(VKAttachments attachments, String message) {
         VKRequest post = VKApi.wall().post(VKParameters.from(VKApiConst.OWNER_ID, profileId, VKApiConst.ATTACHMENTS, attachments, VKApiConst.MESSAGE, message));
         post.setModelClass(VKWallPostResult.class);
         post.executeWithListener(this.wallPostRequestListener);
     }
+
     private void showError(VKError error) {
         AlertBuilder.showErrorMessage(WallPostActivity.this, error.errorMessage);
         if (error.httpError != null) {
             Log.w("Test", "Error in request or upload", error.httpError);
         }
     }
+
     private void startLoading() {
         if (this.currentRequest != null) {
             this.currentRequest.cancel();
         }
-         Loger.logDebug("profid", "onComplete " + profileId);
+        Logger.logDebug("profid", "onComplete " + profileId);
         this.currentRequest = RequestCreator.getFullUserById(profileId);
         this.currentRequest.executeWithListener(this.userFullRequestListener);
     }
-    private void pickPhoto(){
+
+    private void pickPhoto() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, 1);
     }
+
     private void selectPhoto(Uri selectedImage) {
         InputStream imageStream;
         try {
@@ -101,15 +107,15 @@ public class WallPostActivity extends VkSdkActivity
             e.printStackTrace();
         }
     }
-    private void post(){
+
+    private void post() {
         this.msg = ((TextView) findViewById(R.id.post)).getText().toString();
         Toast.makeText(getApplicationContext(), "posted successful", Toast.LENGTH_LONG).show();
         ((TextView) findViewById(R.id.post)).setText("");
-        if(this.photo!=null){
-        VKRequest request = RequestCreator.uploadPhotoToUser(profileId, this.photo);
-        request.executeWithListener(this.uploadPhotoRequestListener);
-        }
-        else {
+        if (this.photo != null) {
+            VKRequest request = RequestCreator.uploadPhotoToUser(profileId, this.photo);
+            request.executeWithListener(this.uploadPhotoRequestListener);
+        } else {
             makePost(this.msg);
         }
     }
@@ -121,6 +127,7 @@ public class WallPostActivity extends VkSdkActivity
             VKApiPhoto photoModel = ((VKPhotoArray) response.parsedModel).get(0);
             makePost(new VKAttachments(photoModel), msg);
         }
+
         @Override
         public void onError(VKError error) {
             showError(error);
@@ -131,17 +138,17 @@ public class WallPostActivity extends VkSdkActivity
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
-            Loger.logDebug("profid", "onComplete " + response);
+            Logger.logDebug("profid", "onComplete " + response);
             setUserInfo(response);
         }
 
         private void setUserInfo(VKResponse response) {
             try {
-                Loger.logDebug("profid", "seting inf " + profileId);
+                Logger.logDebug("profid", "seting inf " + profileId);
                 JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
                 if (r.getString("last_name") != null && r.getString("first_name") != null)
                     ((TextView) findViewById(R.id.tvPostName)).setText(r.getString("first_name") + " " + r.getString("last_name"));
-                PhotoLoader.loadPhoto(getApplicationContext(),r.getString("photo_200"),(ImageView) findViewById(R.id.ivPostPhoto));
+                PhotoLoader.loadPhoto(getApplicationContext(), r.getString("photo_200"), (ImageView) findViewById(R.id.ivPostPhoto));
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());
             }
@@ -158,16 +165,15 @@ public class WallPostActivity extends VkSdkActivity
             showError(error.apiError != null ? error.apiError : error);
         }
     };
-    private View.OnClickListener wallPostClickListener  = new View.OnClickListener() {
+    private View.OnClickListener wallPostClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(final View v)
-        {
-            switch (v.getId()){
+        public void onClick(final View v) {
+            switch (v.getId()) {
                 case R.id.ibAddPhoto: {
                     pickPhoto();
                     break;
                 }
-                case R.id.btWallPost:{
+                case R.id.btWallPost: {
                     post();
                     break;
                 }

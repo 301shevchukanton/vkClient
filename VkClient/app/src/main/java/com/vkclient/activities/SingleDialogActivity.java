@@ -17,7 +17,7 @@ import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.supports.JsonResponseParser;
-import com.vkclient.supports.Loger;
+import com.vkclient.supports.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +28,7 @@ import java.util.List;
 
 
 public class SingleDialogActivity extends VkSdkActivity {
-    private final String COUNT="50";
+    private final String COUNT = "50";
     private ListView listView;
     private VKRequest currentRequest;
     private List<Message> messages = new ArrayList<>();
@@ -36,24 +36,25 @@ public class SingleDialogActivity extends VkSdkActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        profileId=getIntent().getStringExtra("userid");
-        Loger.logDebug("profid", "ic_user id taked" + profileId);
+        profileId = getIntent().getStringExtra("userid");
+        Logger.logDebug("profid", "ic_user id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_dialog);
         super.onCreateDrawer();
-        this.listView = (ListView)findViewById(R.id.lvSingleDialog);
+        this.listView = (ListView) findViewById(R.id.lvSingleDialog);
         VKUIHelper.onCreate(this);
         if (VKSdk.wakeUpSession()) {
             startLoading();
         }
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
-            this.messages =  ((ArrayList<Message>) items);
+            this.messages = ((ArrayList<Message>) items);
         }
-        this.listAdapter = new MessagesListAdapter(this,this.messages);
+        this.listAdapter = new MessagesListAdapter(this, this.messages);
         this.listView.setAdapter(this.listAdapter);
         findViewById(R.id.btSendDialogMessage).setOnClickListener(new SingleDialogClickListener());
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -68,9 +69,10 @@ public class SingleDialogActivity extends VkSdkActivity {
             this.currentRequest.cancel();
         }
         this.messages.clear();
-        this.currentRequest  = new VKRequest ("messages.getHistory", VKParameters.from(VKApiConst.COUNT, this.COUNT, VKApiConst.USER_ID, this.profileId), VKRequest.HttpMethod.GET);
+        this.currentRequest = new VKRequest("messages.getHistory", VKParameters.from(VKApiConst.COUNT, this.COUNT, VKApiConst.USER_ID, this.profileId), VKRequest.HttpMethod.GET);
         this.currentRequest.executeWithListener(new GetHistoryRequest());
     }
+
     final class GetHistoryRequest extends AbstractRequestListener {
         @Override
         public void onComplete(final VKResponse response) {
@@ -88,9 +90,8 @@ public class SingleDialogActivity extends VkSdkActivity {
                     }
                 }
                 if (ownRequest != null) ownRequestExecution(ownRequest, messagesArray.length());
-                if (fromRequest != null)fromRequestExecution(fromRequest, messagesArray.length());
-            }
-            catch (Exception e) {
+                if (fromRequest != null) fromRequestExecution(fromRequest, messagesArray.length());
+            } catch (Exception e) {
             }
             listAdapter.notifyDataSetChanged();
         }
@@ -103,11 +104,14 @@ public class SingleDialogActivity extends VkSdkActivity {
             request.executeWithListener(new SingleDialogFromRequest(arrayLength));
         }
     }
+
     final class SingleDialogOwnerRequest extends AbstractRequestListener {
         private int arrayLength;
+
         public SingleDialogOwnerRequest(int length) {
-            this.arrayLength=length;
+            this.arrayLength = length;
         }
+
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
@@ -127,11 +131,14 @@ public class SingleDialogActivity extends VkSdkActivity {
             }
         }
     }
+
     final class SingleDialogFromRequest extends AbstractRequestListener {
         private int arrayLength;
-        public SingleDialogFromRequest(int length){
-            this.arrayLength=length;
+
+        public SingleDialogFromRequest(int length) {
+            this.arrayLength = length;
         }
+
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
@@ -151,13 +158,14 @@ public class SingleDialogActivity extends VkSdkActivity {
             }
         }
     }
+
     public final class SingleDialogClickListener implements View.OnClickListener {
         @Override
         public void onClick(final View v) {
-            if(v==findViewById(R.id.btSendDialogMessage)) {
+            if (v == findViewById(R.id.btSendDialogMessage)) {
                 Message.sendMessage((TextView) findViewById(R.id.etMessageText), profileId);
                 try {
-                    Thread.sleep(50,0);
+                    Thread.sleep(50, 0);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

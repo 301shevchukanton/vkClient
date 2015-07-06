@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.podkaifom.vkclient.R;
 import com.squareup.picasso.Picasso;
 import com.vkclient.entities.News;
@@ -14,6 +15,7 @@ import com.vkclient.supports.JsonResponseParser;
 import com.vkclient.supports.PhotoLoader;
 
 import net.danlew.android.joda.JodaTimeAndroid;
+
 import java.util.List;
 
 
@@ -23,6 +25,7 @@ public class NewsListAdapter extends ArrayAdapter<News> {
         super(context, R.layout.news_list_item, R.id.tvPostSource, models);
         JodaTimeAndroid.init(context);
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final View view = super.getView(position, convertView, parent);
@@ -31,8 +34,8 @@ public class NewsListAdapter extends ArrayAdapter<News> {
         final News post = getItem(position);
         ((TextView) view.findViewById(R.id.tvPostSource)).setText(post.getSourceName());
         ((TextView) view.findViewById(R.id.tvPostDate)).setText(JsonResponseParser.getParsedDate(post.getDate()).toString("dd.MM - HH:mm"));
-        ((TextView)view.findViewById(R.id.tvLikesCount)).setText(post.getLikesCount());
-        ((TextView)view.findViewById(R.id.tvSharesCount)).setText(post.getRepostsCount());
+        ((TextView) view.findViewById(R.id.tvLikesCount)).setText(post.getLikesCount());
+        ((TextView) view.findViewById(R.id.tvSharesCount)).setText(post.getRepostsCount());
         photo.setImageResource(R.drawable.ic_user100);
         text.setText(post.getText());
         if ((!post.getUserPhotoLink_200().isEmpty()) && post.getUserPhotoLink_200() != null) {

@@ -8,7 +8,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,7 +22,7 @@ import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUserFull;
 import com.vk.sdk.api.model.VKUsersArray;
 import com.vkclient.entities.RequestCreator;
-import com.vkclient.supports.Loger;
+import com.vkclient.supports.Logger;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -42,12 +41,12 @@ public class FriendsListActivity extends VkSdkActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        profileId=getIntent().getStringExtra("id");
-        Loger.logDebug("profid", "profile id taked" + profileId);
+        profileId = getIntent().getStringExtra("id");
+        Logger.logDebug("profid", "profile id taked" + profileId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
         super.onCreateDrawer();
-        this.friendsList = (ListView)findViewById(R.id.lvFriends);
+        this.friendsList = (ListView) findViewById(R.id.lvFriends);
         this.filterText = (EditText) findViewById(R.id.etSearchFriends);
         this.filterText.addTextChangedListener(filterTextWatcher);
         VKUIHelper.onCreate(this);
@@ -56,12 +55,12 @@ public class FriendsListActivity extends VkSdkActivity {
         }
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
-            this.users =  ((ArrayList<User>) items);
+            this.users = ((ArrayList<User>) items);
         }
-        this.listAdapter = new FriendListAdapter(this,this.users);
+        this.listAdapter = new FriendListAdapter(this, this.users);
         this.friendsList.setOnItemClickListener(this.friendClickListener);
         listAdapter.setOnPhotoClickListener(photoClickListener);
-                this.friendsList.setAdapter(this.listAdapter);
+        this.friendsList.setAdapter(this.listAdapter);
     }
 
     private TextWatcher filterTextWatcher = new TextWatcher() {
@@ -115,7 +114,7 @@ public class FriendsListActivity extends VkSdkActivity {
                     break;
                 }
             }
-            Loger.logDebug("VkList", "id: " + id);
+            Logger.logDebug("VkList", "id: " + id);
         }
     };
     private final AbstractRequestListener getFriendsRequestListener = new AbstractRequestListener() {
@@ -163,10 +162,11 @@ public class FriendsListActivity extends VkSdkActivity {
         i.putExtra("photo", userId);
         startActivity(i);
     }
+
     private final FriendListAdapter.OnPhotoClickListener photoClickListener = new FriendListAdapter.OnPhotoClickListener() {
         @Override
         public void onClick(String userId) {
-           startPhotoViewCall(userId);
+            startPhotoViewCall(userId);
         }
     };
 }

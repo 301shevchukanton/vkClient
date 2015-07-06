@@ -13,7 +13,7 @@ import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.News;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.supports.JsonResponseParser;
-import com.vkclient.supports.Loger;
+import com.vkclient.supports.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +30,17 @@ public class NewsActivity extends VkSdkActivity {
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_news);
         super.onCreateDrawer();
-        listView = (ListView)findViewById(R.id.lvNews);
+        listView = (ListView) findViewById(R.id.lvNews);
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
-            this.news =  ((List<News>) items);
-            this.listAdapter = new NewsListAdapter(this,this.news);
+            this.news = ((List<News>) items);
+            this.listAdapter = new NewsListAdapter(this, this.news);
             this.listView.setAdapter(this.listAdapter);
             this.listAdapter.notifyDataSetChanged();
-        }
-        else if (VKSdk.wakeUpSession()) {
+        } else if (VKSdk.wakeUpSession()) {
             startLoading();
         }
-        this.listAdapter = new NewsListAdapter(this,this.news);
+        this.listAdapter = new NewsListAdapter(this, this.news);
         this.listView.setAdapter(this.listAdapter);
     }
 
@@ -52,23 +51,23 @@ public class NewsActivity extends VkSdkActivity {
         this.currentRequest = RequestCreator.getNewsFeed();
         this.currentRequest.executeWithListener(this.getHistoryRequestListener);
     }
+
     private final AbstractRequestListener getHistoryRequestListener = new AbstractRequestListener() {
         @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
-            Loger.logDebug("profid", response.responseString);
+            Logger.logDebug("profid", response.responseString);
             news.clear();
             try {
                 JsonResponseParser newsFeed = new JsonResponseParser(response.json);
                 newsFeed.parsePosts();
                 VKRequest[] myrequests = new VKRequest[newsFeed.feedLength()];
-                for (int i = 0; i < newsFeed.feedLength(); i++ ) {
+                for (int i = 0; i < newsFeed.feedLength(); i++) {
                     news.add(JsonResponseParser.parse(newsFeed.getPost(i)));
                     news.get(i).getPostSourceDate(response.json);
                 }
-            }
-            catch (Exception e){
-                Loger.logDebug("profid", e.toString());
+            } catch (Exception e) {
+                Logger.logDebug("profid", e.toString());
             }
             listAdapter.notifyDataSetChanged();
         }

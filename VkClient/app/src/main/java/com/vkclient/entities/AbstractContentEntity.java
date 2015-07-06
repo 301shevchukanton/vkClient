@@ -5,7 +5,7 @@ public abstract class AbstractContentEntity {
     protected long date;
     protected int user_id;
     protected String body;
-    protected  String username = "";
+    protected String username = "";
     protected String userPhotoLink_200 = "";
     protected boolean readState;
 
@@ -16,6 +16,7 @@ public abstract class AbstractContentEntity {
         this.body = body;
         this.readState = readState;
     }
+
     protected AbstractContentEntity() {
         this.id = 0;
         this.date = 0;
@@ -51,6 +52,7 @@ public abstract class AbstractContentEntity {
     public void setUsername(String username) {
         this.username = username;
     }
+
     public void setUserPhotoLink_200(String userPhotoLink_200) {
         this.userPhotoLink_200 = userPhotoLink_200;
     }

@@ -23,12 +23,15 @@ import org.joda.time.format.DateTimeFormat;
 
 public class FriendListAdapter extends ArrayAdapter<User> {
     private List<User> mModels;
+
     public Object getItems() {
         return mModels;
     }
+
     public interface OnPhotoClickListener {
         void onClick(String photoUrl);
     }
+
     private OnPhotoClickListener photoClickListener;
 
     public void setOnPhotoClickListener(OnPhotoClickListener photoClickListener) {
@@ -39,6 +42,7 @@ public class FriendListAdapter extends ArrayAdapter<User> {
         super(context, R.layout.friends_list_item, R.id.tvFriendName, models);
         mModels = models;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
@@ -47,11 +51,11 @@ public class FriendListAdapter extends ArrayAdapter<User> {
         ((TextView) view.findViewById(R.id.tvFriendName)).setText(user.getName());
         friendPhoto.setOnClickListener(
                 new ImageView.OnClickListener() {
-                     public void onClick(View v) {
-                         if (FriendListAdapter.this.photoClickListener != null) {
-                             photoClickListener.onClick(String.valueOf(user.getId()));
-                         }
-                     }
+                    public void onClick(View v) {
+                        if (FriendListAdapter.this.photoClickListener != null) {
+                            photoClickListener.onClick(String.valueOf(user.getId()));
+                        }
+                    }
                 }
         );
         friendPhoto.setImageResource(R.drawable.ic_user100);

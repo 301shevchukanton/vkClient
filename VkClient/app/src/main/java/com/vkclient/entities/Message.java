@@ -2,11 +2,13 @@ package com.vkclient.entities;
 
 import android.util.Log;
 import android.widget.TextView;
+
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
+
 import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +18,8 @@ import java.util.TimeZone;
 public class Message extends AbstractContentEntity {
     private final int from_id;
     private String fromPhotoLink_200 = "";
-    private  String fromname = "";
+    private String fromname = "";
+
     public Message(int mId, int mUser_id, int mFrom_id, long mDate, boolean mReadState, String mBody) {
         id = mId;
         user_id = mUser_id;
@@ -25,6 +28,7 @@ public class Message extends AbstractContentEntity {
         readState = mReadState;
         body = mBody;
     }
+
     public int getFrom_id() {
         return this.from_id;
     }
@@ -45,22 +49,25 @@ public class Message extends AbstractContentEntity {
         return this.fromPhotoLink_200;
     }
 
-    static public void sendMessage(final TextView msgView, String profileId){
+    static public void sendMessage(final TextView msgView, String profileId) {
         String msg = msgView.getText().toString();
-        VKRequest currentRequest  = new VKRequest("messages.send", VKParameters.from(VKApiConst.USER_ID, profileId, VKApiConst.MESSAGE, msg), VKRequest.HttpMethod.GET);
+        VKRequest currentRequest = new VKRequest("messages.send", VKParameters.from(VKApiConst.USER_ID, profileId, VKApiConst.MESSAGE, msg), VKRequest.HttpMethod.GET);
         currentRequest.executeWithListener(new SendMessageListener(msgView));
     }
-    public static final class SendMessageListener extends VKRequest.VKRequestListener
-    {
+
+    public static final class SendMessageListener extends VKRequest.VKRequestListener {
         private TextView msgView;
+
         public SendMessageListener(TextView msgView) {
             this.msgView = msgView;
         }
+
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
             this.msgView.setText("");
         }
+
         @Override
         public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
             super.attemptFailed(request, attemptNumber, totalAttempts);

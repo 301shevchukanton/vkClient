@@ -1,4 +1,5 @@
 package com.vkclient.entities;
+
 import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -6,11 +7,11 @@ import org.json.JSONObject;
 
 
 public class User {
-    public final static String[] relationshipStatus = {"nonset", "single","in a relationship","engaged","married","married","actively searching","in love"};
-    private  int id;
-    private  String name;
-    private  String status;
-    private  DateTime birthDate;
+    public final static String[] relationshipStatus = {"nonset", "single", "in a relationship", "engaged", "married", "married", "actively searching", "in love"};
+    private int id;
+    private String name;
+    private String status;
+    private DateTime birthDate;
     private String bdDateString;
     private String city;
     private String univers;
@@ -20,8 +21,7 @@ public class User {
     private String photoMax;
     private String langs;
 
-    public User()
-    {
+    public User() {
         this.name = null;
         this.birthDate = null;
         this.dateFormat = null;
@@ -29,7 +29,8 @@ public class User {
         this.photoMax = null;
         this.id = 1;
     }
-    public User(int id,String name, DateTime birthDate, String dateFormat) {
+
+    public User(int id, String name, DateTime birthDate, String dateFormat) {
         this.name = name;
         this.birthDate = birthDate;
         this.dateFormat = dateFormat;
@@ -37,7 +38,7 @@ public class User {
         this.id = id;
     }
 
-    public User(int id,String name, DateTime birthDate, String photo, String photoMax, String dateFormat ) {
+    public User(int id, String name, DateTime birthDate, String photo, String photoMax, String dateFormat) {
         this.name = name;
         this.birthDate = birthDate;
         this.dateFormat = dateFormat;
@@ -117,6 +118,7 @@ public class User {
     public String getUnivers() {
         return univers;
     }
+
     public static String getLangs(JSONObject r) {
         try {
             String langs = "";
@@ -124,11 +126,9 @@ public class User {
             for (int i = 0; i < langsArray.length(); i++)
                 langs += langsArray.getString(i) + "; ";
             return langs;
-            }
-        catch (JSONException e)
-            {
-             return "";
-            }
+        } catch (JSONException e) {
+            return "";
+        }
     }
 
     public void setLangs(String langs) {

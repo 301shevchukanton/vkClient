@@ -23,6 +23,7 @@ public class DialogsListAdapter extends ArrayAdapter<Dialog> {
         super(context, R.layout.dialogs_list_item, R.id.tvDialogName, models);
         JodaTimeAndroid.init(context);
     }
+
     @Override
     public View getView(int position, final View convertView, ViewGroup parent) {
         final View view = super.getView(position, convertView, parent);

@@ -14,7 +14,7 @@ import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.supports.JsonResponseParser;
-import com.vkclient.supports.Loger;
+import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 
 import org.json.JSONException;
@@ -23,10 +23,11 @@ import org.json.JSONException;
 public class SendMessageActivity extends VkSdkActivity {
 
     private VKRequest currentRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        profileId=getIntent().getStringExtra("id");
-        Loger.logDebug("profid", "profileidSended " + profileId);
+        profileId = getIntent().getStringExtra("id");
+        Logger.logDebug("profid", "profileidSended " + profileId);
         startLoading();
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
@@ -34,28 +35,31 @@ public class SendMessageActivity extends VkSdkActivity {
         super.onCreateDrawer();
         findViewById(R.id.btSendMessage).setOnClickListener(this.sendMessageClick);
     }
+
     private void startLoading() {
         if (this.currentRequest != null) {
             this.currentRequest.cancel();
         }
-        Loger.logDebug("profid", "onComplete " + profileId);
+        Logger.logDebug("profid", "onComplete " + profileId);
         this.currentRequest = RequestCreator.getFullUserById(profileId);
         this.currentRequest.executeWithListener(this.sendMessageRequest);
     }
-    private final AbstractRequestListener sendMessageRequest = new AbstractRequestListener(){
+
+    private final AbstractRequestListener sendMessageRequest = new AbstractRequestListener() {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
-            Loger.logDebug("profid", "onComplete " + response);
+            Logger.logDebug("profid", "onComplete " + response);
             setUserInfo(response);
         }
 
         private void setUserInfo(VKResponse response) {
             try {
-                Loger.logDebug("profid", "seting inf " + profileId);
+                Logger.logDebug("profid", "seting inf " + profileId);
                 JsonResponseParser userInfo = new JsonResponseParser(response.json);
                 ((TextView) findViewById(R.id.tvRecipientName)).setText(userInfo.getUserName());
-                if(userInfo.photoAvailable()) PhotoLoader.loadPhoto(getApplicationContext(), userInfo.getPhoto(), (ImageView) findViewById(R.id.ivMessagePhoto));
+                if (userInfo.photoAvailable())
+                    PhotoLoader.loadPhoto(getApplicationContext(), userInfo.getPhoto(), (ImageView) findViewById(R.id.ivMessagePhoto));
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());
             }

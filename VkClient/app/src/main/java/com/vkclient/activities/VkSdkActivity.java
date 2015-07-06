@@ -18,11 +18,12 @@ import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKApiConst;
 
 public abstract class VkSdkActivity extends ActionBarActivity {
-    protected String profileId= VKApiConst.OWNER_ID;
+    protected String profileId = VKApiConst.OWNER_ID;
     private String[] drawerItemsTitles;
     private ListView drawerList;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
+
     protected void onCreateDrawer() {
         drawerItemsTitles = getResources().getStringArray(R.array.drawer_menu);
         drawerList = (ListView) findViewById(R.id.left_drawer);
@@ -35,6 +36,7 @@ public abstract class VkSdkActivity extends ActionBarActivity {
                 super.onDrawerClosed(view);
                 getSupportActionBar().setTitle(getTitle());
             }
+
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 getSupportActionBar().setTitle(R.string.drawer_open);
@@ -43,17 +45,19 @@ public abstract class VkSdkActivity extends ActionBarActivity {
         drawerLayout.setDrawerListener(toggle);
         setupActionBar();
     }
-    private void setupActionBar(){
-        android.support.v7.app.ActionBar ab =getSupportActionBar();
+
+    private void setupActionBar() {
+        android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setDisplayShowHomeEnabled(true);
         ab.setHomeButtonEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_drawer);
     }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-       toggle.syncState();
+        toggle.syncState();
     }
 
     @Override
@@ -67,11 +71,13 @@ public abstract class VkSdkActivity extends ActionBarActivity {
         super.onResume();
         VKUIHelper.onResume(this);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         VKUIHelper.onDestroy(this);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -85,12 +91,13 @@ public abstract class VkSdkActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    private void startApiCall(Class <?> cls){
+
+    private void startApiCall(Class<?> cls) {
         Intent i = new Intent(this, cls);
         startActivity(i);
     }
 
-    private ListView.OnItemClickListener drawerListener = new ListView.OnItemClickListener(){
+    private ListView.OnItemClickListener drawerListener = new ListView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             switch (((TextView) view).getText().toString()) {
