@@ -22,12 +22,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 public class FriendListAdapter extends ArrayAdapter<User> {
-    private List<User> mModels;
-
-    public Object getItems() {
-        return mModels;
-    }
-
     public interface OnPhotoClickListener {
         void onClick(String photoUrl);
     }
@@ -40,7 +34,6 @@ public class FriendListAdapter extends ArrayAdapter<User> {
 
     public FriendListAdapter(Context context, List<User> models) {
         super(context, R.layout.friends_list_item, R.id.tvFriendName, models);
-        mModels = models;
     }
 
     @Override
@@ -59,7 +52,7 @@ public class FriendListAdapter extends ArrayAdapter<User> {
                 }
         );
         friendPhoto.setImageResource(R.drawable.ic_user100);
-        PhotoLoader.loadPhoto(getContext(), user.getPhoto(), friendPhoto);
+        PhotoLoader.loadPhoto(getContext(), user.getPhoto(), (ImageView) view.findViewById(R.id.ivFriendPhoto));
         String birthDateStr = String.valueOf(R.string.not_set);
         DateTime dt = user.getBirthDate();
         if (dt != null) {

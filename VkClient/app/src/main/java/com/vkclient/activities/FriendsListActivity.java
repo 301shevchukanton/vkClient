@@ -10,10 +10,13 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.vkclient.adapters.DialogsListAdapter;
 import com.vkclient.adapters.FriendListAdapter;
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.entities.AbstractRequestListener;
+import com.vkclient.entities.Dialog;
 import com.vkclient.entities.User;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
@@ -50,44 +53,46 @@ public class FriendsListActivity extends VkSdkActivity {
         this.filterText = (EditText) findViewById(R.id.etSearchFriends);
         this.filterText.addTextChangedListener(filterTextWatcher);
         VKUIHelper.onCreate(this);
-        if (VKSdk.wakeUpSession()) {
-            startLoading();
-        }
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
-            this.users = ((ArrayList<User>) items);
+            this.users = ((List<User>) items);
+            this.listAdapter.notifyDataSetChanged();
+        } else if (VKSdk.wakeUpSession()) {
+            startLoading();
         }
-        this.listAdapter = new FriendListAdapter(this, this.users);
         this.friendsList.setOnItemClickListener(this.friendClickListener);
+        this.listAdapter = new FriendListAdapter(this, this.users);
         listAdapter.setOnPhotoClickListener(photoClickListener);
         this.friendsList.setAdapter(this.listAdapter);
     }
 
     private TextWatcher filterTextWatcher = new TextWatcher() {
+        List<User> fullUsersArray = new ArrayList<User>();
 
         public void afterTextChanged(Editable s) {
         }
 
         public void beforeTextChanged(CharSequence s, int start, int count,
                                       int after) {
+            if (fullUsersArray.isEmpty()) fullUsersArray.addAll(users);
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             List<User> temp = new ArrayList<User>();
-            int textlength = filterText.getText().length();
-            temp.clear();
-            for (int i = 0; i < users.size(); i++) {
-                if (textlength <= users.get(i).getName().length()) {
+            int textLength = filterText.getText().length();
+            for (int i = 0; i < fullUsersArray.size(); i++) {
+                if (textLength <= fullUsersArray.get(i).getName().length()) {
                     if (filterText.getText().toString().equalsIgnoreCase(
-                            (String)
-                                    users.get(i).getName().subSequence(0,
-                                            textlength))) {
-                        temp.add(users.get(i));
+                            (String) fullUsersArray.get(i).getName().subSequence(0,
+                                    textLength))) {
+                        temp.add(fullUsersArray.get(i));
                     }
                 }
             }
-            friendsList.setAdapter(listAdapter = new FriendListAdapter(FriendsListActivity.this, temp));
+            listAdapter.notifyDataSetChanged();
+            users.clear();
+            users.addAll(temp);
         }
     };
 
@@ -97,6 +102,7 @@ public class FriendsListActivity extends VkSdkActivity {
         }
         this.currentRequest = RequestCreator.getFriends(profileId);
         this.currentRequest.executeWithListener(this.getFriendsRequestListener);
+
     }
 
     private void startUserApiCall(int id) {
