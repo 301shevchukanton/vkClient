@@ -8,6 +8,7 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.photo.VKImageParameters;
 import com.vk.sdk.api.photo.VKUploadImage;
+import com.vkclient.supports.Logger;
 
 public class RequestCreator {
 
@@ -15,18 +16,18 @@ public class RequestCreator {
     static final String SORT_BY = "hints";
     static final String REQUEST_PARAMS = "id,first_name,last_name,bdate,photo_200,photo_max";
 
-    public static VKRequest getUserById(String user_id) {
-        return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, user_id, VKApiConst.FIELDS,
+    public static VKRequest getUserById(String userId) {
+        return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
                 "first_name,last_name,photo_200"));
     }
 
-    public static VKRequest getBigUserPhoto(String user_id) {
-        return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, user_id, VKApiConst.FIELDS,
+    public static VKRequest getBigUserPhoto(String userId) {
+        return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
                 "photo_max_orig"));
     }
 
-    public static VKRequest getFullUserById(String user_id) {
-        return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, user_id, VKApiConst.FIELDS,
+    public static VKRequest getFullUserById(String userId) {
+        return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
                 "id,first_name,last_name,bdate,city,photo_200,online," +
                         "online_mobile,lists,domain,has_mobile,contacts,connections,site,education," +
                         "universities,schools,can_post,can_see_all_posts,can_see_audio,can_write_private_message," +
@@ -53,11 +54,15 @@ public class RequestCreator {
         return new VKRequest("likes.isLiked", VKParameters.from("type", "post", "owner_id", ownerId, "item_id", itemId), VKRequest.HttpMethod.GET);
     }
 
-    public static VKRequest getFriends(String user_id) {
-        return VKApi.friends().get(VKParameters.from(VKApiConst.USER_ID, user_id, "order", SORT_BY, VKApiConst.COUNT, FRIENDS_COUNT, VKApiConst.FIELDS, REQUEST_PARAMS));
+    public static VKRequest getFriends(String userId) {
+        return VKApi.friends().get(VKParameters.from(VKApiConst.USER_ID, userId, "order", SORT_BY, VKApiConst.COUNT, FRIENDS_COUNT, VKApiConst.FIELDS, REQUEST_PARAMS));
     }
 
-    public static VKRequest uploadPhotoToUser(String user_id, Bitmap photo) {
-        return VKApi.uploadWallPhotoRequest(new VKUploadImage(photo, VKImageParameters.jpgImage(0.9f)), Integer.parseInt(user_id), 0);
+    public static VKRequest uploadPhotoToUser(String userId, Bitmap photo) {
+        return VKApi.uploadWallPhotoRequest(new VKUploadImage(photo, VKImageParameters.jpgImage(0.9f)), Integer.parseInt(userId), 0);
+    }
+
+    public static VKRequest getPhotosOfUser(String userId) {
+        return new VKRequest("photos.getAll", VKParameters.from("owner_id", userId, "extended", "1", "photo_sizes", "0"), VKRequest.HttpMethod.GET);
     }
 }

@@ -7,13 +7,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.meetme.android.horizontallistview.HorizontalListView;
+import com.vk.sdk.VKSdk;
+import com.vkclient.adapters.PhotoFeedAdapter;
 import com.vkclient.entities.AbstractRequestListener;
+import com.vkclient.entities.PhotoFeed;
 import com.vkclient.entities.User;
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.parsers.PhotoFeedParser;
 import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
@@ -21,10 +26,16 @@ import com.vkclient.supports.PhotoLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ProfileActivity extends VkSdkActivity {
-
-    private VKRequest currentRequest;
+    private HorizontalListView listView;
+    private List<PhotoFeed> usersPhoto = new ArrayList<>();
+    private PhotoFeedAdapter listAdapter;
+    private VKRequest profileInfoRequest;
+    private VKRequest profilePhotoRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +46,26 @@ public class ProfileActivity extends VkSdkActivity {
         VKUIHelper.onCreate(this);
         setContentView(R.layout.activity_profile);
         super.onCreateDrawer();
+        listView = (HorizontalListView) findViewById(R.id.lvPhotoFeed);
+
+        Object items = getLastNonConfigurationInstance();
+        if (items != null) {
+            this.usersPhoto = ((List<PhotoFeed>) items);
+            this.listAdapter = new PhotoFeedAdapter(this, this.usersPhoto);
+            this.listView.setAdapter(this.listAdapter);
+            this.listAdapter.notifyDataSetChanged();
+        } else if (VKSdk.wakeUpSession()) {
+            startLoading();
+        }
+        this.listAdapter = new PhotoFeedAdapter(this, this.usersPhoto);
+        this.listView.setAdapter(this.listAdapter);
+
         findViewById(R.id.drawer_layout).setVisibility(View.VISIBLE);
         findViewById(R.id.btProfileFriends).setOnClickListener(profileClickListener);
         findViewById(R.id.btSendMessage).setOnClickListener(profileClickListener);
         findViewById(R.id.btWallPost).setOnClickListener(profileClickListener);
         findViewById(R.id.ivProfilePhoto).setOnClickListener(profileClickListener);
+
     }
 
     private void startActivityCall(Class<?> cls) {
@@ -55,15 +81,17 @@ public class ProfileActivity extends VkSdkActivity {
     }
 
     private void startLoading() {
-        if (currentRequest != null) {
-            currentRequest.cancel();
+        if (profileInfoRequest != null) {
+            profileInfoRequest.cancel();
         }
         Logger.logDebug("profid", "onComplete " + profileId);
-        currentRequest = RequestCreator.getFullUserById(profileId);
-        currentRequest.executeWithListener(new ProfileRequestListener());
+        profileInfoRequest = RequestCreator.getFullUserById(profileId);
+        profileInfoRequest.executeWithListener(profileRequestListener);
+        profilePhotoRequest = RequestCreator.getPhotosOfUser(profileId);
+        profilePhotoRequest.executeWithListener(getPhotoFeedRequestListener);
     }
 
-    public final class ProfileRequestListener extends AbstractRequestListener {
+    private final AbstractRequestListener profileRequestListener = new AbstractRequestListener() {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
@@ -111,7 +139,22 @@ public class ProfileActivity extends VkSdkActivity {
                 Log.e(e.getMessage(), e.toString());
             }
         }
-    }
+    };
+
+    private final AbstractRequestListener getPhotoFeedRequestListener = new AbstractRequestListener() {
+        @Override
+        public void onComplete(final VKResponse response) {
+            super.onComplete(response);
+            usersPhoto.clear();
+            try {
+                usersPhoto.addAll(new PhotoFeedParser(response.json).getPhotoFeedList());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            listAdapter.notifyDataSetChanged();
+        }
+    };
 
     private final View.OnClickListener profileClickListener = new View.OnClickListener() {
         @Override

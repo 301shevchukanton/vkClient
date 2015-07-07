@@ -9,14 +9,6 @@ public abstract class AbstractContentEntity {
     protected String userPhotoLink_200 = "";
     protected boolean readState;
 
-    protected AbstractContentEntity(int id, long date, int user_id, String body, boolean readState) {
-        this.id = id;
-        this.date = date;
-        this.user_id = user_id;
-        this.body = body;
-        this.readState = readState;
-    }
-
     protected AbstractContentEntity() {
         this.id = 0;
         this.date = 0;
