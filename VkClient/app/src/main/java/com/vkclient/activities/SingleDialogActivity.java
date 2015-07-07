@@ -16,10 +16,9 @@ import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
-import com.vkclient.supports.JsonResponseParser;
+import com.vkclient.parsers.MessageParser;
 import com.vkclient.supports.Logger;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -78,19 +77,17 @@ public class SingleDialogActivity extends VkSdkActivity {
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
             try {
-                final JSONArray messagesArray = response.json.getJSONObject("response").getJSONArray("items");
                 VKRequest ownRequest = null;
                 VKRequest fromRequest = null;
-                for (int i = 0; i < messagesArray.length(); i++) {
-                    messages.add(JsonResponseParser.parseMessageFromJSON(messagesArray.getJSONObject(i)));
-                    ownRequest = RequestCreator.getUserById(messagesArray.getJSONObject(i).getString("user_id"));
-                    if (!messagesArray.getJSONObject(i).getString("user_id").equals(
-                            messagesArray.getJSONObject(i).getString("from_id"))) {
-                        fromRequest = RequestCreator.getUserById(messagesArray.getJSONObject(i).getString("from_id"));
+                messages.addAll(new MessageParser(response.json).getMessagesList());
+                for (int i = 0; i < messages.size(); i++) {
+                    ownRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getUser_id()));
+                    if (messages.get(i).getUser_id() != messages.get(i).getFrom_id()) {
+                        fromRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getFrom_id()));
                     }
                 }
-                if (ownRequest != null) ownRequestExecution(ownRequest, messagesArray.length());
-                if (fromRequest != null) fromRequestExecution(fromRequest, messagesArray.length());
+                if (ownRequest != null) ownRequestExecution(ownRequest, messages.size());
+                if (fromRequest != null) fromRequestExecution(fromRequest, messages.size());
             } catch (Exception e) {
             }
             listAdapter.notifyDataSetChanged();

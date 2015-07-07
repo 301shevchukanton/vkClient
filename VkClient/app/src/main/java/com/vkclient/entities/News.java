@@ -70,37 +70,6 @@ public class News extends AbstractContentEntity {
         return sourceName;
     }
 
-    public void getPostSourceDate(JSONObject newsFeedObject) {
-        JSONArray source;
-        if (this.getSourceId().contains("-")) {
-            try {
-                source = newsFeedObject.getJSONObject("response").getJSONArray("groups");
-                this.setSourceId(this.getSourceId().replace("-", ""));
-                for (int i = 0; i < source.length(); i++) {
-                    if (source.getJSONObject(i).getString("id").equals(this.getSourceId())) {
-                        this.setSourceName(source.getJSONObject(i).getString("name"));
-                        this.setUserPhotoLink_200(source.getJSONObject(i).getString("photo_200"));
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                source = newsFeedObject.getJSONObject("response").getJSONArray("profiles");
-                for (int i = 0; i < source.length(); i++) {
-                    if (source.getJSONObject(i).getString("id").equals(this.getSourceId())) {
-                        this.setSourceName(source.getJSONObject(i).getString("first_name") + " "
-                                + source.getJSONObject(i).getString("last_name"));
-                        this.setUserPhotoLink_200(source.getJSONObject(i).getString("photo_100"));
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public void setLikesCount(String likesCount) {
         this.likesCount = likesCount;
     }

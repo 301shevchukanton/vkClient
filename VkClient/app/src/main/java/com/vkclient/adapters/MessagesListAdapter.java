@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.vkclient.entities.Message;
 import com.example.podkaifom.vkclient.R;
-import com.vkclient.supports.JsonResponseParser;
+import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 
@@ -39,7 +39,7 @@ public class MessagesListAdapter extends ArrayAdapter<Message> {
         } catch (Exception e) {
             Logger.logError("Image loading error", e.toString());
         }
-        String Date = JsonResponseParser.getParsedDate(msg.getDate()).toString("dd.MM - HH:mm");
+        String Date = UserParser.getParsedDate(msg.getDate()).toString("dd.MM - HH:mm");
         ((TextView) view.findViewById(R.id.tvSingleDialogDate)).setText(Date);
         ((TextView) view.findViewById(R.id.tvSingleDialogText)).setText(msg.getBody());
         return view;

@@ -1,7 +1,6 @@
 package com.vkclient.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -9,9 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
-import com.squareup.picasso.Picasso;
 import com.vkclient.entities.News;
-import com.vkclient.supports.JsonResponseParser;
+import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.PhotoLoader;
 
 import net.danlew.android.joda.JodaTimeAndroid;
@@ -33,7 +31,7 @@ public class NewsListAdapter extends ArrayAdapter<News> {
         ImageView photo = ((ImageView) view.findViewById(R.id.ivPostSourcePhoto));
         final News post = getItem(position);
         ((TextView) view.findViewById(R.id.tvPostSource)).setText(post.getSourceName());
-        ((TextView) view.findViewById(R.id.tvPostDate)).setText(JsonResponseParser.getParsedDate(post.getDate()).toString("dd.MM - HH:mm"));
+        ((TextView) view.findViewById(R.id.tvPostDate)).setText(UserParser.getParsedDate(post.getDate()).toString("dd.MM - HH:mm"));
         ((TextView) view.findViewById(R.id.tvLikesCount)).setText(post.getLikesCount());
         ((TextView) view.findViewById(R.id.tvSharesCount)).setText(post.getRepostsCount());
         photo.setImageResource(R.drawable.ic_user100);

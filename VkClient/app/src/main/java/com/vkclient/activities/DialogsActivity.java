@@ -20,7 +20,8 @@ import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
-import com.vkclient.supports.JsonResponseParser;
+import com.vkclient.parsers.MessageParser;
+import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 
 import org.json.JSONException;
@@ -77,14 +78,12 @@ public class DialogsActivity extends VkSdkActivity {
             Logger.logDebug("profid", response.responseString);
             dialogs.clear();
             try {
-                JsonResponseParser history = new JsonResponseParser(response.json);
-                history.parseMessages();
-                VKRequest[] myrequests = new VKRequest[history.length()];
-                for (int i = 0; i < history.length(); i++) {
-                    dialogs.add(JsonResponseParser.parseDialog(history.getMessage(i)));
-                    myrequests[i] = RequestCreator.getUserById(history.getUser(i));
+                dialogs.addAll(new MessageParser(response.json).getDialogsList());
+                VKRequest[] requests = new VKRequest[dialogs.size()];
+                for (int i = 0; i < dialogs.size(); i++) {
+                    requests[i] = RequestCreator.getUserById(String.valueOf(dialogs.get(i).getUser_id()));
                 }
-                VKBatchRequest batch = new VKBatchRequest(myrequests);
+                VKBatchRequest batch = new VKBatchRequest(requests);
                 batch.executeWithListener(batchListener);
             } catch (Exception e) {
                 Logger.logDebug("profid", e.toString());
@@ -105,7 +104,7 @@ public class DialogsActivity extends VkSdkActivity {
 
         private void setUserInfo(VKResponse[] responses) throws JSONException {
             for (int i = 0; i < responses.length; i++) {
-                JsonResponseParser userParser = new JsonResponseParser(responses[i].json);
+                UserParser userParser = new UserParser(responses[i].json);
                 dialogs.get(i).setUsername(userParser.getUserName());
                 if (userParser.photoAvailable()) {
                     dialogs.get(i).setUserPhotoLink_200(userParser.getPhoto());

@@ -14,7 +14,7 @@ import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.RequestCreator;
-import com.vkclient.supports.JsonResponseParser;
+import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 
@@ -101,8 +101,7 @@ public class ProfileActivity extends VkSdkActivity {
         private void setUserInfo(VKResponse response) {
             try {
                 JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
-                Logger.logDebug("responseshit", response.json.getString("response"));
-                User user = JsonResponseParser.parseUserFromJSON(r);
+                User user = new UserParser(r).parse();
                 setLayoutsVisibility(user);
                 profileId = String.valueOf(user.getId());
                 if (user.getPhoto() != null) {

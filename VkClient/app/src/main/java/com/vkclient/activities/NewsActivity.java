@@ -12,8 +12,10 @@ import com.vkclient.adapters.NewsListAdapter;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.News;
 import com.vkclient.entities.RequestCreator;
-import com.vkclient.supports.JsonResponseParser;
+import com.vkclient.parsers.NewsParser;
 import com.vkclient.supports.Logger;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,19 +58,13 @@ public class NewsActivity extends VkSdkActivity {
         @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
-            Logger.logDebug("profid", response.responseString);
             news.clear();
             try {
-                JsonResponseParser newsFeed = new JsonResponseParser(response.json);
-                newsFeed.parsePosts();
-                VKRequest[] myrequests = new VKRequest[newsFeed.feedLength()];
-                for (int i = 0; i < newsFeed.feedLength(); i++) {
-                    news.add(JsonResponseParser.parse(newsFeed.getPost(i)));
-                    news.get(i).getPostSourceDate(response.json);
-                }
-            } catch (Exception e) {
-                Logger.logDebug("profid", e.toString());
+                news.addAll(new NewsParser(response.json).getNewsList());
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
             listAdapter.notifyDataSetChanged();
         }
     };
