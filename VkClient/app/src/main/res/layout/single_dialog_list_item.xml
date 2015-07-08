@@ -33,4 +33,11 @@
         android:id="@+id/tvSingleDialogPhoto"
         android:layout_alignTop="@+id/tvSingleDialogName"
         android:src="@drawable/ic_user75" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_below="@+id/tvSingleDialogDate"
+        android:layout_centerHorizontal="true" />
 </TwoLineListItem>
