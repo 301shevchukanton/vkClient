@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.meetme.android.horizontallistview.HorizontalListView;
 import com.vk.sdk.VKSdk;
+import com.vkclient.adapters.FriendListAdapter;
 import com.vkclient.adapters.PhotoFeedAdapter;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.PhotoFeed;
@@ -34,6 +35,8 @@ public class ProfileActivity extends VkSdkActivity {
     private HorizontalListView listView;
     private List<PhotoFeed> usersPhoto = new ArrayList<>();
     private PhotoFeedAdapter listAdapter;
+    private VKRequest currentRequest;
+    private String photoUrl = "";
     private VKRequest profileInfoRequest;
     private VKRequest profilePhotoRequest;
 
@@ -52,12 +55,14 @@ public class ProfileActivity extends VkSdkActivity {
         if (items != null) {
             this.usersPhoto = ((List<PhotoFeed>) items);
             this.listAdapter = new PhotoFeedAdapter(this, this.usersPhoto);
+            listAdapter.setOnPhotoClickListener(photoClickListener);
             this.listView.setAdapter(this.listAdapter);
             this.listAdapter.notifyDataSetChanged();
         } else if (VKSdk.wakeUpSession()) {
             startLoading();
         }
         this.listAdapter = new PhotoFeedAdapter(this, this.usersPhoto);
+        listAdapter.setOnPhotoClickListener(photoClickListener);
         this.listView.setAdapter(this.listAdapter);
 
         findViewById(R.id.drawer_layout).setVisibility(View.VISIBLE);
@@ -173,12 +178,52 @@ public class ProfileActivity extends VkSdkActivity {
                 case R.id.btWallPost:
                     return WallPostActivity.class;
                 case R.id.ivProfilePhoto: {
-                    startActivityCall(PhotoViewActivity.class, profileId);
+                    startPhotoViewCall(profileId);
                     return null;
                 }
                 default:
                     return null;
             }
+        }
+    };
+
+    public void startPhotoViewCall(String userId) {
+
+        if (currentRequest != null) {
+            currentRequest.cancel();
+        }
+        currentRequest = RequestCreator.getBigUserPhoto(userId);
+        currentRequest.executeWithListener(bigPhotoRequestListener);
+
+    }
+
+    private AbstractRequestListener bigPhotoRequestListener = new AbstractRequestListener() {
+        @Override
+        public void onComplete(VKResponse response) {
+            super.onComplete(response);
+            setPhoto(response);
+        }
+
+        private void setPhoto(VKResponse response) {
+            try {
+                JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
+                if (r.getString("photo_max_orig") != null) {
+                    photoUrl = r.getString("photo_max_orig");
+                    Intent i = new Intent(getApplicationContext(), PhotoViewActivity.class);
+                    i.putExtra("photo", photoUrl);
+                    startActivity(i);
+                }
+            } catch (JSONException e) {
+                Log.e(e.getMessage(), e.toString());
+            }
+        }
+    };
+    private final PhotoFeedAdapter.OnPhotoClickListener photoClickListener = new PhotoFeedAdapter.OnPhotoClickListener() {
+        @Override
+        public void onClick(String userId) {
+            Intent i = new Intent(getApplicationContext(), PhotoViewActivity.class);
+            i.putExtra("photo", userId);
+            startActivity(i);
         }
     };
 }

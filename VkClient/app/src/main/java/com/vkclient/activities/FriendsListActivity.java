@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +28,12 @@ import com.vk.sdk.api.model.VKApiUserFull;
 import com.vk.sdk.api.model.VKUsersArray;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.supports.Logger;
+import com.vkclient.supports.PhotoLoader;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +42,7 @@ import java.util.List;
 public class FriendsListActivity extends VkSdkActivity {
     private EditText filterText = null;
     private VKRequest currentRequest;
+    private String photoUrl = "";
     private ListView friendsList;
     private List<User> users = new ArrayList<User>();
     private FriendListAdapter listAdapter;
@@ -163,11 +169,6 @@ public class FriendsListActivity extends VkSdkActivity {
         }
     };
 
-    public void startPhotoViewCall(String userId) {
-        Intent i = new Intent(this, PhotoViewActivity.class);
-        i.putExtra("photo", userId);
-        startActivity(i);
-    }
 
     private final FriendListAdapter.OnPhotoClickListener photoClickListener = new FriendListAdapter.OnPhotoClickListener() {
         @Override
@@ -175,4 +176,37 @@ public class FriendsListActivity extends VkSdkActivity {
             startPhotoViewCall(userId);
         }
     };
+
+    public void startPhotoViewCall(String userId) {
+
+        if (currentRequest != null) {
+            currentRequest.cancel();
+        }
+        currentRequest = RequestCreator.getBigUserPhoto(userId);
+        currentRequest.executeWithListener(bigPhotoRequestListener);
+
+    }
+
+    private AbstractRequestListener bigPhotoRequestListener = new AbstractRequestListener() {
+        @Override
+        public void onComplete(VKResponse response) {
+            super.onComplete(response);
+            setPhoto(response);
+        }
+
+        private void setPhoto(VKResponse response) {
+            try {
+                JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
+                if (r.getString("photo_max_orig") != null) {
+                    photoUrl = r.getString("photo_max_orig");
+                    Intent i = new Intent(getApplicationContext(), PhotoViewActivity.class);
+                    i.putExtra("photo", photoUrl);
+                    startActivity(i);
+                }
+            } catch (JSONException e) {
+                Log.e(e.getMessage(), e.toString());
+            }
+        }
+    };
+
 }

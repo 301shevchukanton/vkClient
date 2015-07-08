@@ -1,5 +1,6 @@
 package com.vkclient.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -17,9 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PhotoViewActivity extends VkSdkActivity {
-
-    private VKRequest currentRequest;
-    private String photoUrl;
+    private static String photoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,36 +27,7 @@ public class PhotoViewActivity extends VkSdkActivity {
         super.onCreateDrawer();
         VKUIHelper.onCreate(this);
         this.photoUrl = getIntent().getStringExtra("photo");
-        startLoading();
-
+        PhotoLoader.loadPhoto(getApplicationContext(), photoUrl, (ImageView) findViewById(R.id.ivPhoto));
     }
 
-    private void startLoading() {
-        if (this.currentRequest != null) {
-            this.currentRequest.cancel();
-        }
-        Logger.logDebug("profid", "onComplete " + profileId);
-        this.currentRequest = RequestCreator.getBigUserPhoto(this.photoUrl);
-        this.currentRequest.executeWithListener(new bigPhotoRequestListener());
-    }
-
-    public final class bigPhotoRequestListener extends AbstractRequestListener {
-        @Override
-        public void onComplete(VKResponse response) {
-            super.onComplete(response);
-            Logger.logDebug("profid", "onComplete " + response);
-            setPhoto(response);
-        }
-
-        private void setPhoto(VKResponse response) {
-            try {
-                JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
-                if (r.getString("photo_max_orig") != null) {
-                    PhotoLoader.loadPhoto(getApplicationContext(), r.getString("photo_max_orig"), (ImageView) findViewById(R.id.ivPhoto));
-                }
-            } catch (JSONException e) {
-                Log.e(e.getMessage(), e.toString());
-            }
-        }
-    }
 }
