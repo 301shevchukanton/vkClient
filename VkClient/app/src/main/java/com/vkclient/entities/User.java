@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 
 public class User {
-    public final static String[] relationshipStatus = {"nonset", "single", "in a relationship", "engaged", "married", "married", "actively searching", "in love"};
+    public final static String[] RELATIONSHIP_STATUS = {"nonset", "single", "in a relationship", "engaged", "married", "married", "actively searching", "in love"};
     private int id;
     private String name;
     private String status;

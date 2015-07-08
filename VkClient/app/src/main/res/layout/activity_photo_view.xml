@@ -11,8 +11,8 @@
         <ImageView
           style="@style/LargeImageViewStyle"
             android:id="@+id/ivPhoto"
-            android:layout_above="@+id/ibSharePhoto"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:layout_alignParentBottom="true" />
 
         <ImageButton
             style="@style/ImageButtonStyle"

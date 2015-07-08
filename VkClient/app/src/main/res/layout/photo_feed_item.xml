@@ -9,6 +9,8 @@
         android:id="@+id/ivPhotoFeedImage"
         android:layout_width="193dp"
         android:layout_height="195dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_user100" />
 

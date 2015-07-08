@@ -4,21 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.podkaifom.vkclient.R;
 import com.meetme.android.horizontallistview.HorizontalListView;
 import com.vk.sdk.VKSdk;
-import com.vkclient.adapters.FriendListAdapter;
-import com.vkclient.adapters.PhotoFeedAdapter;
-import com.vkclient.entities.AbstractRequestListener;
-import com.vkclient.entities.PhotoFeed;
-import com.vkclient.entities.User;
-import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
+import com.vkclient.adapters.PhotoFeedAdapter;
+import com.vkclient.entities.AbstractRequestListener;
+import com.vkclient.entities.PhotoFeed;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.entities.User;
 import com.vkclient.parsers.PhotoFeedParser;
 import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
@@ -30,13 +30,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ProfileActivity extends VkSdkActivity {
     private HorizontalListView listView;
     private List<PhotoFeed> usersPhoto = new ArrayList<>();
     private PhotoFeedAdapter listAdapter;
     private VKRequest currentRequest;
-    private String photoUrl = "";
     private VKRequest profileInfoRequest;
     private VKRequest profilePhotoRequest;
 
@@ -54,34 +52,27 @@ public class ProfileActivity extends VkSdkActivity {
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
             this.usersPhoto = ((List<PhotoFeed>) items);
-            this.listAdapter = new PhotoFeedAdapter(this, this.usersPhoto);
-            listAdapter.setOnPhotoClickListener(photoClickListener);
-            this.listView.setAdapter(this.listAdapter);
             this.listAdapter.notifyDataSetChanged();
         } else if (VKSdk.wakeUpSession()) {
             startLoading();
         }
         this.listAdapter = new PhotoFeedAdapter(this, this.usersPhoto);
-        listAdapter.setOnPhotoClickListener(photoClickListener);
+        this.listView.setOnItemClickListener(this.photoFeedClickListener);
         this.listView.setAdapter(this.listAdapter);
-
         findViewById(R.id.drawer_layout).setVisibility(View.VISIBLE);
+        setupOnClickListeners(profileClickListener);
+    }
+
+    private void setupOnClickListeners(View.OnClickListener profileClickListener) {
         findViewById(R.id.btProfileFriends).setOnClickListener(profileClickListener);
         findViewById(R.id.btSendMessage).setOnClickListener(profileClickListener);
         findViewById(R.id.btWallPost).setOnClickListener(profileClickListener);
         findViewById(R.id.ivProfilePhoto).setOnClickListener(profileClickListener);
-
     }
 
     private void startActivityCall(Class<?> cls) {
         Intent i = new Intent(this, cls);
         i.putExtra("id", profileId);
-        startActivity(i);
-    }
-
-    public void startActivityCall(Class<?> cls, String date) {
-        Intent i = new Intent(this, cls);
-        i.putExtra("photo", date);
         startActivity(i);
     }
 
@@ -178,7 +169,7 @@ public class ProfileActivity extends VkSdkActivity {
                 case R.id.btWallPost:
                     return WallPostActivity.class;
                 case R.id.ivProfilePhoto: {
-                    startPhotoViewCall(profileId);
+                    startUserPhotoViewCall(profileId);
                     return null;
                 }
                 default:
@@ -187,14 +178,18 @@ public class ProfileActivity extends VkSdkActivity {
         }
     };
 
-    public void startPhotoViewCall(String userId) {
-
+    public void startUserPhotoViewCall(String userId) {
         if (currentRequest != null) {
             currentRequest.cancel();
         }
         currentRequest = RequestCreator.getBigUserPhoto(userId);
         currentRequest.executeWithListener(bigPhotoRequestListener);
+    }
 
+    private void photoViewCall(String photoUrl) {
+        Intent i = new Intent(getApplicationContext(), PhotoViewActivity.class);
+        i.putExtra("photo", photoUrl);
+        startActivity(i);
     }
 
     private AbstractRequestListener bigPhotoRequestListener = new AbstractRequestListener() {
@@ -208,22 +203,20 @@ public class ProfileActivity extends VkSdkActivity {
             try {
                 JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
                 if (r.getString("photo_max_orig") != null) {
-                    photoUrl = r.getString("photo_max_orig");
-                    Intent i = new Intent(getApplicationContext(), PhotoViewActivity.class);
-                    i.putExtra("photo", photoUrl);
-                    startActivity(i);
+                    photoViewCall(r.getString("photo_max_orig"));
                 }
             } catch (JSONException e) {
                 Log.e(e.getMessage(), e.toString());
             }
         }
     };
-    private final PhotoFeedAdapter.OnPhotoClickListener photoClickListener = new PhotoFeedAdapter.OnPhotoClickListener() {
-        @Override
-        public void onClick(String userId) {
-            Intent i = new Intent(getApplicationContext(), PhotoViewActivity.class);
-            i.putExtra("photo", userId);
-            startActivity(i);
+    private final AdapterView.OnItemClickListener photoFeedClickListener = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View view,
+                                int position, long id) {
+            final PhotoFeed photoFeed = usersPhoto.get(position);
+            photoViewCall(photoFeed.getPhotoLarge());
         }
     };
+
+
 }

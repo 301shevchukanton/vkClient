@@ -8,17 +8,16 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.photo.VKImageParameters;
 import com.vk.sdk.api.photo.VKUploadImage;
-import com.vkclient.supports.Logger;
 
 public class RequestCreator {
 
     static final String FRIENDS_COUNT = "222";
     static final String SORT_BY = "hints";
-    static final String REQUEST_PARAMS = "id,first_name,last_name,bdate,photo_200,photo_max";
+    static final String FRIENDS_REQUEST_PARAMS = "id,first_name,last_name,bdate,photo_200,photo_max";
 
     public static VKRequest getUserById(String userId) {
         return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
-                "first_name,last_name,photo_200"));
+                "first_name,last_name,photo_200,photo_max_orig"));
     }
 
     public static VKRequest getBigUserPhoto(String userId) {
@@ -28,7 +27,7 @@ public class RequestCreator {
 
     public static VKRequest getFullUserById(String userId) {
         return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
-                "id,first_name,last_name,bdate,city,photo_200,online," +
+                "id,first_name,last_name,bdate,city,photo_200,photo_max_orig,online," +
                         "online_mobile,lists,domain,has_mobile,contacts,connections,site,education," +
                         "universities,schools,can_post,can_see_all_posts,can_see_audio,can_write_private_message," +
                         "status,last_seen,common_count,relation,relatives,counters,langs,personal"));
@@ -55,7 +54,7 @@ public class RequestCreator {
     }
 
     public static VKRequest getFriends(String userId) {
-        return VKApi.friends().get(VKParameters.from(VKApiConst.USER_ID, userId, "order", SORT_BY, VKApiConst.COUNT, FRIENDS_COUNT, VKApiConst.FIELDS, REQUEST_PARAMS));
+        return VKApi.friends().get(VKParameters.from(VKApiConst.USER_ID, userId, "order", SORT_BY, VKApiConst.COUNT, FRIENDS_COUNT, VKApiConst.FIELDS, FRIENDS_REQUEST_PARAMS));
     }
 
     public static VKRequest uploadPhotoToUser(String userId, Bitmap photo) {

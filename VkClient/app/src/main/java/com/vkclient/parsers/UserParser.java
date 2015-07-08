@@ -1,12 +1,8 @@
 package com.vkclient.parsers;
 
-import com.vkclient.entities.Dialog;
-import com.vkclient.entities.Message;
-import com.vkclient.entities.News;
 import com.vkclient.entities.User;
 
 import org.joda.time.DateTime;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,11 +21,11 @@ public class UserParser {
     }
 
     public boolean photoAvailable() throws JSONException {
-        return !this.object.getJSONArray("response").getJSONObject(0).getString("photo_200").isEmpty();
+        return !this.object.getJSONArray("response").getJSONObject(0).getString("photo_max_orig").isEmpty();
     }
 
     public String getPhoto() throws JSONException {
-        return this.object.getJSONArray("response").getJSONObject(0).getString("photo_200");
+        return this.object.getJSONArray("response").getJSONObject(0).getString("photo_max_orig");
     }
 
     public User parse() throws JSONException {
@@ -43,11 +39,12 @@ public class UserParser {
         if (this.object.has("city"))
             result.setCity(this.object.getJSONObject("city").getString("title"));
         if (this.object.has("relation"))
-            result.setRelationship(User.relationshipStatus[Integer.parseInt(this.object.getString("relation"))]);
+            result.setRelationship(User.RELATIONSHIP_STATUS[Integer.parseInt(this.object.getString("relation"))]);
         if (this.object.has("universities") && !this.object.getJSONArray("universities").isNull(0))
             result.setUnivers(this.object.getJSONArray("universities").getJSONObject(0).getString("name"));
         else result.setUnivers("");
-        if (this.object.has("photo_200")) result.setPhoto(this.object.getString("photo_200"));
+        if (this.object.has("photo_max_orig"))
+            result.setPhoto(this.object.getString("photo_max_orig"));
         result.setLangs(User.getLangs(this.object));
         return result;
     }
