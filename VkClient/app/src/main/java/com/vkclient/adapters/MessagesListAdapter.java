@@ -1,23 +1,34 @@
 package com.vkclient.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.vkclient.entities.Message;
 import com.example.podkaifom.vkclient.R;
+import com.meetme.android.horizontallistview.HorizontalListView;
+import com.vkclient.activities.PhotoViewActivity;
+import com.vkclient.entities.Message;
+import com.vkclient.entities.PhotoFeed;
 import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessagesListAdapter extends ArrayAdapter<Message> {
-    public MessagesListAdapter(Context context, List<Message> models) {
+    private Context context;
+    private int messagePhotoListId;
+
+    public MessagesListAdapter(Context context, List<Message> models, int messagePhotoListId) {
         super(context, R.layout.single_dialog_list_item, R.id.tvSingleDialogName, models);
+        this.messagePhotoListId = messagePhotoListId;
+        this.context = context;
     }
 
     @Override
@@ -25,6 +36,8 @@ public class MessagesListAdapter extends ArrayAdapter<Message> {
         View view = super.getView(position, convertView, parent);
         TextView nameText = ((TextView) view.findViewById(R.id.tvSingleDialogName));
         ImageView photo = ((ImageView) view.findViewById(R.id.tvSingleDialogPhoto));
+        HorizontalListView messagePhotoListView = (HorizontalListView) view.findViewById(R.id.lvDialogsPhoto);
+
         final Message msg = getItem(position);
         if (msg.getUser_id() == msg.getFrom_id()) {
             nameText.setText(msg.getUsername());
@@ -42,7 +55,30 @@ public class MessagesListAdapter extends ArrayAdapter<Message> {
         String Date = UserParser.getParsedDate(msg.getDate()).toString("dd.MM - HH:mm");
         ((TextView) view.findViewById(R.id.tvSingleDialogDate)).setText(Date);
         ((TextView) view.findViewById(R.id.tvSingleDialogText)).setText(msg.getBody());
-        return view;
+        final List<PhotoFeed> messagesPhotos = new ArrayList<>();
+        PhotoFeedAdapter listAdapter = new PhotoFeedAdapter(context, messagesPhotos, R.layout.photo_feed_item, R.id.ivPhotoFeedImage);
+        if (!msg.getMessagesPhotos().isEmpty()) {
+            messagesPhotos.addAll(msg.getMessagesPhotos());
+            final AdapterView.OnItemClickListener photoFeedClickListener = new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    final PhotoFeed photoFeed = messagesPhotos.get(position);
+                    photoViewCall(photoFeed.getPhotoLarge());
+                }
+            };
+            messagePhotoListView.setOnItemClickListener(photoFeedClickListener);
+            messagePhotoListView.setAdapter(listAdapter);
+            messagePhotoListView.setVisibility(View.VISIBLE);
+            listAdapter.notifyDataSetChanged();
+        } else messagePhotoListView.setVisibility(View.GONE);
 
+        return view;
     }
+
+    private void photoViewCall(String photoUrl) {
+        Intent i = new Intent(context, PhotoViewActivity.class);
+        i.putExtra("photo", photoUrl);
+        context.startActivity(i);
+    }
+
 }

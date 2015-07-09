@@ -56,7 +56,7 @@ public class ProfileActivity extends VkSdkActivity {
         } else if (VKSdk.wakeUpSession()) {
             startLoading();
         }
-        this.listAdapter = new PhotoFeedAdapter(this, this.usersPhoto);
+        this.listAdapter = new PhotoFeedAdapter(this, this.usersPhoto, R.layout.photo_feed_item, R.id.ivPhotoFeedImage);
         this.listView.setOnItemClickListener(this.photoFeedClickListener);
         this.listView.setAdapter(this.listAdapter);
         findViewById(R.id.drawer_layout).setVisibility(View.VISIBLE);

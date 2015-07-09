@@ -9,24 +9,23 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 
-import org.joda.time.DateTime;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.TimeZone;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Message extends AbstractContentEntity {
     private final int from_id;
     private String fromPhotoLink_200 = "";
     private String fromname = "";
+    private List<PhotoFeed> messagesPhotos = new ArrayList<>();
 
-    public Message(int mId, int mUser_id, int mFrom_id, long mDate, boolean mReadState, String mBody) {
+    public Message(int mId, int mUser_id, int mFrom_id, long mDate, boolean mReadState, String mBody, List<PhotoFeed> messagesPhotos) {
         id = mId;
         user_id = mUser_id;
         this.from_id = mFrom_id;
         date = mDate;
         readState = mReadState;
         body = mBody;
+        this.messagesPhotos.addAll(messagesPhotos);
     }
 
     public int getFrom_id() {
@@ -53,6 +52,14 @@ public class Message extends AbstractContentEntity {
         String msg = msgView.getText().toString();
         VKRequest currentRequest = new VKRequest("messages.send", VKParameters.from(VKApiConst.USER_ID, profileId, VKApiConst.MESSAGE, msg), VKRequest.HttpMethod.GET);
         currentRequest.executeWithListener(new SendMessageListener(msgView));
+    }
+
+    public void setMessagesPhotos(List<PhotoFeed> messagesPhotos) {
+        this.messagesPhotos = messagesPhotos;
+    }
+
+    public List<PhotoFeed> getMessagesPhotos() {
+        return messagesPhotos;
     }
 
     public static final class SendMessageListener extends VKRequest.VKRequestListener {

@@ -41,6 +41,10 @@ public class RequestCreator {
         return new VKRequest("messages.getDialogs", VKParameters.from(VKApiConst.COUNT, "30", "preview_length", "50"), VKRequest.HttpMethod.GET);
     }
 
+    public static VKRequest getHistory(String count, String profileId) {
+        return new VKRequest("messages.getHistory", VKParameters.from(VKApiConst.COUNT, count, VKApiConst.USER_ID, profileId), VKRequest.HttpMethod.GET);
+    }
+
     public static VKRequest likePost(String ownerId, String itemId) {
         return new VKRequest("likes.add", VKParameters.from("type", "post", "owner_id", ownerId, "item_id", itemId), VKRequest.HttpMethod.GET);
     }
