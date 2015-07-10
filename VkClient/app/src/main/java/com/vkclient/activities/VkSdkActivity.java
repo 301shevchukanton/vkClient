@@ -28,6 +28,13 @@ public abstract class VkSdkActivity extends ActionBarActivity {
     private ActionBarDrawerToggle toggle;
     private DrawerAdapter drawerAdapter;
 
+    public enum NavigationItem {
+        PROFILE_INFO,
+        NEWS,
+        DIALOGS,
+        FRIENDS_LIST
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +49,6 @@ public abstract class VkSdkActivity extends ActionBarActivity {
         drawerAdapter = new DrawerAdapter(this, drawerItems);
         drawerList.setAdapter(drawerAdapter);
         drawerList.setOnItemClickListener(drawerListener);
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerClosed(View view) {
@@ -110,17 +116,10 @@ public abstract class VkSdkActivity extends ActionBarActivity {
         startActivity(i);
     }
 
-    public enum NavigationItem {
-        PROFILE_INFO,
-        NEWS,
-        DIALOGS,
-        FRIENDS_LIST
-    }
-
     private ListView.OnItemClickListener drawerListener = new ListView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            switch (drawerItems.get(position).getKey()) {
+            switch (drawerAdapter.getItem(position).getKey()) {
                 case PROFILE_INFO: {
                     startApiCall(ProfileActivity.class);
                     break;
