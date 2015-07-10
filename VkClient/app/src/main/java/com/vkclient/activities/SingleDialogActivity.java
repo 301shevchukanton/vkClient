@@ -77,7 +77,7 @@ public class SingleDialogActivity extends VkSdkActivity {
             try {
                 VKRequest ownRequest = null;
                 VKRequest fromRequest = null;
-                messages.addAll(new MessageParser(response.json).getMessagesList());
+                messages.addAll(new MessageParser().getMessagesList(response));
                 for (int i = 0; i < messages.size(); i++) {
                     ownRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getUser_id()));
                     if (messages.get(i).getUser_id() != messages.get(i).getFrom_id()) {

@@ -10,16 +10,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.vkclient.adapters.DialogsListAdapter;
-import com.vkclient.entities.Dialog;
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKBatchRequest;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
-import com.vkclient.entities.RequestCreator;
+import com.vkclient.adapters.DialogsListAdapter;
 import com.vkclient.entities.AbstractRequestListener;
+import com.vkclient.entities.Dialog;
+import com.vkclient.entities.RequestCreator;
 import com.vkclient.parsers.MessageParser;
 import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
@@ -78,7 +78,7 @@ public class DialogsActivity extends VkSdkActivity {
             Logger.logDebug("profid", response.responseString);
             dialogs.clear();
             try {
-                dialogs.addAll(new MessageParser(response.json).getDialogsList());
+                dialogs.addAll(new MessageParser().getDialogsList(response));
                 VKRequest[] requests = new VKRequest[dialogs.size()];
                 for (int i = 0; i < dialogs.size(); i++) {
                     requests[i] = RequestCreator.getUserById(String.valueOf(dialogs.get(i).getUser_id()));
@@ -124,7 +124,6 @@ public class DialogsActivity extends VkSdkActivity {
                     break;
                 }
             }
-            Logger.logDebug("VkList", "id: " + id);
         }
     };
 
