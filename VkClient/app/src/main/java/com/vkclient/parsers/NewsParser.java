@@ -1,5 +1,6 @@
 package com.vkclient.parsers;
 
+import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.News;
 
 import org.json.JSONArray;
@@ -10,14 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsParser {
-    private JSONArray newsArray;
-    private JSONObject newsFeedObject;
-
-    public NewsParser(JSONObject object) throws JSONException {
-        this.newsArray = object.getJSONObject("response").getJSONArray("items");
-        this.newsFeedObject = object;
-    }
-
     public static News parse(JSONObject object) {
         News result = null;
         try {
@@ -36,20 +29,21 @@ public class NewsParser {
         return result;
     }
 
-    public List<News> getNewsList() throws JSONException {
+    public List<News> getNewsList(VKResponse response) throws JSONException {
+        JSONObject object = response.json;
         List<News> result = new ArrayList<>();
-        for (int i = 0; i < this.newsArray.length(); i++) {
-            result.add(this.parse(newsArray.getJSONObject(i)));
-            getPostSourceInfo(result.get(i));
+        for (int i = 0; i < object.getJSONObject("response").getJSONArray("items").length(); i++) {
+            result.add(this.parse(object.getJSONObject("response").getJSONArray("items").getJSONObject(i)));
+            getPostSourceInfo(object, result.get(i));
         }
         return result;
     }
 
-    public void getPostSourceInfo(News newsObject) {
+    public void getPostSourceInfo(JSONObject object, News newsObject) {
         JSONArray source;
         if (newsObject.getSourceId().contains("-")) {
             try {
-                source = this.newsFeedObject.getJSONObject("response").getJSONArray("groups");
+                source = object.getJSONObject("response").getJSONArray("groups");
                 newsObject.setSourceId(newsObject.getSourceId().replace("-", ""));
                 for (int i = 0; i < source.length(); i++) {
                     if (source.getJSONObject(i).getString("id").equals(newsObject.getSourceId())) {
@@ -62,7 +56,7 @@ public class NewsParser {
             }
         } else {
             try {
-                source = this.newsFeedObject.getJSONObject("response").getJSONArray("profiles");
+                source = object.getJSONObject("response").getJSONArray("profiles");
                 for (int i = 0; i < source.length(); i++) {
                     if (source.getJSONObject(i).getString("id").equals(newsObject.getSourceId())) {
                         newsObject.setSourceName(source.getJSONObject(i).getString("first_name") + " "

@@ -13,7 +13,6 @@ import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.News;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.parsers.NewsParser;
-import com.vkclient.supports.Logger;
 
 import org.json.JSONException;
 
@@ -60,7 +59,7 @@ public class NewsActivity extends VkSdkActivity {
             super.onComplete(response);
             news.clear();
             try {
-                news.addAll(new NewsParser(response.json).getNewsList());
+                news.addAll(new NewsParser().getNewsList(response));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

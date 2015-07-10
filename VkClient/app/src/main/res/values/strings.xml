@@ -27,12 +27,11 @@
     <string name="title_activity_photo_view">Photo view:</string>
     <string name="share">Share</string>
     <string name="like">Like</string>
-    <string-array name="drawer_menu">
-        <item>My Profile</item>
-        <item>News feed</item>
-        <item>Messages</item>
-        <item>Friends</item>
-    </string-array>
+
+    <string name="drawer_profile">My Profile</string>
+    <string name="drawer_news">News feed</string>
+    <string name="drawer_messages">Messages</string>
+    <string name="drawer_friends">Friends</string>
     <string name="title_activity_news">News feed:</string>
     <string name="item1">Item1</string>
     <string name="item2">Item2</string>
