@@ -23,11 +23,9 @@ import java.util.List;
 
 public class MessagesListAdapter extends ArrayAdapter<Message> {
     private Context context;
-    private int messagePhotoListId;
 
-    public MessagesListAdapter(Context context, List<Message> models, int messagePhotoListId) {
+    public MessagesListAdapter(Context context, List<Message> models) {
         super(context, R.layout.single_dialog_list_item, R.id.tvSingleDialogName, models);
-        this.messagePhotoListId = messagePhotoListId;
         this.context = context;
     }
 
@@ -38,27 +36,27 @@ public class MessagesListAdapter extends ArrayAdapter<Message> {
         ImageView photo = ((ImageView) view.findViewById(R.id.tvSingleDialogPhoto));
         HorizontalListView messagePhotoListView = (HorizontalListView) view.findViewById(R.id.lvDialogsPhoto);
 
-        final Message msg = getItem(position);
-        if (msg.getUser_id() == msg.getFrom_id()) {
-            nameText.setText(msg.getUsername());
+        final Message message = getItem(position);
+        if (message.getUser_id() == message.getFrom_id()) {
+            nameText.setText(message.getUsername());
         } else {
-            nameText.setText(msg.getFromname());
+            nameText.setText(message.getFromname());
         }
 
         photo.setImageResource(R.drawable.ic_user100);
         try {
             PhotoLoader.loadPhoto(getContext(),
-                    msg.getUser_id() == msg.getFrom_id() ? msg.getUserPhotoLink_200() : msg.getFromPhotoLink_200(), photo);
+                    message.getUser_id() == message.getFrom_id() ? message.getUserPhotoLink_200() : message.getFromPhotoLink_200(), photo);
         } catch (Exception e) {
             Logger.logError("Image loading error", e.toString());
         }
-        String Date = UserParser.getParsedDate(msg.getDate()).toString("dd.MM - HH:mm");
+        String Date = UserParser.getParsedDate(message.getDate()).toString("dd.MM - HH:mm");
         ((TextView) view.findViewById(R.id.tvSingleDialogDate)).setText(Date);
-        ((TextView) view.findViewById(R.id.tvSingleDialogText)).setText(msg.getBody());
+        ((TextView) view.findViewById(R.id.tvSingleDialogText)).setText(message.getBody());
         final List<PhotoFeed> messagesPhotos = new ArrayList<>();
         PhotoFeedAdapter listAdapter = new PhotoFeedAdapter(context, messagesPhotos, R.layout.photo_feed_item, R.id.ivPhotoFeedImage);
-        if (!msg.getMessagesPhotos().isEmpty()) {
-            messagesPhotos.addAll(msg.getMessagesPhotos());
+        if (!message.getMessagesPhotos().isEmpty()) {
+            messagesPhotos.addAll(message.getMessagesPhotos());
             final AdapterView.OnItemClickListener photoFeedClickListener = new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {

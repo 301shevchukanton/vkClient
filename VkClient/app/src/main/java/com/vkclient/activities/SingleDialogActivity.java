@@ -47,7 +47,7 @@ public class SingleDialogActivity extends VkSdkActivity {
         if (items != null) {
             this.messages = ((ArrayList<Message>) items);
         }
-        this.listAdapter = new MessagesListAdapter(this, this.messages, R.id.lvDialogsPhoto);
+        this.listAdapter = new MessagesListAdapter(this, this.messages);
         this.messagesList.setAdapter(this.listAdapter);
         findViewById(R.id.btSendDialogMessage).setOnClickListener(this.singleDialogClickListener);
     }

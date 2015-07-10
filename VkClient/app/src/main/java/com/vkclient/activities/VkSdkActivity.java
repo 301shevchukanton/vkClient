@@ -9,27 +9,40 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKApiConst;
+import com.vkclient.adapters.DrawerAdapter;
+import com.vkclient.entities.DrawerMenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class VkSdkActivity extends ActionBarActivity {
     protected String profileId = VKApiConst.OWNER_ID;
-    private String[] drawerItemsTitles;
+    private List<DrawerMenuItem> drawerItems = new ArrayList<>();
     private ListView drawerList;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
+    private DrawerAdapter drawerAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     protected void onCreateDrawer() {
-        drawerItemsTitles = getResources().getStringArray(R.array.drawer_menu);
+        drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_profile), NavigationItem.PROFILE_INFO));
+        drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_friends), NavigationItem.FRIENDS_LIST));
+        drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_messages), NavigationItem.DIALOGS));
+        drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_news), NavigationItem.NEWS));
         drawerList = (ListView) findViewById(R.id.left_drawer);
-        drawerList.setAdapter(new ArrayAdapter<String>(getApplicationContext(),
-                R.layout.drawer_list_item, drawerItemsTitles));
+        drawerAdapter = new DrawerAdapter(this, drawerItems);
+        drawerList.setAdapter(drawerAdapter);
         drawerList.setOnItemClickListener(drawerListener);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerClosed(View view) {
@@ -97,24 +110,31 @@ public abstract class VkSdkActivity extends ActionBarActivity {
         startActivity(i);
     }
 
+    public enum NavigationItem {
+        PROFILE_INFO,
+        NEWS,
+        DIALOGS,
+        FRIENDS_LIST
+    }
+
     private ListView.OnItemClickListener drawerListener = new ListView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            switch (((TextView) view).getText().toString()) {
-                case "My Profile": {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            switch (drawerItems.get(position).getKey()) {
+                case PROFILE_INFO: {
                     startApiCall(ProfileActivity.class);
                     break;
                 }
-                case "Messages": {
+                case NEWS: {
+                    startApiCall(NewsActivity.class);
+                    break;
+                }
+                case DIALOGS: {
                     startApiCall(DialogsActivity.class);
                     break;
                 }
-                case "Friends": {
+                case FRIENDS_LIST: {
                     startApiCall(FriendsListActivity.class);
-                    break;
-                }
-                case "News feed": {
-                    startApiCall(NewsActivity.class);
                     break;
                 }
             }

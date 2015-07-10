@@ -36,10 +36,10 @@ public class DialogListItemView extends LinearLayout {
     }
 
     private void findViews() {
-        this.text = ((TextView) findViewById(R.id.tvDialogText));
-        this.photo = ((ImageView) findViewById(R.id.ivDialogPhoto));
-        this.date= (TextView) findViewById(R.id.tvDialogDate);
-        this.name= (TextView)findViewById(R.id.tvDialogName);
+        this.text = (TextView) findViewById(R.id.tvDialogText);
+        this.photo = (ImageView) findViewById(R.id.ivDialogPhoto);
+        this.date = (TextView) findViewById(R.id.tvDialogDate);
+        this.name = (TextView) findViewById(R.id.tvDialogName);
     }
 
     public void setDialog(Dialog dialog) {
