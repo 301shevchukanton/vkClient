@@ -25,7 +25,7 @@ import java.util.List;
 
 
 public class SingleDialogActivity extends VkSdkActivity {
-    private final String COUNT = "50";
+    private final String COUNT = "150";
     private ListView messagesList;
     private VKRequest currentRequest;
     private List<Message> messages = new ArrayList<>();

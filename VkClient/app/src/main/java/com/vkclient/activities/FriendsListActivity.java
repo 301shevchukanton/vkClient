@@ -9,26 +9,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.vkclient.adapters.DialogsListAdapter;
-import com.vkclient.adapters.FriendListAdapter;
 import com.example.podkaifom.vkclient.R;
-import com.vkclient.entities.AbstractRequestListener;
-import com.vkclient.entities.Dialog;
-import com.vkclient.entities.User;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUserFull;
 import com.vk.sdk.api.model.VKUsersArray;
+import com.vkclient.adapters.FriendListAdapter;
+import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.entities.User;
 import com.vkclient.supports.Logger;
-import com.vkclient.supports.PhotoLoader;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -40,6 +35,9 @@ import java.util.List;
 
 
 public class FriendsListActivity extends VkSdkActivity {
+
+    private static final String BUNDLE_FILTER_TEXT = "BUNDLE_FILTER_TEXT";
+
     private EditText filterText = null;
     private VKRequest currentRequest;
     private String photoUrl = "";
@@ -70,6 +68,21 @@ public class FriendsListActivity extends VkSdkActivity {
         this.listAdapter = new FriendListAdapter(this, this.users);
         listAdapter.setOnPhotoClickListener(photoClickListener);
         this.friendsList.setAdapter(this.listAdapter);
+        if (savedInstanceState != null) {
+            filterList(this.users, savedInstanceState.getString(BUNDLE_FILTER_TEXT));
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(BUNDLE_FILTER_TEXT, this.filterText.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        filterList(this.users, savedInstanceState.getString(BUNDLE_FILTER_TEXT));
     }
 
     private TextWatcher filterTextWatcher = new TextWatcher() {
@@ -85,22 +98,28 @@ public class FriendsListActivity extends VkSdkActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            List<User> temp = new ArrayList<User>();
-            int textLength = filterText.getText().length();
-            for (int i = 0; i < fullUsersArray.size(); i++) {
-                if (textLength <= fullUsersArray.get(i).getName().length()) {
-                    if (filterText.getText().toString().equalsIgnoreCase(
-                            (String) fullUsersArray.get(i).getName().subSequence(0,
-                                    textLength))) {
-                        temp.add(fullUsersArray.get(i));
-                    }
+            filterList(fullUsersArray, s.toString());
+        }
+
+
+    };
+
+    private void filterList(List<User> fullUsersArray, String filterText) {
+        List<User> temp = new ArrayList<User>();
+        int textLength = filterText.length();
+        for (int i = 0; i < fullUsersArray.size(); i++) {
+            if (textLength <= fullUsersArray.get(i).getName().length()) {
+                if (filterText.equalsIgnoreCase(
+                        (String) fullUsersArray.get(i).getName().subSequence(0,
+                                textLength))) {
+                    temp.add(fullUsersArray.get(i));
                 }
             }
-            listAdapter.notifyDataSetChanged();
-            users.clear();
-            users.addAll(temp);
         }
-    };
+        users.clear();
+        users.addAll(temp);
+        listAdapter.notifyDataSetChanged();
+    }
 
     private void startLoading() {
         if (this.currentRequest != null) {
