@@ -57,7 +57,7 @@ public class MessageParser {
     }
 
     public List<Message> getMessagesList(VKResponse response) throws JSONException {
-        JSONObject object=response.json;
+        JSONObject object = response.json;
         List<Message> result = new ArrayList<>();
         for (int i = 0; i < object.getJSONObject("response").getJSONArray("items").length(); i++) {
             result.add(this.getMessage(object, i));
@@ -66,7 +66,7 @@ public class MessageParser {
     }
 
     public List<Dialog> getDialogsList(VKResponse response) throws JSONException {
-        JSONObject object=response.json;
+        JSONObject object = response.json;
         List<Dialog> result = new ArrayList<>();
         for (int i = 0; i < object.getJSONObject("response").getJSONArray("items").length(); i++) {
             result.add(this.getDialog(object, i));
