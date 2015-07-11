@@ -14,7 +14,9 @@ import com.vkclient.adapters.MessagesListAdapter;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.Message;
 import com.vkclient.entities.RequestCreator;
+import com.vkclient.entities.User;
 import com.vkclient.parsers.MessageParser;
+import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 
 import org.json.JSONException;
@@ -74,20 +76,17 @@ public class SingleDialogActivity extends VkSdkActivity {
         @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
-            try {
-                VKRequest ownRequest = null;
-                VKRequest fromRequest = null;
-                messages.addAll(new MessageParser().getMessagesList(response));
-                for (int i = 0; i < messages.size(); i++) {
-                    ownRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getUser_id()));
-                    if (messages.get(i).getUser_id() != messages.get(i).getFrom_id()) {
-                        fromRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getFrom_id()));
-                    }
+            VKRequest ownRequest = null;
+            VKRequest fromRequest = null;
+            messages.addAll(new MessageParser().getMessagesList(response));
+            for (int i = 0; i < messages.size(); i++) {
+                ownRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getUser_id()));
+                if (messages.get(i).getUser_id() != messages.get(i).getFrom_id()) {
+                    fromRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getFrom_id()));
                 }
-                if (ownRequest != null) ownRequestExecution(ownRequest, messages.size());
-                if (fromRequest != null) fromRequestExecution(fromRequest, messages.size());
-            } catch (Exception e) {
             }
+            if (ownRequest != null) ownRequestExecution(ownRequest, messages.size());
+            if (fromRequest != null) fromRequestExecution(fromRequest, messages.size());
             listAdapter.notifyDataSetChanged();
         }
 
@@ -119,10 +118,10 @@ public class SingleDialogActivity extends VkSdkActivity {
         }
 
         private void setMessageInfo(VKResponse response) throws JSONException {
-            JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
+            User responseUser = new UserParser().parseUserName(response);
             for (int i = 0; i < arrayLength; i++) {
-                messages.get(i).setUsername(r.getString("first_name") + " " + r.getString("last_name"));
-                messages.get(i).setUserPhotoLink_200(r.getString("photo_200"));
+                messages.get(i).setUsername(responseUser.getName());
+                messages.get(i).setUserPhotoLink_200(responseUser.getPhotoMax());
             }
         }
     }

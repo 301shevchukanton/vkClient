@@ -19,12 +19,12 @@ public class Message extends AbstractContentEntity {
     private List<PhotoFeed> messagesPhotos = new ArrayList<>();
 
     public Message(int mId, int mUser_id, int mFrom_id, long mDate, boolean mReadState, String mBody, List<PhotoFeed> messagesPhotos) {
-        id = mId;
-        user_id = mUser_id;
+        this.id = mId;
+        this.user_id = mUser_id;
         this.from_id = mFrom_id;
-        date = mDate;
-        readState = mReadState;
-        body = mBody;
+        this.date = mDate;
+        this.readState = mReadState;
+        this.body = mBody;
         this.messagesPhotos.addAll(messagesPhotos);
     }
 

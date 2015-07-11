@@ -29,14 +29,18 @@ public class NewsParser {
         return result;
     }
 
-    public List<News> getNewsList(VKResponse response) throws JSONException {
+    public List<News> getNewsList(VKResponse response) {
         JSONObject object = response.json;
-        List<News> result = new ArrayList<>();
-        for (int i = 0; i < object.getJSONObject("response").getJSONArray("items").length(); i++) {
-            result.add(this.parse(object.getJSONObject("response").getJSONArray("items").getJSONObject(i)));
-            getPostSourceInfo(object, result.get(i));
+        try {
+            List<News> result = new ArrayList<>();
+            for (int i = 0; i < object.getJSONObject("response").getJSONArray("items").length(); i++) {
+                result.add(this.parse(object.getJSONObject("response").getJSONArray("items").getJSONObject(i)));
+                getPostSourceInfo(object, result.get(i));
+            }
+            return result;
+        } catch (JSONException e) {
+            return null;
         }
-        return result;
     }
 
     public void getPostSourceInfo(JSONObject object, News newsObject) {

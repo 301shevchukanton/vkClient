@@ -24,7 +24,7 @@ public class DrawerMenuItemView extends LinearLayout {
     public DrawerMenuItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.drawer_list_item, this);
-        itemText = (TextView) findViewById(R.id.drawerText);
+        this.itemText = (TextView) findViewById(R.id.drawerText);
     }
 
     public void setDrawerItem(DrawerMenuItem drawerItem) {

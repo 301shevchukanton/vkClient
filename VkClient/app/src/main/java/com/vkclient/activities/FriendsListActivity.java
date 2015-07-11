@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -23,12 +22,11 @@ import com.vkclient.adapters.FriendListAdapter;
 import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.User;
+import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -201,9 +199,8 @@ public class FriendsListActivity extends VkSdkActivity {
         if (currentRequest != null) {
             currentRequest.cancel();
         }
-        currentRequest = RequestCreator.getBigUserPhoto(userId);
+        currentRequest = RequestCreator.getUserById(userId);
         currentRequest.executeWithListener(bigPhotoRequestListener);
-
     }
 
     private AbstractRequestListener bigPhotoRequestListener = new AbstractRequestListener() {
@@ -214,18 +211,11 @@ public class FriendsListActivity extends VkSdkActivity {
         }
 
         private void setPhoto(VKResponse response) {
-            try {
-                JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
-                if (r.getString("photo_max_orig") != null) {
-                    photoUrl = r.getString("photo_max_orig");
-                    Intent i = new Intent(getApplicationContext(), PhotoViewActivity.class);
-                    i.putExtra("photo", photoUrl);
-                    startActivity(i);
-                }
-            } catch (JSONException e) {
-                Log.e(e.getMessage(), e.toString());
-            }
+            Intent i = new Intent(getApplicationContext(), PhotoViewActivity.class);
+            i.putExtra("photo", new UserParser().parseUserName(response).getPhotoMax());
+            startActivity(i);
         }
+
     };
 
 }

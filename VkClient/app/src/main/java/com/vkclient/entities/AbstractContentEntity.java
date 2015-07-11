@@ -45,6 +45,13 @@ public abstract class AbstractContentEntity {
         this.username = username;
     }
 
+    public void setDialogUserInfo(User user) {
+        this.username = user.getName();
+        if (user.getPhotoMax() != null) {
+            this.userPhotoLink_200 = user.getPhotoMax();
+        }
+    }
+
     public void setUserPhotoLink_200(String userPhotoLink_200) {
         this.userPhotoLink_200 = userPhotoLink_200;
     }

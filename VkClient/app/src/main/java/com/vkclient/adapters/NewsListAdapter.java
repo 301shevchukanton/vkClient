@@ -9,12 +9,14 @@ import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.entities.News;
-import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.PhotoLoader;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
+import org.joda.time.DateTime;
+
 import java.util.List;
+import java.util.TimeZone;
 
 
 public class NewsListAdapter extends ArrayAdapter<News> {
@@ -31,7 +33,7 @@ public class NewsListAdapter extends ArrayAdapter<News> {
         ImageView photo = ((ImageView) view.findViewById(R.id.ivPostSourcePhoto));
         final News post = getItem(position);
         ((TextView) view.findViewById(R.id.tvPostSource)).setText(post.getSourceName());
-        ((TextView) view.findViewById(R.id.tvPostDate)).setText(UserParser.getParsedDate(post.getDate()).toString("dd.MM - HH:mm"));
+        ((TextView) view.findViewById(R.id.tvPostDate)).setText(getParsedDate(post.getDate()).toString("dd.MM - HH:mm"));
         ((TextView) view.findViewById(R.id.tvLikesCount)).setText(post.getLikesCount());
         ((TextView) view.findViewById(R.id.tvSharesCount)).setText(post.getRepostsCount());
         photo.setImageResource(R.drawable.ic_user100);
@@ -40,5 +42,10 @@ public class NewsListAdapter extends ArrayAdapter<News> {
             PhotoLoader.loadPhoto(getContext(), post.getUserPhotoLink_200(), photo);
         }
         return view;
+    }
+
+    private DateTime getParsedDate(long date) {
+        DateTime dateTime = new DateTime(date * 1000L + TimeZone.getDefault().getRawOffset());
+        return dateTime;
     }
 }

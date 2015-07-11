@@ -1,57 +1,52 @@
 package com.vkclient.parsers;
 
+import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.User;
 
-import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.TimeZone;
-
 public class UserParser {
-    private JSONObject object;
 
-    public UserParser(JSONObject object) {
-        this.object = object;
-    }
-
-    public String getUserName() throws JSONException {
-        return this.object.getJSONArray("response").getJSONObject(0).getString("first_name") + " " +
-                this.object.getJSONArray("response").getJSONObject(0).getString("last_name");
-    }
-
-    public boolean photoAvailable() throws JSONException {
-        return !this.object.getJSONArray("response").getJSONObject(0).getString("photo_max_orig").isEmpty();
-    }
-
-    public String getPhoto() throws JSONException {
-        return this.object.getJSONArray("response").getJSONObject(0).getString("photo_max_orig");
-    }
-
-    public User parse() throws JSONException {
-        User result = new User();
-        result.setId(Integer.parseInt(this.object.getString("id")));
-        if (this.object.getString("last_name") != null && this.object.getString("first_name") != null) {
-            result.setName(this.object.getString("first_name") + " " + this.object.getString("last_name"));
+    public User parse(VKResponse response) {
+        try {
+            JSONObject object=response.json.getJSONArray("response").getJSONObject(0);
+            User result = new User();
+            result.setId(Integer.parseInt(object.getString("id")));
+            if (object.getString("last_name") != null && object.getString("first_name") != null) {
+                result.setName(object.getString("first_name") + " " + object.getString("last_name"));
+            }
+            if (object.has("status")) result.setStatus(object.getString("status"));
+            if (object.has("bdate")) result.setBdDateString(object.getString("bdate"));
+            if (object.has("city"))
+                result.setCity(object.getJSONObject("city").getString("title"));
+            if (object.has("relation"))
+                result.setRelationship(User.RELATIONSHIP_STATUS[Integer.parseInt(object.getString("relation"))]);
+            if (object.has("universities") && !object.getJSONArray("universities").isNull(0))
+                result.setUnivers(object.getJSONArray("universities").getJSONObject(0).getString("name"));
+            else result.setUnivers("");
+            if (object.has("photo_max_orig"))
+                result.setPhoto(object.getString("photo_max_orig"));
+            result.setLangs(User.getLangs(object));
+            return result;
+        } catch (JSONException e) {
+            return null;
         }
-        if (this.object.has("status")) result.setStatus(this.object.getString("status"));
-        if (this.object.has("bdate")) result.setBdDateString(this.object.getString("bdate"));
-        if (this.object.has("city"))
-            result.setCity(this.object.getJSONObject("city").getString("title"));
-        if (this.object.has("relation"))
-            result.setRelationship(User.RELATIONSHIP_STATUS[Integer.parseInt(this.object.getString("relation"))]);
-        if (this.object.has("universities") && !this.object.getJSONArray("universities").isNull(0))
-            result.setUnivers(this.object.getJSONArray("universities").getJSONObject(0).getString("name"));
-        else result.setUnivers("");
-        if (this.object.has("photo_max_orig"))
-            result.setPhoto(this.object.getString("photo_max_orig"));
-        result.setLangs(User.getLangs(this.object));
-        return result;
     }
 
-    public static DateTime getParsedDate(long date) {
-        DateTime dateTime = new DateTime(date * 1000L + TimeZone.getDefault().getRawOffset());
-        return dateTime;
+    public User parseUserName(VKResponse response) {
+        try {
+            JSONObject object = response.json;
+            User result = new User();
+            result.setName(object.getJSONArray("response").getJSONObject(0).getString("first_name") + " " +
+                    object.getJSONArray("response").getJSONObject(0).getString("last_name"));
+            result.setPhotoMax(object.getJSONArray("response").getJSONObject(0).getString("photo_max_orig"));
+            //result.setPhoto(object.getJSONArray("response").getJSONObject(0).getString("photo_200"));
+            return result;
+        } catch (JSONException e) {
+            return null;
+        }
     }
+
 }
 

@@ -56,13 +56,17 @@ public class MessageParser {
         );
     }
 
-    public List<Message> getMessagesList(VKResponse response) throws JSONException {
-        JSONObject object = response.json;
-        List<Message> result = new ArrayList<>();
-        for (int i = 0; i < object.getJSONObject("response").getJSONArray("items").length(); i++) {
-            result.add(this.getMessage(object, i));
+    public List<Message> getMessagesList(VKResponse response) {
+        try {
+            JSONObject object = response.json;
+            List<Message> result = new ArrayList<>();
+            for (int i = 0; i < object.getJSONObject("response").getJSONArray("items").length(); i++) {
+                result.add(this.getMessage(object, i));
+            }
+            return result;
+        } catch (JSONException e) {
+            return null;
         }
-        return result;
     }
 
     public List<Dialog> getDialogsList(VKResponse response) throws JSONException {

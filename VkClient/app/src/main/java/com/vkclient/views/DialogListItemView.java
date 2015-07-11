@@ -10,8 +10,11 @@ import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.entities.Dialog;
-import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.PhotoLoader;
+
+import org.joda.time.DateTime;
+
+import java.util.TimeZone;
 
 
 public class DialogListItemView extends LinearLayout {
@@ -45,12 +48,15 @@ public class DialogListItemView extends LinearLayout {
     public void setDialog(Dialog dialog) {
         this.text.setText(dialog.getBody());
         this.name.setText(dialog.getUsername());
-        this.date.setText(UserParser.getParsedDate(dialog.getDate()).toString("dd.MM - HH:mm"));
+        this.date.setText(getParsedDate(dialog.getDate()).toString("dd.MM - HH:mm"));
         this.text.setBackgroundColor(!dialog.getReadState() ? Color.LTGRAY : Color.TRANSPARENT);
         if ((!dialog.getUserPhotoLink_200().isEmpty()) && dialog.getUserPhotoLink_200() != null) {
             PhotoLoader.loadPhoto(getContext(), dialog.getUserPhotoLink_200(), this.photo);
         }
-
     }
 
+    public DateTime getParsedDate(long date) {
+        DateTime dateTime = new DateTime(date * 1000L + TimeZone.getDefault().getRawOffset());
+        return dateTime;
+    }
 }

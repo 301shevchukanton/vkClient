@@ -20,11 +20,6 @@ public class RequestCreator {
                 "first_name,last_name,photo_200,photo_max_orig"));
     }
 
-    public static VKRequest getBigUserPhoto(String userId) {
-        return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
-                "photo_max_orig"));
-    }
-
     public static VKRequest getFullUserById(String userId) {
         return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
                 "id,first_name,last_name,bdate,city,photo_200,photo_max_orig,online," +

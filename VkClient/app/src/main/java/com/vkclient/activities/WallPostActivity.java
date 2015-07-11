@@ -23,14 +23,13 @@ import com.vk.sdk.api.model.VKApiPhoto;
 import com.vk.sdk.api.model.VKAttachments;
 import com.vk.sdk.api.model.VKPhotoArray;
 import com.vk.sdk.api.model.VKWallPostResult;
-import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.AbstractRequestListener;
+import com.vkclient.entities.RequestCreator;
+import com.vkclient.entities.User;
+import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.AlertBuilder;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -143,15 +142,10 @@ public class WallPostActivity extends VkSdkActivity {
         }
 
         private void setUserInfo(VKResponse response) {
-            try {
-                Logger.logDebug("profid", "seting inf " + profileId);
-                JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
-                if (r.getString("last_name") != null && r.getString("first_name") != null)
-                    ((TextView) findViewById(R.id.tvPostName)).setText(r.getString("first_name") + " " + r.getString("last_name"));
-                PhotoLoader.loadPhoto(getApplicationContext(), r.getString("photo_200"), (ImageView) findViewById(R.id.ivPostPhoto));
-            } catch (JSONException e) {
-                Log.e(e.getMessage(), e.toString());
-            }
+            Logger.logDebug("profid", "seting inf " + profileId);
+            User user = new UserParser().parse(response);
+            ((TextView) findViewById(R.id.tvPostName)).setText(user.getName());
+            PhotoLoader.loadPhoto(getApplicationContext(), user.getPhoto(), (ImageView) findViewById(R.id.ivPostPhoto));
         }
     };
     private VKRequest.VKRequestListener wallPostRequestListener = new VKRequest.VKRequestListener() {

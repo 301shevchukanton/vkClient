@@ -24,7 +24,7 @@ public class DialogsListAdapter extends ArrayAdapter<Dialog> {
         if (convertView == null) {
             convertView = new DialogListItemView(getContext());
         }
-        ((DialogListItemView)convertView).setDialog(getItem(position));
+        ((DialogListItemView) convertView).setDialog(getItem(position));
         return convertView;
     }
 }

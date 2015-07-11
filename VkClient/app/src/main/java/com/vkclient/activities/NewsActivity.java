@@ -14,8 +14,6 @@ import com.vkclient.entities.News;
 import com.vkclient.entities.RequestCreator;
 import com.vkclient.parsers.NewsParser;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,12 +56,7 @@ public class NewsActivity extends VkSdkActivity {
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
             news.clear();
-            try {
-                news.addAll(new NewsParser().getNewsList(response));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+            news.addAll(new NewsParser().getNewsList(response));
             listAdapter.notifyDataSetChanged();
         }
     };

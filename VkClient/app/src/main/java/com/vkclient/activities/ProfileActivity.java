@@ -2,7 +2,6 @@ package com.vkclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -23,9 +22,6 @@ import com.vkclient.parsers.PhotoFeedParser;
 import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,14 +73,14 @@ public class ProfileActivity extends VkSdkActivity {
     }
 
     private void startLoading() {
-        if (profileInfoRequest != null) {
-            profileInfoRequest.cancel();
+        if (this.profileInfoRequest != null) {
+            this.profileInfoRequest.cancel();
         }
         Logger.logDebug("profid", "onComplete " + profileId);
-        profileInfoRequest = RequestCreator.getFullUserById(profileId);
-        profileInfoRequest.executeWithListener(profileRequestListener);
-        profilePhotoRequest = RequestCreator.getPhotosOfUser(profileId);
-        profilePhotoRequest.executeWithListener(getPhotoFeedRequestListener);
+        this.profileInfoRequest = RequestCreator.getFullUserById(profileId);
+        this.profileInfoRequest.executeWithListener(this.profileRequestListener);
+        this.profilePhotoRequest = RequestCreator.getPhotosOfUser(profileId);
+        this.profilePhotoRequest.executeWithListener(this.getPhotoFeedRequestListener);
     }
 
     private final AbstractRequestListener profileRequestListener = new AbstractRequestListener() {
@@ -123,16 +119,11 @@ public class ProfileActivity extends VkSdkActivity {
         }
 
         private void setUserInfo(VKResponse response) {
-            try {
-                JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
-                User user = new UserParser(r).parse();
-                setLayoutsVisibility(user);
-                profileId = String.valueOf(user.getId());
-                if (user.getPhoto() != null) {
-                    PhotoLoader.loadPhoto(getApplicationContext(), user.getPhoto(), (ImageView) findViewById(R.id.ivProfilePhoto));
-                }
-            } catch (JSONException e) {
-                Log.e(e.getMessage(), e.toString());
+            User user = new UserParser().parse(response);
+            setLayoutsVisibility(user);
+            profileId = String.valueOf(user.getId());
+            if (user.getPhoto() != null) {
+                PhotoLoader.loadPhoto(getApplicationContext(), user.getPhoto(), (ImageView) findViewById(R.id.ivProfilePhoto));
             }
         }
     };
@@ -142,12 +133,7 @@ public class ProfileActivity extends VkSdkActivity {
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
             usersPhoto.clear();
-            try {
-                usersPhoto.addAll(new PhotoFeedParser(response.json).getPhotoFeedList());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+            usersPhoto.addAll(new PhotoFeedParser().getPhotoFeedList(response));
             listAdapter.notifyDataSetChanged();
         }
     };
@@ -179,11 +165,11 @@ public class ProfileActivity extends VkSdkActivity {
     };
 
     public void startUserPhotoViewCall(String userId) {
-        if (currentRequest != null) {
-            currentRequest.cancel();
+        if (this.currentRequest != null) {
+            this.currentRequest.cancel();
         }
-        currentRequest = RequestCreator.getBigUserPhoto(userId);
-        currentRequest.executeWithListener(bigPhotoRequestListener);
+        this.currentRequest = RequestCreator.getUserById(userId);
+        this.currentRequest.executeWithListener(this.bigPhotoRequestListener);
     }
 
     private void photoViewCall(String photoUrl) {
@@ -200,14 +186,7 @@ public class ProfileActivity extends VkSdkActivity {
         }
 
         private void setPhoto(VKResponse response) {
-            try {
-                JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
-                if (r.getString("photo_max_orig") != null) {
-                    photoViewCall(r.getString("photo_max_orig"));
-                }
-            } catch (JSONException e) {
-                Log.e(e.getMessage(), e.toString());
-            }
+            photoViewCall(new UserParser().parseUserName(response).getPhotoMax());
         }
     };
     private final AdapterView.OnItemClickListener photoFeedClickListener = new AdapterView.OnItemClickListener() {

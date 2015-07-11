@@ -14,12 +14,14 @@ import com.meetme.android.horizontallistview.HorizontalListView;
 import com.vkclient.activities.PhotoViewActivity;
 import com.vkclient.entities.Message;
 import com.vkclient.entities.PhotoFeed;
-import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MessagesListAdapter extends ArrayAdapter<Message> {
     private Context context;
@@ -50,7 +52,7 @@ public class MessagesListAdapter extends ArrayAdapter<Message> {
         } catch (Exception e) {
             Logger.logError("Image loading error", e.toString());
         }
-        String Date = UserParser.getParsedDate(message.getDate()).toString("dd.MM - HH:mm");
+        String Date = getParsedDate(message.getDate()).toString("dd.MM - HH:mm");
         ((TextView) view.findViewById(R.id.tvSingleDialogDate)).setText(Date);
         ((TextView) view.findViewById(R.id.tvSingleDialogText)).setText(message.getBody());
         final List<PhotoFeed> messagesPhotos = new ArrayList<>();
@@ -77,6 +79,11 @@ public class MessagesListAdapter extends ArrayAdapter<Message> {
         Intent i = new Intent(context, PhotoViewActivity.class);
         i.putExtra("photo", photoUrl);
         context.startActivity(i);
+    }
+
+    private DateTime getParsedDate(long date) {
+        DateTime dateTime = new DateTime(date * 1000L + TimeZone.getDefault().getRawOffset());
+        return dateTime;
     }
 
 }
