@@ -19,11 +19,11 @@ import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUserFull;
 import com.vk.sdk.api.model.VKUsersArray;
 import com.vkclient.adapters.FriendListAdapter;
-import com.vkclient.entities.AbstractRequestListener;
-import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.User;
+import com.vkclient.listeners.AbstractRequestListener;
 import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
+import com.vkclient.supports.RequestCreator;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

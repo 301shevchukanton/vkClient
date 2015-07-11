@@ -9,10 +9,10 @@ import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.adapters.NewsListAdapter;
-import com.vkclient.entities.AbstractRequestListener;
 import com.vkclient.entities.News;
-import com.vkclient.entities.RequestCreator;
+import com.vkclient.listeners.AbstractRequestListener;
 import com.vkclient.parsers.NewsParser;
+import com.vkclient.supports.RequestCreator;
 
 import java.util.ArrayList;
 import java.util.List;

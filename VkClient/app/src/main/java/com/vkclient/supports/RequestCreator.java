@@ -1,4 +1,4 @@
-package com.vkclient.entities;
+package com.vkclient.supports;
 
 import android.graphics.Bitmap;
 

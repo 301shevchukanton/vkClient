@@ -1,4 +1,4 @@
-package com.vkclient.entities;
+package com.vkclient.listeners;
 
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;

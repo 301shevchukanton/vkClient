@@ -23,13 +23,13 @@ import com.vk.sdk.api.model.VKApiPhoto;
 import com.vk.sdk.api.model.VKAttachments;
 import com.vk.sdk.api.model.VKPhotoArray;
 import com.vk.sdk.api.model.VKWallPostResult;
-import com.vkclient.entities.AbstractRequestListener;
-import com.vkclient.entities.RequestCreator;
 import com.vkclient.entities.User;
+import com.vkclient.listeners.AbstractRequestListener;
 import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.AlertBuilder;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
+import com.vkclient.supports.RequestCreator;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
