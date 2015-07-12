@@ -15,26 +15,31 @@ public class RequestCreator {
     static final String PHOTOS_COUNT = "100";
     static final String SORT_BY = "hints";
     static final String FRIENDS_REQUEST_PARAMS = "id,first_name,last_name,bdate,photo_200,photo_max";
+    public static final String USER_BY_ID_PARAMS = "first_name,last_name,photo_200,photo_max_orig";
+    public static final String FULL_USER_PARAMS = "id,first_name,last_name,bdate,city,photo_200,photo_max_orig,online," +
+            "online_mobile,lists,domain,has_mobile,contacts,connections,site,education," +
+            "universities,schools,can_post,can_see_all_posts,can_see_audio,can_write_private_message," +
+            "status,last_seen,common_count,relation,relatives,counters,langs,personal";
+    public static final String NEWS_COUNT = "100";
+    public static final String DIALOGS_COUNT = "30";
+    public static final String DIALOGS_PRIVIEW_LENGTH = "50";
 
     public static VKRequest getUserById(String userId) {
         return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
-                "first_name,last_name,photo_200,photo_max_orig"));
+                USER_BY_ID_PARAMS));
     }
 
     public static VKRequest getFullUserById(String userId) {
         return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
-                "id,first_name,last_name,bdate,city,photo_200,photo_max_orig,online," +
-                        "online_mobile,lists,domain,has_mobile,contacts,connections,site,education," +
-                        "universities,schools,can_post,can_see_all_posts,can_see_audio,can_write_private_message," +
-                        "status,last_seen,common_count,relation,relatives,counters,langs,personal"));
+                FULL_USER_PARAMS));
     }
 
     public static VKRequest getNewsFeed() {
-        return new VKRequest("newsfeed.get", VKParameters.from(VKApiConst.COUNT, "100", "filters", "post", VKApiConst.FIELDS, "photo_200"), VKRequest.HttpMethod.GET);
+        return new VKRequest("newsfeed.get", VKParameters.from(VKApiConst.COUNT, NEWS_COUNT, "filters", "post", VKApiConst.FIELDS, "photo_200"), VKRequest.HttpMethod.GET);
     }
 
     public static VKRequest getDialogs() {
-        return new VKRequest("messages.getDialogs", VKParameters.from(VKApiConst.COUNT, "30", "preview_length", "50"), VKRequest.HttpMethod.GET);
+        return new VKRequest("messages.getDialogs", VKParameters.from(VKApiConst.COUNT, DIALOGS_COUNT, "preview_length", DIALOGS_PRIVIEW_LENGTH), VKRequest.HttpMethod.GET);
     }
 
     public static VKRequest getHistory(String count, String profileId) {
