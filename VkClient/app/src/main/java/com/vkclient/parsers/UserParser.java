@@ -10,7 +10,7 @@ public class UserParser {
 
     public User parse(VKResponse response) {
         try {
-            JSONObject object=response.json.getJSONArray("response").getJSONObject(0);
+            JSONObject object = response.json.getJSONArray("response").getJSONObject(0);
             User result = new User();
             result.setId(Integer.parseInt(object.getString("id")));
             if (object.getString("last_name") != null && object.getString("first_name") != null) {
@@ -41,7 +41,9 @@ public class UserParser {
             result.setName(object.getJSONArray("response").getJSONObject(0).getString("first_name") + " " +
                     object.getJSONArray("response").getJSONObject(0).getString("last_name"));
             result.setPhotoMax(object.getJSONArray("response").getJSONObject(0).getString("photo_max_orig"));
-            //result.setPhoto(object.getJSONArray("response").getJSONObject(0).getString("photo_200"));
+            if (object.getJSONArray("response").getJSONObject(0).has("photo_200")) {
+                result.setPhoto(object.getJSONArray("response").getJSONObject(0).getString("photo_200"));
+            }
             return result;
         } catch (JSONException e) {
             return null;

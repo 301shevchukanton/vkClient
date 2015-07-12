@@ -32,7 +32,8 @@ public class SingleDialogActivity extends VkSdkActivity {
     private VKRequest currentRequest;
     private List<Message> messages = new ArrayList<>();
     private MessagesListAdapter listAdapter;
-
+    private VKRequest ownRequest = null;
+    private VKRequest fromRequest = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId = getIntent().getStringExtra("userid");
@@ -76,8 +77,8 @@ public class SingleDialogActivity extends VkSdkActivity {
         @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
-            VKRequest ownRequest = null;
-            VKRequest fromRequest = null;
+          ownRequest = null;
+          fromRequest = null;
             messages.addAll(new MessageParser().getMessagesList(response));
             for (int i = 0; i < messages.size(); i++) {
                 ownRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getUser_id()));
@@ -86,19 +87,15 @@ public class SingleDialogActivity extends VkSdkActivity {
                 }
             }
             if (ownRequest != null) ownRequestExecution(ownRequest, messages.size());
-            if (fromRequest != null) fromRequestExecution(fromRequest, messages.size());
-            listAdapter.notifyDataSetChanged();
-        }
-
-        private void ownRequestExecution(VKRequest request, final int arrayLength) {
-            request.executeWithListener(new SingleDialogOwnerRequest(arrayLength));
-        }
-
-        private void fromRequestExecution(VKRequest request, final int arrayLength) {
-            request.executeWithListener(new SingleDialogFromRequest(arrayLength));
         }
     };
+    private void ownRequestExecution(VKRequest request, final int arrayLength) {
+        request.executeWithListener(new SingleDialogOwnerRequest(arrayLength));
+    }
 
+    private void fromRequestExecution(VKRequest request, final int arrayLength) {
+        request.executeWithListener(new SingleDialogFromRequest(arrayLength));
+    }
     final class SingleDialogOwnerRequest extends AbstractRequestListener {
         private int arrayLength;
 
@@ -114,14 +111,15 @@ public class SingleDialogActivity extends VkSdkActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            listAdapter.notifyDataSetChanged();
+            if (fromRequest != null) fromRequestExecution(fromRequest, messages.size());
+            else listAdapter.notifyDataSetChanged();
         }
 
         private void setMessageInfo(VKResponse response) throws JSONException {
             User responseUser = new UserParser().parseUserName(response);
             for (int i = 0; i < arrayLength; i++) {
                 messages.get(i).setUsername(responseUser.getName());
-                messages.get(i).setUserPhotoLink_200(responseUser.getPhotoMax());
+                messages.get(i).setUserPhotoLink_200(responseUser.getPhoto());
             }
         }
     }
@@ -138,6 +136,7 @@ public class SingleDialogActivity extends VkSdkActivity {
             super.onComplete(response);
             try {
                 setMessageInfo(response);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

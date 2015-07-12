@@ -2,6 +2,8 @@ package com.vkclient.parsers;
 
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.News;
+import com.vkclient.entities.PhotoFeed;
+import com.vkclient.supports.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,12 +15,35 @@ import java.util.List;
 public class NewsParser {
     public static News parse(JSONObject object) {
         News result = null;
+        List<PhotoFeed> messagesPhotos = new ArrayList<>();
+        try {  JSONObject messageJSON = object;
+        if (messageJSON.has("attachments")) {
+            JSONArray attachmentsJSON = messageJSON.getJSONArray("attachments");
+            for (int i = 0; i < attachmentsJSON.length(); i++) {
+
+                if (attachmentsJSON.getJSONObject(i).has("photo")) {
+                    JSONObject photoJson = attachmentsJSON.getJSONObject(i).getJSONObject("photo");
+                    Logger.logDebug("Dialogs_Photos:", attachmentsJSON.getJSONObject(i).getString("photo"));
+                    messagesPhotos.add(new PhotoFeed(
+                            photoJson.getString("id"),
+                            photoJson.getString("album_id"),
+                            photoJson.getString("owner_id"),
+                            "",
+                            photoJson.getString("photo_75"),
+                            photoJson.getString("photo_604"),
+                            photoJson.getString("text"),
+                            ""));
+                }
+            } }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         try {
             result = new News(object.getString("type"),
                     object.getString("source_id"),
                     Long.parseLong(object.getString("date")),
                     object.getString("post_id"),
-                    object.getString("post_type"));
+                    object.getString("post_type"),messagesPhotos);
             result.setText(object.getString("text"));
             result.setLikesCount(object.getJSONObject("likes").getString("count"));
             result.setRepostsCount(object.getJSONObject("reposts").getString("count"));

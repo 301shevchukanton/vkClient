@@ -16,44 +16,54 @@ import java.util.List;
 
 public class MessageParser {
 
-    private Dialog getDialog(JSONObject object, int index) throws JSONException {
-        JSONObject dialogObject = object.getJSONObject("response").getJSONArray("items").getJSONObject(index).getJSONObject("message");
-        return new Dialog(Integer.parseInt(dialogObject.getString("id")),
-                Long.parseLong(dialogObject.getString("date")),
-                Integer.parseInt(dialogObject.getString("user_id")),
-                dialogObject.getString("read_state").equals("1"),
-                dialogObject.getString("title"),
-                dialogObject.getString("body"));
+    private Dialog getDialog(JSONObject object, int index) {
+        try {
+            JSONObject dialogObject = object.getJSONObject("response").getJSONArray("items").getJSONObject(index).getJSONObject("message");
+            return new Dialog(Integer.parseInt(dialogObject.getString("id")),
+                    Long.parseLong(dialogObject.getString("date")),
+                    Integer.parseInt(dialogObject.getString("user_id")),
+                    dialogObject.getString("read_state").equals("1"),
+                    dialogObject.getString("title"),
+                    dialogObject.getString("body"));
+        } catch (JSONException e) {
+            Logger.logError("MessageParserError:", e.toString());
+            return null;
+        }
     }
 
-    private Message getMessage(JSONObject object, int index) throws JSONException {
-        JSONObject messageJSON = object.getJSONObject("response").getJSONArray("items").getJSONObject(index);
-        List<PhotoFeed> messagesPhotos = new ArrayList<>();
-        if (messageJSON.has("attachments")) {
-            JSONArray attachmentsJSON = messageJSON.getJSONArray("attachments");
-            for (int i = 0; i < attachmentsJSON.length(); i++) {
-                if (attachmentsJSON.getJSONObject(i).has("photo")) {
-                    JSONObject photoJson = attachmentsJSON.getJSONObject(i).getJSONObject("photo");
-                    Logger.logDebug("Dialogs_Photos:", attachmentsJSON.getJSONObject(i).getString("photo"));
-                    messagesPhotos.add(new PhotoFeed(
-                            photoJson.getString("id"),
-                            photoJson.getString("album_id"),
-                            photoJson.getString("owner_id"),
-                            "",
-                            photoJson.getString("photo_75"),
-                            photoJson.getString("photo_604"),
-                            photoJson.getString("text"),
-                            ""));
+    private Message getMessage(JSONObject object, int index) {
+        try {
+            JSONObject messageJSON = object.getJSONObject("response").getJSONArray("items").getJSONObject(index);
+            List<PhotoFeed> messagesPhotos = new ArrayList<>();
+            if (messageJSON.has("attachments")) {
+                JSONArray attachmentsJSON = messageJSON.getJSONArray("attachments");
+                for (int i = 0; i < attachmentsJSON.length(); i++) {
+                    if (attachmentsJSON.getJSONObject(i).has("photo")) {
+                        JSONObject photoJson = attachmentsJSON.getJSONObject(i).getJSONObject("photo");
+                        Logger.logDebug("Dialogs_Photos:", attachmentsJSON.getJSONObject(i).getString("photo"));
+                        messagesPhotos.add(new PhotoFeed(
+                                photoJson.getString("id"),
+                                photoJson.getString("album_id"),
+                                photoJson.getString("owner_id"),
+                                "",
+                                photoJson.getString("photo_75"),
+                                photoJson.getString("photo_604"),
+                                photoJson.getString("text"),
+                                ""));
+                    }
                 }
             }
+            return new Message(Integer.parseInt(messageJSON.getString("id")),
+                    Integer.parseInt(messageJSON.getString("user_id")),
+                    Integer.parseInt(messageJSON.getString("from_id")),
+                    Long.parseLong(messageJSON.getString("date")),
+                    messageJSON.getString("read_state").equals("1"),
+                    messageJSON.getString("body"), messagesPhotos
+            );
+        } catch (JSONException e) {
+            Logger.logError("MessageParserError:", e.toString());
+            return null;
         }
-        return new Message(Integer.parseInt(messageJSON.getString("id")),
-                Integer.parseInt(messageJSON.getString("user_id")),
-                Integer.parseInt(messageJSON.getString("from_id")),
-                Long.parseLong(messageJSON.getString("date")),
-                messageJSON.getString("read_state").equals("1"),
-                messageJSON.getString("body"), messagesPhotos
-        );
     }
 
     public List<Message> getMessagesList(VKResponse response) {
@@ -65,15 +75,20 @@ public class MessageParser {
             }
             return result;
         } catch (JSONException e) {
+            Logger.logError("MessageParserError:", e.toString());
             return null;
         }
     }
 
-    public List<Dialog> getDialogsList(VKResponse response) throws JSONException {
+    public List<Dialog> getDialogsList(VKResponse response) {
         JSONObject object = response.json;
         List<Dialog> result = new ArrayList<>();
-        for (int i = 0; i < object.getJSONObject("response").getJSONArray("items").length(); i++) {
-            result.add(this.getDialog(object, i));
+        try {
+            for (int i = 0; i < object.getJSONObject("response").getJSONArray("items").length(); i++) {
+                result.add(this.getDialog(object, i));
+            }
+        } catch (JSONException e) {
+            Logger.logError("MessageParserError:", e.toString());
         }
         return result;
     }

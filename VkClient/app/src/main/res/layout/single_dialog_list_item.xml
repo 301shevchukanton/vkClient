@@ -32,12 +32,11 @@
     <ImageView
         style="@style/PhotoPreview"
         android:id="@+id/tvSingleDialogPhoto"
-        android:layout_alignTop="@+id/tvSingleDialogName"
-        android:src="@drawable/ic_user75" />
+        android:layout_alignTop="@+id/tvSingleDialogName" />
     <com.meetme.android.horizontallistview.HorizontalListView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:widget="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/lvDialogsPhoto"
+        android:id="@+id/lvMessagesPhoto"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:divider="#878787"

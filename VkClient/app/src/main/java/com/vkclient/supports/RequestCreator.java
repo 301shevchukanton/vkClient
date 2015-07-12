@@ -11,7 +11,8 @@ import com.vk.sdk.api.photo.VKUploadImage;
 
 public class RequestCreator {
 
-    static final String FRIENDS_COUNT = "222";
+    static final String FRIENDS_COUNT = "500";
+    static final String PHOTOS_COUNT = "100";
     static final String SORT_BY = "hints";
     static final String FRIENDS_REQUEST_PARAMS = "id,first_name,last_name,bdate,photo_200,photo_max";
 
@@ -29,7 +30,7 @@ public class RequestCreator {
     }
 
     public static VKRequest getNewsFeed() {
-        return new VKRequest("newsfeed.get", VKParameters.from(VKApiConst.COUNT, "26", "filters", "post", VKApiConst.FIELDS, "photo_200"), VKRequest.HttpMethod.GET);
+        return new VKRequest("newsfeed.get", VKParameters.from(VKApiConst.COUNT, "100", "filters", "post", VKApiConst.FIELDS, "photo_200"), VKRequest.HttpMethod.GET);
     }
 
     public static VKRequest getDialogs() {
@@ -61,6 +62,6 @@ public class RequestCreator {
     }
 
     public static VKRequest getPhotosOfUser(String userId) {
-        return new VKRequest("photos.getAll", VKParameters.from("owner_id", userId, "extended", "1", "photo_sizes", "0"), VKRequest.HttpMethod.GET);
+        return new VKRequest("photos.getAll", VKParameters.from("owner_id", userId, "extended", "1","count",PHOTOS_COUNT, "photo_sizes", "0"), VKRequest.HttpMethod.GET);
     }
 }

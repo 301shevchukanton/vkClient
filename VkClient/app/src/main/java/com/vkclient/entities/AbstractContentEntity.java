@@ -29,10 +29,6 @@ public abstract class AbstractContentEntity {
         return date;
     }
 
-    public boolean isReadState() {
-        return readState;
-    }
-
     public String getBody() {
         return body;
     }
@@ -47,8 +43,8 @@ public abstract class AbstractContentEntity {
 
     public void setDialogUserInfo(User user) {
         this.username = user.getName();
-        if (user.getPhotoMax() != null) {
-            this.userPhotoLink_200 = user.getPhotoMax();
+        if (user.getPhoto() != null) {
+            this.userPhotoLink_200 = user.getPhoto();
         }
     }
 

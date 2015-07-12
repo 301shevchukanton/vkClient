@@ -1,10 +1,6 @@
 package com.vkclient.adapters;
 
-import java.util.List;
-
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -12,14 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
-import com.vkclient.activities.FriendsListActivity;
-import com.vkclient.activities.PhotoViewActivity;
 import com.vkclient.entities.User;
-import com.squareup.picasso.Picasso;
 import com.vkclient.supports.PhotoLoader;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+
+import java.util.List;
 
 public class FriendListAdapter extends ArrayAdapter<User> {
     public interface OnPhotoClickListener {
@@ -39,6 +34,7 @@ public class FriendListAdapter extends ArrayAdapter<User> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
+
         ImageView friendPhoto = (ImageView) view.findViewById(R.id.ivFriendPhoto);
         final User user = getItem(position);
         ((TextView) view.findViewById(R.id.tvFriendName)).setText(user.getName());

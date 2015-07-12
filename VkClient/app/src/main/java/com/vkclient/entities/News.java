@@ -1,8 +1,7 @@
 package com.vkclient.entities;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class News extends AbstractContentEntity {
     private String sourceId;
@@ -13,13 +12,15 @@ public class News extends AbstractContentEntity {
     private String sourceName = "";
     private String likesCount = "";
     private String repostsCount = "";
+    private List<PhotoFeed> postPhotos = new ArrayList<>();
 
-    public News(String type, String sourceId, long date, String postId, String postType) {
+    public News(String type, String sourceId, long date, String postId, String postType, List<PhotoFeed> postPhotos) {
         this.sourceId = sourceId;
         this.postId = postId;
         this.date = date;
         this.type = type;
         this.postType = postType;
+        this.postPhotos.addAll(postPhotos);
     }
 
     public void setSourceId(String sourceId) {
@@ -84,5 +85,13 @@ public class News extends AbstractContentEntity {
 
     public String getRepostsCount() {
         return repostsCount;
+    }
+
+    public void setPostPhotos(List<PhotoFeed> postPhotos) {
+        this.postPhotos = postPhotos;
+    }
+
+    public List<PhotoFeed> getPostPhotos() {
+        return postPhotos;
     }
 }

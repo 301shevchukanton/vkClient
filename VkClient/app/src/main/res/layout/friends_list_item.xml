@@ -15,7 +15,7 @@
         android:id="@+id/tvFriendBirthDate"
         android:paddingTop="10dp" />
 
-    <ImageView
+        <ImageView
         style="@style/PhotoPreview"
         android:id="@+id/ivFriendPhoto"
         android:layout_alignTop="@+id/tvFriendName"

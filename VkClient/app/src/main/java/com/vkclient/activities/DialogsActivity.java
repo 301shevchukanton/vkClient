@@ -42,16 +42,9 @@ public class DialogsActivity extends VkSdkActivity {
         setContentView(R.layout.activity_dialogs);
         super.onCreateDrawer();
         listView = (ListView) findViewById(R.id.lvDialogs);
-        Object items = getLastNonConfigurationInstance();
-        if (items != null) {
-            this.dialogs = ((List<Dialog>) items);
-            this.listAdapter = new DialogsListAdapter(this, this.dialogs);
-            this.listView.setAdapter(this.listAdapter);
-            this.listAdapter.notifyDataSetChanged();
-        } else if (VKSdk.wakeUpSession()) {
+    if (VKSdk.wakeUpSession()) {
             startLoading();
         }
-
         this.listView.setOnItemClickListener(this.dialogClickListener);
         this.listAdapter = new DialogsListAdapter(this, this.dialogs);
         this.listView.setAdapter(this.listAdapter);
@@ -77,7 +70,6 @@ public class DialogsActivity extends VkSdkActivity {
             super.onComplete(response);
             Logger.logDebug("profid", response.responseString);
             dialogs.clear();
-            try {
                 dialogs.addAll(new MessageParser().getDialogsList(response));
                 VKRequest[] requests = new VKRequest[dialogs.size()];
                 for (int i = 0; i < dialogs.size(); i++) {
@@ -85,10 +77,6 @@ public class DialogsActivity extends VkSdkActivity {
                 }
                 VKBatchRequest batch = new VKBatchRequest(requests);
                 batch.executeWithListener(batchListener);
-            } catch (Exception e) {
-                Logger.logDebug("profid", e.toString());
-            }
-            listAdapter.notifyDataSetChanged();
         }
     };
     private final VKBatchRequest.VKBatchRequestListener batchListener = new VKBatchRequest.VKBatchRequestListener() {
