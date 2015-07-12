@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
-   style="@style/TwoLinesItemStyle">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/TwoLinesItemStyle">
 
     <TextView
+        android:id="@+id/tvFriendName"
         style="@style/ZeroPaddingLayoutStyle"
         android:layout_marginTop="8dp"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:id="@+id/tvFriendName"/>
+        android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
-        style="@style/ZeroPaddingLayoutStyle"
-        android:layout_below="@id/tvFriendName"
-
         android:id="@+id/tvFriendBirthDate"
+        style="@style/ZeroPaddingLayoutStyle"
+
+        android:layout_below="@id/tvFriendName"
         android:paddingTop="10dp" />
 
-        <ImageView
-        style="@style/PhotoPreview"
+    <ImageView
         android:id="@+id/ivFriendPhoto"
+        style="@style/PhotoPreview"
         android:layout_alignTop="@+id/tvFriendName"
         android:src="@drawable/ic_user75" />
 
-</TwoLineListItem>
+</RelativeLayout>

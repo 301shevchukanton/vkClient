@@ -4,15 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.entities.User;
-import com.vkclient.supports.PhotoLoader;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
+import com.vkclient.views.FriendsListItemView;
 
 import java.util.List;
 
@@ -33,29 +28,12 @@ public class FriendListAdapter extends ArrayAdapter<User> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = super.getView(position, convertView, parent);
-
-        ImageView friendPhoto = (ImageView) view.findViewById(R.id.ivFriendPhoto);
-        final User user = getItem(position);
-        ((TextView) view.findViewById(R.id.tvFriendName)).setText(user.getName());
-        friendPhoto.setOnClickListener(
-                new ImageView.OnClickListener() {
-                    public void onClick(View v) {
-                        if (FriendListAdapter.this.photoClickListener != null) {
-                            photoClickListener.onClick(String.valueOf(user.getId()));
-                        }
-                    }
-                }
-        );
-        friendPhoto.setImageResource(R.drawable.ic_user100);
-        PhotoLoader.loadPhoto(getContext(), user.getPhoto(), (ImageView) view.findViewById(R.id.ivFriendPhoto));
-        String birthDateStr = String.valueOf(R.string.not_set);
-        DateTime dt = user.getBirthDate();
-        if (dt != null) {
-            birthDateStr = dt.toString(DateTimeFormat.forPattern(user.getDateFormat()));
+        if (convertView == null) {
+            convertView = new FriendsListItemView(getContext());
         }
-        ((TextView) view.findViewById(R.id.tvFriendBirthDate)).setText(birthDateStr);
-        return view;
+        ((FriendsListItemView) convertView).setOnPhotoClickListener(photoClickListener);
+        ((FriendsListItemView) convertView).setFriend(getItem(position));
+        return convertView;
     }
 
 }
