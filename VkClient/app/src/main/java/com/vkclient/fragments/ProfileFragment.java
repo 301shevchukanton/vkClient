@@ -3,6 +3,7 @@ package com.vkclient.fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,6 @@ public class ProfileFragment extends Fragment {
     private PhotoFeedAdapter listAdapter;
     private VKRequest currentRequest;
     private VKRequest profileInfoRequest;
-    private View view;
     private VKRequest profilePhotoRequest;
     private String profileId;
     public HorizontalListView listView;
@@ -48,16 +48,15 @@ public class ProfileFragment extends Fragment {
     private ProfileInfoLayoutView relationshipsView;
     private ProfileInfoLayoutView educationView;
     private ProfileInfoLayoutView languagesView;
+    private ImageView profilePhoto;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewHierarchy = inflater.inflate(R.layout.fragment_profile, container, false);
-        view = viewHierarchy;
         findProfileInfoViews(viewHierarchy);
         setUserInfoCaptions();
         this.listAdapter = new PhotoFeedAdapter(getActivity(), this.usersPhoto, R.layout.photo_feed_item, R.id.ivPhotoFeedImage);
-        this.listView = (HorizontalListView) viewHierarchy.findViewById(R.id.lvPhotoFeed);
         this.listView.setOnItemClickListener(photoFeedClickListener);
         this.listView.setAdapter(this.listAdapter);
         profileId = getActivity().getIntent().getStringExtra("id");
@@ -67,6 +66,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void findProfileInfoViews(View viewHierarchy) {
+        this.listView = (HorizontalListView) viewHierarchy.findViewById(R.id.lvPhotoFeed);
         this.userName = (TextView) viewHierarchy.findViewById(R.id.tvProfileName);
         this.userStatus = (TextView) viewHierarchy.findViewById(R.id.tvProfileStatus);
         this.birthDateView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piBirthDate);
@@ -74,6 +74,7 @@ public class ProfileFragment extends Fragment {
         this.relationshipsView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piRelationships);
         this.educationView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piEducation);
         this.languagesView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piLanguages);
+        this.profilePhoto = (ImageView) viewHierarchy.findViewById(R.id.ivProfilePhoto);
     }
 
     private void setUserInfoCaptions() {
@@ -175,31 +176,31 @@ public class ProfileFragment extends Fragment {
             setUserInfo(response);
         }
 
-        private void setLayoutState(String data, ProfileInfoLayoutView profileInfoView) {
-            if (data != null && !data.equals("")) {
+        private void setViewText(String data, ProfileInfoLayoutView profileInfoView) {
+            if (!TextUtils.isEmpty(data)) {
                 profileInfoView.setValue(data);
             } else {
                 profileInfoView.setVisibility(View.GONE);
             }
         }
 
-        private void setLayoutsVisibility(User u) {
-            userName.setText(u.getName());
-            userStatus.setText(u.getStatus());
-            setLayoutState(u.getBdDateString(), birthDateView);
-            setLayoutState(u.getCity(), townView);
-            setLayoutState(u.getRelationship(), relationshipsView);
-            setLayoutState(u.getUnivers(), educationView);
-            setLayoutState(u.getLangs(), languagesView);
-        }
-
         private void setUserInfo(VKResponse response) {
             User user = new UserParser().parse(response);
-            setLayoutsVisibility(user);
+            setViewsData(user);
             profileId = String.valueOf(user.getId());
             if (user.getPhoto() != null) {
-                PhotoLoader.loadPhoto(getActivity().getApplicationContext(), user.getPhoto(), (ImageView) view.findViewById(R.id.ivProfilePhoto));
+                PhotoLoader.loadPhoto(getActivity().getApplicationContext(), user.getPhoto(), profilePhoto);
             }
+        }
+
+        private void setViewsData(User user) {
+            userName.setText(user.getName());
+            userStatus.setText(user.getStatus());
+            setViewText(user.getBdDateString(), birthDateView);
+            setViewText(user.getCity(), townView);
+            setViewText(user.getRelationship(), relationshipsView);
+            setViewText(user.getUnivers(), educationView);
+            setViewText(user.getLangs(), languagesView);
         }
     };
 
