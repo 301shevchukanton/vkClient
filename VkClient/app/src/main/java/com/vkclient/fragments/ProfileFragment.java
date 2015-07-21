@@ -27,25 +27,35 @@ import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 import com.vkclient.supports.RequestCreator;
+import com.vkclient.views.ProfileInfoLayoutView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
-    public View view;
     private List<PhotoFeed> usersPhoto = new ArrayList<>();
     private PhotoFeedAdapter listAdapter;
     private VKRequest currentRequest;
     private VKRequest profileInfoRequest;
+    private View view;
     private VKRequest profilePhotoRequest;
     private String profileId;
     public HorizontalListView listView;
+    private TextView userName;
+    private TextView userStatus;
+    private ProfileInfoLayoutView birthDateView;
+    private ProfileInfoLayoutView townView;
+    private ProfileInfoLayoutView relationshipsView;
+    private ProfileInfoLayoutView educationView;
+    private ProfileInfoLayoutView languagesView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewHierarchy = inflater.inflate(R.layout.fragment_profile, container, false);
         view = viewHierarchy;
+        findProfileInfoViews(viewHierarchy);
+        setUserInfoCaptions();
         this.listAdapter = new PhotoFeedAdapter(getActivity(), this.usersPhoto, R.layout.photo_feed_item, R.id.ivPhotoFeedImage);
         this.listView = (HorizontalListView) viewHierarchy.findViewById(R.id.lvPhotoFeed);
         this.listView.setOnItemClickListener(photoFeedClickListener);
@@ -54,6 +64,24 @@ public class ProfileFragment extends Fragment {
         startLoading();
         setupOnClickListeners(profileClickListener, viewHierarchy);
         return viewHierarchy;
+    }
+
+    private void findProfileInfoViews(View viewHierarchy) {
+        this.userName = (TextView) viewHierarchy.findViewById(R.id.tvProfileName);
+        this.userStatus = (TextView) viewHierarchy.findViewById(R.id.tvProfileStatus);
+        this.birthDateView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piBirthDate);
+        this.townView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piTown);
+        this.relationshipsView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piRelationships);
+        this.educationView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piEducation);
+        this.languagesView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piLanguages);
+    }
+
+    private void setUserInfoCaptions() {
+        this.birthDateView.setCaption(getString(R.string.birthday_profile_label));
+        this.townView.setCaption(getString(R.string.hometown_profile_label));
+        this.relationshipsView.setCaption(getString(R.string.relationship_status_label));
+        this.educationView.setCaption(getString(R.string.studied_at_profile_label));
+        this.languagesView.setCaption(getString(R.string.languages_profile_label));
     }
 
     private void setupOnClickListeners(View.OnClickListener profileClickListener, View container) {
@@ -147,31 +175,22 @@ public class ProfileFragment extends Fragment {
             setUserInfo(response);
         }
 
-        private void setViewText(int id, String text) {
-            ((TextView) view.findViewById(id)).setText(text);
-        }
-
-        private void hideLayout(int id) {
-            view.findViewById(id).setVisibility(View.GONE);
-        }
-
-        private void setLayoutState(String data, int viewId, int layoutId) {
-            if (data != null && !data.equals("")) setViewText(viewId, data);
-            else hideLayout(layoutId);
-        }
-
-        private void setLayoutState(String data, int viewId) {
-            if (data != null) setViewText(viewId, data);
+        private void setLayoutState(String data, ProfileInfoLayoutView profileInfoView) {
+            if (data != null && !data.equals("")) {
+                profileInfoView.setValue(data);
+            } else {
+                profileInfoView.setVisibility(View.GONE);
+            }
         }
 
         private void setLayoutsVisibility(User u) {
-            setLayoutState(u.getName(), R.id.tvProfileName);
-            setLayoutState(u.getStatus(), R.id.tvProfileStatus);
-            setLayoutState(u.getBdDateString(), R.id.tvProfileBirthDate, R.id.llBirthDate);
-            setLayoutState(u.getCity(), R.id.tvProfileTown, R.id.llHomeTown);
-            setLayoutState(u.getRelationship(), R.id.tvRelationship, R.id.llRelationships);
-            setLayoutState(u.getUnivers(), R.id.tvStudiedAt, R.id.llStudiedAt);
-            setLayoutState(u.getLangs(), R.id.tvLanguages, R.id.llLanguages);
+            userName.setText(u.getName());
+            userStatus.setText(u.getStatus());
+            setLayoutState(u.getBdDateString(), birthDateView);
+            setLayoutState(u.getCity(), townView);
+            setLayoutState(u.getRelationship(), relationshipsView);
+            setLayoutState(u.getUnivers(), educationView);
+            setLayoutState(u.getLangs(), languagesView);
         }
 
         private void setUserInfo(VKResponse response) {
@@ -183,6 +202,7 @@ public class ProfileFragment extends Fragment {
             }
         }
     };
+
     private final AbstractRequestListener getPhotoFeedRequestListener = new AbstractRequestListener() {
         @Override
         public void onComplete(final VKResponse response) {
