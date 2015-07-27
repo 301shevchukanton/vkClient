@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
@@ -20,19 +19,17 @@ import com.vkclient.entities.PhotoFeed;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 
-import org.joda.time.DateTime;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
-public class SingleDialogLsitItemView extends LinearLayout {
+public class SingleDialogLsitItemView extends AbstractView {
     private TextView nameText;
     private ImageView photo;
     private HorizontalListView messagePhotoListView;
     private TextView dateText;
     private TextView messageBody;
     private Context context;
+
     public SingleDialogLsitItemView(Context context) {
         this(context, null);
     }
@@ -44,19 +41,19 @@ public class SingleDialogLsitItemView extends LinearLayout {
     public SingleDialogLsitItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.single_dialog_list_item, this);
-        this.context=context;
+        this.context = context;
         findViews();
     }
 
     private void findViews() {
         this.nameText = ((TextView) findViewById(R.id.tvSingleDialogName));
         this.photo = ((ImageView) findViewById(R.id.tvSingleDialogPhoto));
-        this.messagePhotoListView = (HorizontalListView)findViewById(R.id.lvMessagesPhoto);
-        this.dateText =(TextView) findViewById(R.id.tvSingleDialogDate);
+        this.messagePhotoListView = (HorizontalListView) findViewById(R.id.lvMessagesPhoto);
+        this.dateText = (TextView) findViewById(R.id.tvSingleDialogDate);
         this.messageBody = ((TextView) findViewById(R.id.tvSingleDialogText));
     }
-    public void setMessagesListItem(Message message){
 
+    public void setMessagesListItem(Message message) {
         if (message.getUser_id() == message.getFrom_id()) {
             nameText.setText(message.getUsername());
         } else {
@@ -90,10 +87,7 @@ public class SingleDialogLsitItemView extends LinearLayout {
             listAdapter.notifyDataSetChanged();
         } else messagePhotoListView.setVisibility(View.GONE);
     }
-    private DateTime getParsedDate(long date) {
-        DateTime dateTime = new DateTime(date * 1000L + TimeZone.getDefault().getRawOffset());
-        return dateTime;
-    }
+
     private void photoViewCall(String photoUrl) {
         Intent i = new Intent(context, PhotoViewActivity.class);
         i.putExtra("photo", photoUrl);

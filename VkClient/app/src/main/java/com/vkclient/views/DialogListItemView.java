@@ -5,19 +5,14 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.entities.Dialog;
 import com.vkclient.supports.PhotoLoader;
 
-import org.joda.time.DateTime;
 
-import java.util.TimeZone;
-
-
-public class DialogListItemView extends LinearLayout {
+public class DialogListItemView extends AbstractView {
 
     private TextView text;
     private TextView date;
@@ -53,10 +48,5 @@ public class DialogListItemView extends LinearLayout {
         if ((!dialog.getUserPhotoLink_200().isEmpty()) && dialog.getUserPhotoLink_200() != null) {
             PhotoLoader.loadPhoto(getContext(), dialog.getUserPhotoLink_200(), this.photo);
         }
-    }
-
-    public DateTime getParsedDate(long date) {
-        DateTime dateTime = new DateTime(date * 1000L + TimeZone.getDefault().getRawOffset());
-        return dateTime;
     }
 }

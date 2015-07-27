@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
@@ -19,13 +18,10 @@ import com.vkclient.entities.News;
 import com.vkclient.entities.PhotoFeed;
 import com.vkclient.supports.PhotoLoader;
 
-import org.joda.time.DateTime;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
-public class NewsListItemView extends LinearLayout {
+public class NewsListItemView extends AbstractView {
     private Context context;
     private TextView text;
     private ImageView photo;
@@ -88,11 +84,6 @@ public class NewsListItemView extends LinearLayout {
         if ((!post.getUserPhotoLink_200().isEmpty()) && post.getUserPhotoLink_200() != null) {
             PhotoLoader.loadPhoto(getContext(), post.getUserPhotoLink_200(), photo);
         }
-    }
-
-    public DateTime getParsedDate(long date) {
-        DateTime dateTime = new DateTime(date * 1000L + TimeZone.getDefault().getRawOffset());
-        return dateTime;
     }
 
     private void photoViewCall(String photoUrl) {
