@@ -211,9 +211,7 @@ public class FriendsListActivity extends VkSdkActivity {
         }
 
         private void setPhoto(VKResponse response) {
-            Intent i = new Intent(getApplicationContext(), PhotoViewActivity.class);
-            i.putExtra("photo", new UserParser().parseUserName(response).getPhotoMax());
-            startActivity(i);
+            startActivity(PhotoViewActivity.getPhotoViewIntent(getApplicationContext(), new UserParser().parseUserName(response).getPhotoMax()));
         }
 
     };

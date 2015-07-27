@@ -2,7 +2,6 @@ package com.vkclient.views;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsListItemView extends AbstractView {
-    private Context context;
     private TextView text;
     private ImageView photo;
     private TextView postSource;
@@ -30,6 +28,7 @@ public class NewsListItemView extends AbstractView {
     private TextView likesCount;
     private TextView repostsCount;
     private HorizontalListView newsPhoto;
+    private List<PhotoFeed> messagesPhotos;
 
     public NewsListItemView(Context context) {
         this(context, null);
@@ -42,7 +41,6 @@ public class NewsListItemView extends AbstractView {
     public NewsListItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.news_list_item, this);
-        this.context = context;
         findViews();
     }
 
@@ -61,34 +59,33 @@ public class NewsListItemView extends AbstractView {
         this.postDate.setText(getParsedDate(post.getDate()).toString("dd.MM - HH:mm"));
         this.likesCount.setText(post.getLikesCount());
         this.repostsCount.setText(post.getRepostsCount());
-        final List<PhotoFeed> messagesPhotos = new ArrayList<>();
-        PhotoFeedAdapter listAdapter = new PhotoFeedAdapter(context, messagesPhotos, R.layout.photo_feed_item, R.id.ivPhotoFeedImage);
+        this.messagesPhotos = new ArrayList<>();
+        PhotoFeedAdapter listAdapter = new PhotoFeedAdapter(getContext(), this.messagesPhotos, R.layout.photo_feed_item, R.id.ivPhotoFeedImage);
         if (!post.getPostPhotos().isEmpty()) {
-            messagesPhotos.addAll(post.getPostPhotos());
-            final AdapterView.OnItemClickListener photoFeedClickListener = new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view,
-                                        int position, long id) {
-                    final PhotoFeed photoFeed = messagesPhotos.get(position);
-                    photoViewCall(photoFeed.getPhotoLarge());
-                }
-            };
-            this.newsPhoto.setOnItemClickListener(photoFeedClickListener);
+            this.messagesPhotos.addAll(post.getPostPhotos());
+            this.newsPhoto.setOnItemClickListener(this.photoFeedClickListener);
             this.newsPhoto.setAdapter(listAdapter);
             this.newsPhoto.setVisibility(View.VISIBLE);
             listAdapter.notifyDataSetChanged();
-        } else this.newsPhoto.setVisibility(View.GONE);
-
+        } else {
+            this.newsPhoto.setVisibility(View.GONE);
+        }
         photo.setImageResource(R.drawable.ic_user100);
-
         text.setText(post.getText());
         if ((!post.getUserPhotoLink_200().isEmpty()) && post.getUserPhotoLink_200() != null) {
             PhotoLoader.loadPhoto(getContext(), post.getUserPhotoLink_200(), photo);
         }
     }
 
+    final AdapterView.OnItemClickListener photoFeedClickListener = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View view,
+                                int position, long id) {
+            final PhotoFeed photoFeed = messagesPhotos.get(position);
+            photoViewCall(photoFeed.getPhotoLarge());
+        }
+    };
+
     private void photoViewCall(String photoUrl) {
-        Intent i = new Intent(context, PhotoViewActivity.class);
-        i.putExtra("photo", photoUrl);
-        context.startActivity(i);
+        getContext().startActivity(PhotoViewActivity.getPhotoViewIntent(getContext(), photoUrl));
     }
 }

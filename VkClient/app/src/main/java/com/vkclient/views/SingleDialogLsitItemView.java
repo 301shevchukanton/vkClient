@@ -1,7 +1,6 @@
 package com.vkclient.views;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -89,8 +88,6 @@ public class SingleDialogLsitItemView extends AbstractView {
     }
 
     private void photoViewCall(String photoUrl) {
-        Intent i = new Intent(context, PhotoViewActivity.class);
-        i.putExtra("photo", photoUrl);
-        context.startActivity(i);
+        getContext().startActivity(PhotoViewActivity.getPhotoViewIntent(getContext(), photoUrl));
     }
 }

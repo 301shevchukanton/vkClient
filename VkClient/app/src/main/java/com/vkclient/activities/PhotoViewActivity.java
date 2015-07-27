@@ -1,5 +1,7 @@
 package com.vkclient.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -18,5 +20,11 @@ public class PhotoViewActivity extends VkSdkActivity {
         VKUIHelper.onCreate(this);
         this.photoUrl = getIntent().getStringExtra("photo");
         PhotoLoader.loadPhoto(getApplicationContext(), photoUrl, (ImageView) findViewById(R.id.ivPhoto));
+    }
+
+    public static Intent getPhotoViewIntent(Context context, String photoUrl) {
+        Intent intent = new Intent(context, PhotoViewActivity.class);
+        intent.putExtra("photo", photoUrl);
+        return intent;
     }
 }
