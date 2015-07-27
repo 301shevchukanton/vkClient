@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.meetme.android.horizontallistview.HorizontalListView;
-import com.vkclient.activities.PhotoViewActivity;
 import com.vkclient.adapters.PhotoFeedAdapter;
 import com.vkclient.entities.News;
 import com.vkclient.entities.PhotoFeed;
@@ -84,8 +83,4 @@ public class NewsListItemView extends AbstractView {
             photoViewCall(photoFeed.getPhotoLarge());
         }
     };
-
-    private void photoViewCall(String photoUrl) {
-        getContext().startActivity(PhotoViewActivity.getPhotoViewIntent(getContext(), photoUrl));
-    }
 }

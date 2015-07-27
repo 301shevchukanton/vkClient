@@ -9,19 +9,19 @@ import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 
-public class ProfileInfoLayoutView extends LinearLayout {
+public class ProfileInfoView extends LinearLayout {
     private TextView caption;
     private TextView value;
 
-    public ProfileInfoLayoutView(Context context) {
+    public ProfileInfoView(Context context) {
         this(context, null);
     }
 
-    public ProfileInfoLayoutView(Context context, AttributeSet attrs) {
+    public ProfileInfoView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ProfileInfoLayoutView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ProfileInfoView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.profile_info_layout_view, this);
         findViews();
@@ -32,19 +32,11 @@ public class ProfileInfoLayoutView extends LinearLayout {
         this.value = (TextView) findViewById(R.id.value);
     }
 
-    public void setCaption(String captionText) {
-        this.caption.setText(captionText);
+    public void setCaption(String caption) {
+        this.caption.setText(caption);
     }
 
-    public void setValue(String valueText) {
-        this.value.setText(valueText);
-    }
-
-    public String getCaption() {
-        return this.caption.getText().toString();
-    }
-
-    public String getValue() {
-        return this.value.getText().toString();
+    public void setValue(String value) {
+        this.value.setText(value);
     }
 }

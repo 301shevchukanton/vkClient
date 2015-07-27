@@ -10,6 +10,7 @@ import com.vk.sdk.VKUIHelper;
 import com.vkclient.supports.PhotoLoader;
 
 public class PhotoViewActivity extends VkSdkActivity {
+    public static final String PHOTO_EXTRA = "photo";
     private static String photoUrl;
 
     @Override
@@ -24,7 +25,7 @@ public class PhotoViewActivity extends VkSdkActivity {
 
     public static Intent getPhotoViewIntent(Context context, String photoUrl) {
         Intent intent = new Intent(context, PhotoViewActivity.class);
-        intent.putExtra("photo", photoUrl);
+        intent.putExtra(PHOTO_EXTRA, photoUrl);
         return intent;
     }
 }

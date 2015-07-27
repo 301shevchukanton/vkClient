@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter;
 
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.entities.Message;
-import com.vkclient.views.SingleDialogLsitItemView;
+import com.vkclient.views.SingleDialogListItemView;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -24,9 +24,9 @@ Context context;
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = new SingleDialogLsitItemView(getContext());
+            convertView = new SingleDialogListItemView(getContext());
         }
-        ((SingleDialogLsitItemView) convertView).setMessagesListItem(getItem(position));
+        ((SingleDialogListItemView) convertView).setMessagesListItem(getItem(position));
         return convertView;
     }
 }

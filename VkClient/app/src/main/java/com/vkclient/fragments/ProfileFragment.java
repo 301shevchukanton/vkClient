@@ -28,7 +28,7 @@ import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 import com.vkclient.supports.RequestCreator;
-import com.vkclient.views.ProfileInfoLayoutView;
+import com.vkclient.views.ProfileInfoView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +43,11 @@ public class ProfileFragment extends Fragment {
     public HorizontalListView listView;
     private TextView userName;
     private TextView userStatus;
-    private ProfileInfoLayoutView birthDateView;
-    private ProfileInfoLayoutView townView;
-    private ProfileInfoLayoutView relationshipsView;
-    private ProfileInfoLayoutView educationView;
-    private ProfileInfoLayoutView languagesView;
+    private ProfileInfoView birthDateView;
+    private ProfileInfoView townView;
+    private ProfileInfoView relationshipsView;
+    private ProfileInfoView educationView;
+    private ProfileInfoView languagesView;
     private ImageView profilePhoto;
 
     @Override
@@ -69,11 +69,11 @@ public class ProfileFragment extends Fragment {
         this.listView = (HorizontalListView) viewHierarchy.findViewById(R.id.lvPhotoFeed);
         this.userName = (TextView) viewHierarchy.findViewById(R.id.tvProfileName);
         this.userStatus = (TextView) viewHierarchy.findViewById(R.id.tvProfileStatus);
-        this.birthDateView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piBirthDate);
-        this.townView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piTown);
-        this.relationshipsView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piRelationships);
-        this.educationView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piEducation);
-        this.languagesView = (ProfileInfoLayoutView) viewHierarchy.findViewById(R.id.piLanguages);
+        this.birthDateView = (ProfileInfoView) viewHierarchy.findViewById(R.id.piBirthDate);
+        this.townView = (ProfileInfoView) viewHierarchy.findViewById(R.id.piTown);
+        this.relationshipsView = (ProfileInfoView) viewHierarchy.findViewById(R.id.piRelationships);
+        this.educationView = (ProfileInfoView) viewHierarchy.findViewById(R.id.piEducation);
+        this.languagesView = (ProfileInfoView) viewHierarchy.findViewById(R.id.piLanguages);
         this.profilePhoto = (ImageView) viewHierarchy.findViewById(R.id.ivProfilePhoto);
     }
 
@@ -176,7 +176,7 @@ public class ProfileFragment extends Fragment {
             setUserInfo(response);
         }
 
-        private void setViewText(String data, ProfileInfoLayoutView profileInfoView) {
+        private void setViewText(String data, ProfileInfoView profileInfoView) {
             if (!TextUtils.isEmpty(data)) {
                 profileInfoView.setValue(data);
             } else {

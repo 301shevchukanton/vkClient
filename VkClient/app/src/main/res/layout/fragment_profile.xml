@@ -55,23 +55,23 @@
                     style="@style/MiddleLabel"
                     android:layout_gravity="center_horizontal" />
 
-                <com.vkclient.views.ProfileInfoLayoutView
+                <com.vkclient.views.ProfileInfoView
                     android:id="@+id/piBirthDate"
                     style="@style/CentralHorizontalLayout" />
 
-                <com.vkclient.views.ProfileInfoLayoutView
+                <com.vkclient.views.ProfileInfoView
                     android:id="@+id/piTown"
                     style="@style/CentralHorizontalLayout" />
 
-                <com.vkclient.views.ProfileInfoLayoutView
+                <com.vkclient.views.ProfileInfoView
                     android:id="@+id/piRelationships"
                     style="@style/CentralHorizontalLayout" />
 
-                <com.vkclient.views.ProfileInfoLayoutView
+                <com.vkclient.views.ProfileInfoView
                     android:id="@+id/piEducation"
                     style="@style/CentralHorizontalLayout" />
 
-                <com.vkclient.views.ProfileInfoLayoutView
+                <com.vkclient.views.ProfileInfoView
                     android:id="@+id/piLanguages"
                     style="@style/CentralHorizontalLayout" />
             </LinearLayout>
