@@ -67,6 +67,6 @@ public class RequestCreator {
     }
 
     public static VKRequest getPhotosOfUser(String userId) {
-        return new VKRequest("photos.getAll", VKParameters.from("owner_id", userId, "extended", "1","count",PHOTOS_COUNT, "photo_sizes", "0"), VKRequest.HttpMethod.GET);
+        return new VKRequest("photos.getAll", VKParameters.from("owner_id", userId, "extended", "1", "count", PHOTOS_COUNT, "photo_sizes", "0"), VKRequest.HttpMethod.GET);
     }
 }

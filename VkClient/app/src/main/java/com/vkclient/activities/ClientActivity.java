@@ -40,9 +40,9 @@ public class ClientActivity extends VkSdkActivity {
             }
         }
     };
+
     @Override
-    int getLayoutResource()
-    {
+    int getLayoutResource() {
         return R.layout.activity_client;
     }
 }

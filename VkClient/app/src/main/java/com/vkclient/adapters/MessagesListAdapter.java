@@ -14,11 +14,12 @@ import net.danlew.android.joda.JodaTimeAndroid;
 import java.util.List;
 
 public class MessagesListAdapter extends ArrayAdapter<Message> {
-Context context;
+    Context context;
+
     public MessagesListAdapter(Context context, List<Message> models) {
         super(context, R.layout.single_dialog_list_item, R.id.tvSingleDialogName, models);
         JodaTimeAndroid.init(context);
-        this.context=context;
+        this.context = context;
     }
 
     @Override

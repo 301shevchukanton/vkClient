@@ -72,7 +72,7 @@ public class WallPostActivity extends VkSdkActivity {
     private void showError(VKError error) {
         AlertBuilder.showErrorMessage(WallPostActivity.this, error.errorMessage);
         if (error.httpError != null) {
-           Logger.logWarning("Test", "Error in request or upload" + error.httpError);
+            Logger.logWarning("Test", "Error in request or upload" + error.httpError);
         }
     }
 
@@ -171,8 +171,7 @@ public class WallPostActivity extends VkSdkActivity {
     };
 
     @Override
-    int getLayoutResource()
-    {
+    int getLayoutResource() {
         return R.layout.activity_wall_post;
     }
 }

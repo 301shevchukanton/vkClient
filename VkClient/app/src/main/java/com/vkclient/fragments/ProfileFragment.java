@@ -101,7 +101,7 @@ public class ProfileFragment extends Fragment {
     };
 
     private void photoViewCall(String photoUrl) {
-        startActivity(PhotoViewActivity.getPhotoViewIntent(getActivity(),photoUrl));
+        startActivity(PhotoViewActivity.getPhotoViewIntent(getActivity(), photoUrl));
     }
 
     private final View.OnClickListener profileClickListener = new View.OnClickListener() {

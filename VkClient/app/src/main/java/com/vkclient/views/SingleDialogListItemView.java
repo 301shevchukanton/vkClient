@@ -26,6 +26,7 @@ public class SingleDialogListItemView extends AbstractView {
     private TextView dateText;
     private TextView messageBody;
     private List<PhotoFeed> messagesPhotos;
+
     public SingleDialogListItemView(Context context) {
         this(context, null);
     }
@@ -68,6 +69,7 @@ public class SingleDialogListItemView extends AbstractView {
             messagePhotoListView.setVisibility(View.GONE);
         }
     }
+
     final AdapterView.OnItemClickListener photoFeedClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view,
                                 int position, long id) {

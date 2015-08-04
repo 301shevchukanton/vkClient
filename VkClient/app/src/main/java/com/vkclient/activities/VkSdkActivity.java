@@ -34,6 +34,7 @@ public abstract class VkSdkActivity extends ActionBarActivity {
         DIALOGS,
         FRIENDS_LIST
     }
+
     abstract int getLayoutResource();
 
     @Override

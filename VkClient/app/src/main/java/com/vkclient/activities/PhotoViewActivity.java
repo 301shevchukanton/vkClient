@@ -26,8 +26,7 @@ public class PhotoViewActivity extends VkSdkActivity {
     }
 
     @Override
-    int getLayoutResource()
-    {
+    int getLayoutResource() {
         return R.layout.activity_photo_view;
     }
 }

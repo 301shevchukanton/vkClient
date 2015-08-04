@@ -34,6 +34,7 @@ public class SingleDialogActivity extends VkSdkActivity {
     private MessagesListAdapter listAdapter;
     private VKRequest ownRequest = null;
     private VKRequest fromRequest = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId = getIntent().getStringExtra("userid");
@@ -74,8 +75,8 @@ public class SingleDialogActivity extends VkSdkActivity {
         @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
-          ownRequest = null;
-          fromRequest = null;
+            ownRequest = null;
+            fromRequest = null;
             messages.addAll(new MessageParser().getMessagesList(response));
             for (int i = 0; i < messages.size(); i++) {
                 ownRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getUser_id()));
@@ -86,6 +87,7 @@ public class SingleDialogActivity extends VkSdkActivity {
             if (ownRequest != null) ownRequestExecution(ownRequest, messages.size());
         }
     };
+
     private void ownRequestExecution(VKRequest request, final int arrayLength) {
         request.executeWithListener(new SingleDialogOwnerRequest(arrayLength));
     }
@@ -93,6 +95,7 @@ public class SingleDialogActivity extends VkSdkActivity {
     private void fromRequestExecution(VKRequest request, final int arrayLength) {
         request.executeWithListener(new SingleDialogFromRequest(arrayLength));
     }
+
     final class SingleDialogOwnerRequest extends AbstractRequestListener {
         private int arrayLength;
 
@@ -165,8 +168,7 @@ public class SingleDialogActivity extends VkSdkActivity {
     };
 
     @Override
-    int getLayoutResource()
-    {
+    int getLayoutResource() {
         return R.layout.activity_single_dialog;
     }
 }

@@ -124,9 +124,9 @@ public class DialogsActivity extends VkSdkActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
-    int getLayoutResource()
-    {
+    int getLayoutResource() {
         return R.layout.activity_dialogs;
     }
 }

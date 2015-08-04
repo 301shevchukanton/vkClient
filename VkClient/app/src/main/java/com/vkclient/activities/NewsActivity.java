@@ -58,9 +58,9 @@ public class NewsActivity extends VkSdkActivity {
             listAdapter.notifyDataSetChanged();
         }
     };
+
     @Override
-    int getLayoutResource()
-    {
+    int getLayoutResource() {
         return R.layout.activity_news;
     }
 }

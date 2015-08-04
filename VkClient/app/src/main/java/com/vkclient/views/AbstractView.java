@@ -22,9 +22,11 @@ public abstract class AbstractView extends LinearLayout {
     public AbstractView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
+
     protected DateTime getParsedDate(long date) {
         return new DateTime(date * 1000L + TimeZone.getDefault().getRawOffset());
     }
+
     protected void photoViewCall(String photoUrl) {
         getContext().startActivity(PhotoViewActivity.getPhotoViewIntent(getContext(), photoUrl));
     }

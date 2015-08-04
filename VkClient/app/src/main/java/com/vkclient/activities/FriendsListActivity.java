@@ -40,6 +40,7 @@ public class FriendsListActivity extends VkSdkActivity {
     private ListView friendsList;
     private List<User> users = new ArrayList<User>();
     private FriendListAdapter listAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId = getIntent().getStringExtra("id");
@@ -202,8 +203,7 @@ public class FriendsListActivity extends VkSdkActivity {
     };
 
     @Override
-    int getLayoutResource()
-    {
+    int getLayoutResource() {
         return R.layout.activity_friends_list;
     }
 }

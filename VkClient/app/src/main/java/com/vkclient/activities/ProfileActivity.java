@@ -16,16 +16,16 @@ public class ProfileActivity extends VkSdkActivity {
         Logger.logDebug("profid", "profileid " + profileId);
         super.onCreate(savedInstanceState);
         FragmentManager fragmentManager = getFragmentManager();
-        Fragment profileFragment =  fragmentManager.findFragmentById(R.id.container_profile);
+        Fragment profileFragment = fragmentManager.findFragmentById(R.id.container_profile);
         if (profileFragment == null) {
             profileFragment = new ProfileFragment();
             fragmentManager.beginTransaction().add(R.id.container_profile, profileFragment).commit();
             findViewById(R.id.drawer_layout).setVisibility(View.VISIBLE);
         }
     }
+
     @Override
-    int getLayoutResource()
-    {
+    int getLayoutResource() {
         return R.layout.activity_profile;
     }
 }
