@@ -39,10 +39,7 @@ public class SingleDialogActivity extends VkSdkActivity {
         profileId = getIntent().getStringExtra("userid");
         Logger.logDebug("profid", "ic_user id taked" + profileId);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_dialog);
-        super.onCreateDrawer();
         this.messagesList = (ListView) findViewById(R.id.lvSingleDialog);
-        VKUIHelper.onCreate(this);
         if (VKSdk.wakeUpSession()) {
             startLoading();
         }
@@ -166,4 +163,10 @@ public class SingleDialogActivity extends VkSdkActivity {
             }
         }
     };
+
+    @Override
+    int getLayoutResource()
+    {
+        return R.layout.activity_single_dialog;
+    }
 }

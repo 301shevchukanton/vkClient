@@ -5,14 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.podkaifom.vkclient.R;
-import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
@@ -46,9 +44,6 @@ public class WallPostActivity extends VkSdkActivity {
         profileId = getIntent().getStringExtra("id");
         startLoading();
         super.onCreate(savedInstanceState);
-        VKUIHelper.onCreate(this);
-        setContentView(R.layout.activity_wall_post);
-        super.onCreateDrawer();
         findViewById(R.id.ibAddPhoto).setOnClickListener(this.wallPostClickListener);
         findViewById(R.id.btWallPost).setOnClickListener(this.wallPostClickListener);
     }
@@ -77,7 +72,7 @@ public class WallPostActivity extends VkSdkActivity {
     private void showError(VKError error) {
         AlertBuilder.showErrorMessage(WallPostActivity.this, error.errorMessage);
         if (error.httpError != null) {
-            Log.w("Test", "Error in request or upload", error.httpError);
+           Logger.logWarning("Test", "Error in request or upload" + error.httpError);
         }
     }
 
@@ -174,4 +169,10 @@ public class WallPostActivity extends VkSdkActivity {
             }
         }
     };
+
+    @Override
+    int getLayoutResource()
+    {
+        return R.layout.activity_wall_post;
+    }
 }

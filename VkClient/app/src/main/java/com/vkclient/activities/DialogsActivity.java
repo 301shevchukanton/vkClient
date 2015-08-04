@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
-import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKBatchRequest;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
@@ -38,11 +37,8 @@ public class DialogsActivity extends VkSdkActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        VKUIHelper.onCreate(this);
-        setContentView(R.layout.activity_dialogs);
-        super.onCreateDrawer();
         listView = (ListView) findViewById(R.id.lvDialogs);
-    if (VKSdk.wakeUpSession()) {
+        if (VKSdk.wakeUpSession()) {
             startLoading();
         }
         this.listView.setOnItemClickListener(this.dialogClickListener);
@@ -70,13 +66,13 @@ public class DialogsActivity extends VkSdkActivity {
             super.onComplete(response);
             Logger.logDebug("profid", response.responseString);
             dialogs.clear();
-                dialogs.addAll(new MessageParser().getDialogsList(response));
-                VKRequest[] requests = new VKRequest[dialogs.size()];
-                for (int i = 0; i < dialogs.size(); i++) {
-                    requests[i] = RequestCreator.getUserById(String.valueOf(dialogs.get(i).getUser_id()));
-                }
-                VKBatchRequest batch = new VKBatchRequest(requests);
-                batch.executeWithListener(batchListener);
+            dialogs.addAll(new MessageParser().getDialogsList(response));
+            VKRequest[] requests = new VKRequest[dialogs.size()];
+            for (int i = 0; i < dialogs.size(); i++) {
+                requests[i] = RequestCreator.getUserById(String.valueOf(dialogs.get(i).getUser_id()));
+            }
+            VKBatchRequest batch = new VKBatchRequest(requests);
+            batch.executeWithListener(batchListener);
         }
     };
     private final VKBatchRequest.VKBatchRequestListener batchListener = new VKBatchRequest.VKBatchRequestListener() {
@@ -127,5 +123,10 @@ public class DialogsActivity extends VkSdkActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    @Override
+    int getLayoutResource()
+    {
+        return R.layout.activity_dialogs;
     }
 }

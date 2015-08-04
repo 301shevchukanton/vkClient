@@ -40,7 +40,7 @@ public class ProfileFragment extends Fragment {
     private VKRequest profileInfoRequest;
     private VKRequest profilePhotoRequest;
     private String profileId;
-    public HorizontalListView listView;
+    private HorizontalListView listView;
     private TextView userName;
     private TextView userStatus;
     private ProfileInfoView birthDateView;
@@ -101,9 +101,7 @@ public class ProfileFragment extends Fragment {
     };
 
     private void photoViewCall(String photoUrl) {
-        Intent i = new Intent(getActivity(), PhotoViewActivity.class);
-        i.putExtra("photo", photoUrl);
-        startActivity(i);
+        startActivity(PhotoViewActivity.getPhotoViewIntent(getActivity(),photoUrl));
     }
 
     private final View.OnClickListener profileClickListener = new View.OnClickListener() {
@@ -189,7 +187,7 @@ public class ProfileFragment extends Fragment {
             setViewsData(user);
             profileId = String.valueOf(user.getId());
             if (user.getPhoto() != null) {
-                PhotoLoader.loadPhoto(getActivity().getApplicationContext(), user.getPhoto(), profilePhoto);
+                PhotoLoader.loadPhoto(getActivity(), user.getPhoto(), profilePhoto);
             }
         }
 

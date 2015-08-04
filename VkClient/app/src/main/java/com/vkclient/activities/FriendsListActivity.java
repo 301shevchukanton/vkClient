@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
-import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUserFull;
@@ -38,23 +37,17 @@ public class FriendsListActivity extends VkSdkActivity {
 
     private EditText filterText = null;
     private VKRequest currentRequest;
-    private String photoUrl = "";
     private ListView friendsList;
     private List<User> users = new ArrayList<User>();
     private FriendListAdapter listAdapter;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         profileId = getIntent().getStringExtra("id");
         Logger.logDebug("profid", "profile id taked" + profileId);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friends_list);
-        super.onCreateDrawer();
         this.friendsList = (ListView) findViewById(R.id.lvFriends);
         this.filterText = (EditText) findViewById(R.id.etSearchFriends);
         this.filterText.addTextChangedListener(filterTextWatcher);
-        VKUIHelper.onCreate(this);
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
             this.users = ((List<User>) items);
@@ -98,8 +91,6 @@ public class FriendsListActivity extends VkSdkActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             filterList(fullUsersArray, s.toString());
         }
-
-
     };
 
     private void filterList(List<User> fullUsersArray, String filterText) {
@@ -125,7 +116,6 @@ public class FriendsListActivity extends VkSdkActivity {
         }
         this.currentRequest = RequestCreator.getFriends(profileId);
         this.currentRequest.executeWithListener(this.getFriendsRequestListener);
-
     }
 
     private void startUserApiCall(int id) {
@@ -153,11 +143,9 @@ public class FriendsListActivity extends VkSdkActivity {
             VKUsersArray usersArray = (VKUsersArray) response.parsedModel;
             users.clear();
             final String[] formats = new String[]{"dd.MM.yyyy", "dd.MM"};
-
             for (VKApiUserFull userFull : usersArray) {
                 DateTime birthDate = null;
                 String format = null;
-
                 if (!TextUtils.isEmpty(userFull.bdate)) {
                     for (int i = 0; i < formats.length; i++) {
                         format = formats[i];
@@ -186,7 +174,6 @@ public class FriendsListActivity extends VkSdkActivity {
         }
     };
 
-
     private final FriendListAdapter.OnPhotoClickListener photoClickListener = new FriendListAdapter.OnPhotoClickListener() {
         @Override
         public void onClick(String userId) {
@@ -195,7 +182,6 @@ public class FriendsListActivity extends VkSdkActivity {
     };
 
     public void startPhotoViewCall(String userId) {
-
         if (currentRequest != null) {
             currentRequest.cancel();
         }
@@ -215,4 +201,9 @@ public class FriendsListActivity extends VkSdkActivity {
         }
     };
 
+    @Override
+    int getLayoutResource()
+    {
+        return R.layout.activity_friends_list;
+    }
 }

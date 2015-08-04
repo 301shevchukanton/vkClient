@@ -34,23 +34,27 @@ public abstract class VkSdkActivity extends ActionBarActivity {
         DIALOGS,
         FRIENDS_LIST
     }
+    abstract int getLayoutResource();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        VKUIHelper.onCreate(this);
+        setContentView(getLayoutResource());
+        onCreateDrawer();
     }
 
     protected void onCreateDrawer() {
-        drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_profile), NavigationItem.PROFILE_INFO));
-        drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_friends), NavigationItem.FRIENDS_LIST));
-        drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_messages), NavigationItem.DIALOGS));
-        drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_news), NavigationItem.NEWS));
-        drawerList = (ListView) findViewById(R.id.left_drawer);
-        drawerAdapter = new DrawerAdapter(this, drawerItems);
-        drawerList.setAdapter(drawerAdapter);
-        drawerList.setOnItemClickListener(drawerListener);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
+        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_profile), NavigationItem.PROFILE_INFO));
+        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_friends), NavigationItem.FRIENDS_LIST));
+        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_messages), NavigationItem.DIALOGS));
+        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_news), NavigationItem.NEWS));
+        this.drawerList = (ListView) findViewById(R.id.left_drawer);
+        this.drawerAdapter = new DrawerAdapter(this, this.drawerItems);
+        this.drawerList.setAdapter(this.drawerAdapter);
+        this.drawerList.setOnItemClickListener(this.drawerListener);
+        this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        this.toggle = new ActionBarDrawerToggle(this, this.drawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 getSupportActionBar().setTitle(getTitle());
@@ -61,7 +65,7 @@ public abstract class VkSdkActivity extends ActionBarActivity {
                 getSupportActionBar().setTitle(R.string.drawer_open);
             }
         };
-        drawerLayout.setDrawerListener(toggle);
+        this.drawerLayout.setDrawerListener(toggle);
         setupActionBar();
     }
 
@@ -76,13 +80,13 @@ public abstract class VkSdkActivity extends ActionBarActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        toggle.syncState();
+        this.toggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        toggle.onConfigurationChanged(newConfig);
+        this.toggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -105,7 +109,7 @@ public abstract class VkSdkActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (toggle.onOptionsItemSelected(item)) {
+        if (this.toggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);

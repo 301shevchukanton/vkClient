@@ -1,24 +1,15 @@
 package com.vkclient.activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.example.podkaifom.vkclient.R;
-import com.vk.sdk.VKUIHelper;
 
 public class ClientActivity extends VkSdkActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        VKUIHelper.onCreate(this);
-        setContentView(R.layout.activity_client);
-        super.onCreateDrawer();
         findViewById(R.id.btGetUserInfo).setOnClickListener(clientClickListener);
         findViewById(R.id.btGetFriends).setOnClickListener(clientClickListener);
         findViewById(R.id.btGetDialogs).setOnClickListener(clientClickListener);
@@ -49,5 +40,9 @@ public class ClientActivity extends VkSdkActivity {
             }
         }
     };
-
+    @Override
+    int getLayoutResource()
+    {
+        return R.layout.activity_client;
+    }
 }

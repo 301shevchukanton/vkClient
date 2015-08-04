@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
-import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.Message;
@@ -28,9 +27,6 @@ public class SendMessageActivity extends VkSdkActivity {
         Logger.logDebug("profid", "profileidSended " + profileId);
         startLoading();
         super.onCreate(savedInstanceState);
-        VKUIHelper.onCreate(this);
-        setContentView(R.layout.activity_send_message);
-        super.onCreateDrawer();
         findViewById(R.id.btSendMessage).setOnClickListener(this.sendMessageClick);
     }
 
@@ -57,11 +53,17 @@ public class SendMessageActivity extends VkSdkActivity {
                 PhotoLoader.loadPhoto(getApplicationContext(), responseUser.getPhotoMax(), (ImageView) findViewById(R.id.ivMessagePhoto));
         }
     };
+
     private final View.OnClickListener sendMessageClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Message.sendMessage((TextView) findViewById(R.id.etMessageText), profileId);
         }
     };
+
+    @Override
+    int getLayoutResource() {
+        return R.layout.activity_send_message;
+    }
 }
 

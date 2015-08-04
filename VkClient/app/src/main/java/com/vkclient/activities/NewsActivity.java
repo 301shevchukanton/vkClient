@@ -27,9 +27,7 @@ public class NewsActivity extends VkSdkActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
-        setContentView(R.layout.activity_news);
-        super.onCreateDrawer();
-        listView = (ListView) findViewById(R.id.lvNews);
+        this.listView = (ListView) findViewById(R.id.lvNews);
         Object items = getLastNonConfigurationInstance();
         if (items != null) {
             this.news = ((List<News>) items);
@@ -60,4 +58,9 @@ public class NewsActivity extends VkSdkActivity {
             listAdapter.notifyDataSetChanged();
         }
     };
+    @Override
+    int getLayoutResource()
+    {
+        return R.layout.activity_news;
+    }
 }
