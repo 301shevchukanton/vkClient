@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
+    private static final String ACTIVITY_EXTRA = "id";
     private List<PhotoFeed> usersPhoto = new ArrayList<>();
     private PhotoFeedAdapter listAdapter;
     private VKRequest currentRequest;
@@ -59,7 +60,7 @@ public class ProfileFragment extends Fragment {
         this.listAdapter = new PhotoFeedAdapter(getActivity(), this.usersPhoto, R.layout.photo_feed_item, R.id.ivPhotoFeedImage);
         this.listView.setOnItemClickListener(photoFeedClickListener);
         this.listView.setAdapter(this.listAdapter);
-        profileId = getActivity().getIntent().getStringExtra("id");
+        profileId = getActivity().getIntent().getStringExtra(ACTIVITY_EXTRA);
         startLoading();
         setupOnClickListeners(profileClickListener, viewHierarchy);
         return viewHierarchy;

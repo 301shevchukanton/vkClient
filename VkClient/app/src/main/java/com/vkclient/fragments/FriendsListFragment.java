@@ -38,6 +38,7 @@ import java.util.List;
 public class FriendsListFragment extends Fragment {
 
     private static final String BUNDLE_FILTER_TEXT = "BUNDLE_FILTER_TEXT";
+    private static final String ACTIVITY_EXTRA = "id";
 
     private EditText filterText = null;
     private VKRequest currentRequest;
@@ -51,7 +52,7 @@ public class FriendsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View viewHierarchy = inflater.inflate(R.layout.fragment_friends_list, container, false);
         findFriendsListViews(viewHierarchy);
-        profileId = getActivity().getIntent().getStringExtra("id");
+        profileId = getActivity().getIntent().getStringExtra(ACTIVITY_EXTRA);
         return viewHierarchy;
     }
 
