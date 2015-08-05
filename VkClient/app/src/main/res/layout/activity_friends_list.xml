@@ -1,20 +1,13 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     style="@style/DrawerLayoutStyle">
-        <LinearLayout
-            android:orientation="vertical"
-            style="@style/MainLayoutStyle">
 
-            <EditText
-               style="@style/SearchTextStyle"
-                android:id="@+id/etSearchFriends"
-                android:hint="@string/name_input_hint" />
-
-            <ListView
-                style="@style/LargeListViewStyle"
-                android:id="@+id/lvFriends" />
-
-        </LinearLayout>
+    <LinearLayout
+        style="@style/ZeroPaddingLayoutStyle"
+        android:id="@+id/container_friends_list"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"></LinearLayout>
 
     <ListView android:id="@+id/left_drawer"
         style="@style/DrawerStyle"/>

@@ -3,7 +3,6 @@ package com.vkclient.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.fragments.ProfileFragment;
@@ -20,7 +19,6 @@ public class ProfileActivity extends VkSdkActivity {
         if (profileFragment == null) {
             profileFragment = new ProfileFragment();
             fragmentManager.beginTransaction().add(R.id.container_profile, profileFragment).commit();
-            findViewById(R.id.drawer_layout).setVisibility(View.VISIBLE);
         }
     }
 
