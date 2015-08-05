@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SingleDialogFragment extends Fragment {
+    public static final String ACTIVITY_EXTRA = "userid";
     private final String COUNT = "150";
     private ListView messagesList;
     private Button sendDialog;
@@ -45,12 +46,10 @@ public class SingleDialogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewHierarchy = inflater.inflate(R.layout.fragment_single_dialog, container, false);
-        this.profileId = getActivity().getIntent().getStringExtra("userid");
+        this.profileId = getActivity().getIntent().getStringExtra(ACTIVITY_EXTRA);
         Logger.logDebug("profid", "ic_user id taked" + profileId);
         super.onCreate(savedInstanceState);
-        this.sendDialog = (Button) viewHierarchy.findViewById(R.id.btSendDialogMessage);
-        this.messagesList = (ListView) viewHierarchy.findViewById(R.id.lvSingleDialog);
-        this.messageBody = (TextView) viewHierarchy.findViewById(R.id.etMessageText);
+        findViews(viewHierarchy);
         if (VKSdk.wakeUpSession()) {
             startLoading();
         }
@@ -58,6 +57,12 @@ public class SingleDialogFragment extends Fragment {
         this.messagesList.setAdapter(this.listAdapter);
         this.sendDialog.setOnClickListener(this.singleDialogClickListener);
         return viewHierarchy;
+    }
+
+    private void findViews(View viewHierarchy) {
+        this.sendDialog = (Button) viewHierarchy.findViewById(R.id.btSendDialogMessage);
+        this.messagesList = (ListView) viewHierarchy.findViewById(R.id.lvSingleDialog);
+        this.messageBody = (TextView) viewHierarchy.findViewById(R.id.etMessageText);
     }
 
     public void startLoading() {
