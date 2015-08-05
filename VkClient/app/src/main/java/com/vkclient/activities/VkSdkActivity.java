@@ -36,7 +36,6 @@ public abstract class VkSdkActivity extends ActionBarActivity {
     }
 
     abstract int getLayoutResource();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +94,6 @@ public abstract class VkSdkActivity extends ActionBarActivity {
         super.onResume();
         VKUIHelper.onResume(this);
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
