@@ -7,13 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.podkaifom.vkclient.R;
+import com.vk.sdk.VKUIHelper;
 import com.vkclient.fragments.PhotoViewFragment;
 
 public class PhotoViewActivity extends VkSdkActivity {
     public static final String PHOTO_EXTRA = "photo";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        VKUIHelper.onCreate(this);
         FragmentManager fragmentManager = getFragmentManager();
         Fragment photoViewFragment = fragmentManager.findFragmentById(R.id.container_photo_view);
         if (photoViewFragment == null) {

@@ -28,6 +28,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        VKUIHelper.onCreate(getActivity());
         View viewHierarchy = inflater.inflate(R.layout.fragment_login, container, false);
         VKSdk.initialize(this.sdkListener, this.APPLICATION_ID);
         this.signIn = ((Button) viewHierarchy.findViewById(R.id.btSignIn));
@@ -97,11 +98,5 @@ public class LoginFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         VKUIHelper.onDestroy(getActivity());
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        VKUIHelper.onActivityResult(getActivity(), requestCode, resultCode, data);
     }
 }

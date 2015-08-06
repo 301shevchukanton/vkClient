@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 
 import com.example.podkaifom.vkclient.R;
+import com.vk.sdk.VKUIHelper;
 import com.vkclient.fragments.ProfileFragment;
 import com.vkclient.supports.Logger;
 
@@ -14,6 +15,7 @@ public class ProfileActivity extends VkSdkActivity {
         profileId = getIntent().getStringExtra("id");
         Logger.logDebug("profid", "profileid " + profileId);
         super.onCreate(savedInstanceState);
+        VKUIHelper.onCreate(this);
         FragmentManager fragmentManager = getFragmentManager();
         Fragment profileFragment = fragmentManager.findFragmentById(R.id.container_profile);
         if (profileFragment == null) {
