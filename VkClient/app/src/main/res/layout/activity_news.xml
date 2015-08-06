@@ -3,16 +3,15 @@
     android:id="@+id/drawer_layout"
     style="@style/DrawerLayoutStyle">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        style="@style/MainLayoutStyle"
-        tools:context=".NewsActivity">
+    <LinearLayout
+        style="@style/ZeroPaddingLayoutStyle"
+        android:id="@+id/container_news"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        xmlns:android="http://schemas.android.com/apk/res/android" />
 
-        <ListView
-            style="@style/LargeListViewStyle"
-            android:id="@+id/lvNews"/>
-
-    </RelativeLayout>
 
     <ListView android:id="@+id/left_drawer"
         style="@style/DrawerStyle"/>
