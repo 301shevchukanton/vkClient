@@ -1,20 +1,20 @@
 package com.vkclient.activities;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKAccessToken;
-import com.vk.sdk.dialogs.VKCaptchaDialog;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKSdkListener;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKError;
+import com.vk.sdk.dialogs.VKCaptchaDialog;
 import com.vk.sdk.util.VKUtil;
 import com.vkclient.supports.AlertBuilder;
 import com.vkclient.supports.Logger;
@@ -36,7 +36,6 @@ public class LoginActivity extends Activity {
         @Override
         public void onClick(final View v) {
             if (v == signIn) VKSdk.authorize(vkPermissionScope, true, true);
-            if (v == forceAuth) VKSdk.authorize(vkPermissionScope, true, true);
         }
     }
 
@@ -50,8 +49,6 @@ public class LoginActivity extends Activity {
         Logger.logDebug("Fingerprint", fingerprint[0]);
         this.signIn = ((Button) findViewById(R.id.btSignIn));
         this.signIn.setOnClickListener(new LoginClickListener());
-        this.forceAuth = ((Button) findViewById(R.id.btForceAuth));
-        this.forceAuth.setOnClickListener(new LoginClickListener());
         if (VKSdk.wakeUpSession()) {
             startClientActivity();
             return;

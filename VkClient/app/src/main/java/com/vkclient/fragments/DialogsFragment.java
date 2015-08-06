@@ -43,7 +43,7 @@ public class DialogsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewHierarchy = inflater.inflate(R.layout.fragment_dialogs, container, false);
-        listView = (ListView) viewHierarchy.findViewById(R.id.lvDialogs);
+        this.listView = (ListView) viewHierarchy.findViewById(R.id.lvDialogs);
         if (VKSdk.wakeUpSession()) {
             startLoading();
         }
@@ -117,7 +117,6 @@ public class DialogsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_messages, menu);
     }

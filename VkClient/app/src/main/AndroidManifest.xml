@@ -18,11 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.vkclient.activities.ClientActivity"
-            android:logo="@mipmap/ic_launcher"
-            android:label="@string/title_activity_client">
-        </activity>
         <activity android:name="com.vkclient.activities.ProfileActivity" android:label="@string/title_activity_profile">
         </activity>
         <activity

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">VkClient</string>
     <string name="action_settings">Settings</string>
-    <string name="action_sign_in_ez">Login with Vk-app</string>
+    <string name="action_sign_in_ez">Login</string>
     <string name="action_sign_in_force">Login with API</string>
     <string name="title_activity_client">Select option:</string>
     <string name="users_get">Get user info</string>
