@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
+import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.adapters.MessagesListAdapter;
@@ -41,6 +42,15 @@ public class SingleDialogFragment extends Fragment {
     private MessagesListAdapter listAdapter;
     private VKRequest ownRequest = null;
     private VKRequest fromRequest = null;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        VKUIHelper.onResume(getActivity());
+        if (VKSdk.wakeUpSession()) {
+            startLoading();
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -169,5 +179,4 @@ public class SingleDialogFragment extends Fragment {
             }
         }
     };
-
 }
