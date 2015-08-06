@@ -62,7 +62,7 @@ public class SendMessageActivity extends VkSdkActivity {
     };
 
     @Override
-    int getLayoutResource() {
+    protected int getLayoutResource() {
         return R.layout.activity_send_message;
     }
 }

@@ -23,7 +23,7 @@ public class ProfileActivity extends VkSdkActivity {
     }
 
     @Override
-    int getLayoutResource() {
+    protected int getLayoutResource() {
         return R.layout.activity_profile;
     }
 }

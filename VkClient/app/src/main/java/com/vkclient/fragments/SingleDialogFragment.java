@@ -75,7 +75,7 @@ public class SingleDialogFragment extends Fragment {
         this.messageBody = (TextView) viewHierarchy.findViewById(R.id.etMessageText);
     }
 
-    public void startLoading() {
+    private void startLoading() {
         if (this.currentRequest != null) {
             this.currentRequest.cancel();
         }
