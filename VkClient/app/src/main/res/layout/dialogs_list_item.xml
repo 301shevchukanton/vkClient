@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/TwoLinesItemStyle">
+    style="@style/TwoLinesItemStyle"
+    android:padding="@dimen/abc_control_padding_material">
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,6 +35,7 @@
         style="@style/PhotoPreview"
         android:id="@+id/ivDialogPhoto"
         android:layout_alignTop="@+id/tvDialogName"
-        android:src="@drawable/ic_user75" />
+        android:src="@drawable/ic_user75"
+        android:paddingTop="@dimen/vk_share_link_top_margin" />
 
 </TwoLineListItem>
