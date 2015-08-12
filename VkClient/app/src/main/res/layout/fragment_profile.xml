@@ -36,21 +36,19 @@
             style="@style/ZeroPaddingLayoutStyle"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/ivProfilePhoto"
-                android:layout_width="@dimen/profile_photo_width"
-                android:layout_height="@dimen/profile_photo_height"
-                android:src="@drawable/ic_user100" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="133dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     style="@style/ZeroPaddingLayoutStyle"
                     android:layout_width="fill_parent"
                     android:orientation="vertical"
-                    android:paddingStart="5dp">
+                    android:paddingStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout"
+                    android:layout_toRightOf="@+id/ivProfilePhoto"
+                    android:layout_toEndOf="@+id/ivProfilePhoto">
 
                     <TextView
                         android:id="@+id/tvProfileName"
@@ -69,15 +67,23 @@
                 <ToggleButton
                     android:id="@+id/tbShowFullUser"
                     android:layout_width="match_parent"
-                    android:layout_height="37dp"
+                    android:layout_height="@dimen/show_full_user_info"
                     android:layout_gravity="bottom"
                     android:checked="false"
                     android:text="New ToggleButton"
                     android:textOff="@string/show_full_user_info"
                     android:textOn="@string/hide_full_user_info"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toRightOf="@+id/ivProfilePhoto"
+                    android:layout_toEndOf="@+id/ivProfilePhoto" />
+
+                <ImageView
+                    android:id="@+id/ivProfilePhoto"
+                    android:layout_width="@dimen/profile_photo_width"
+                    android:layout_height="@dimen/profile_photo_height"
+                    android:src="@drawable/ic_user100" />
             </RelativeLayout>
 
         </LinearLayout>
