@@ -33,7 +33,8 @@
         style="@style/PhotoPreview"
         android:id="@+id/tvSingleDialogPhoto"
         android:layout_alignTop="@+id/tvSingleDialogName" />
-    <com.meetme.android.horizontallistview.HorizontalListView
+
+    <com.vkclient.views.External.HorizontalListView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:widget="http://schemas.android.com/apk/res-auto"
         android:id="@+id/lvMessagesPhoto"

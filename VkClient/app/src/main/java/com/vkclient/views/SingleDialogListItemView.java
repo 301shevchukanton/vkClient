@@ -10,11 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
-import com.meetme.android.horizontallistview.HorizontalListView;
 import com.vkclient.adapters.PhotoFeedAdapter;
 import com.vkclient.entities.Message;
 import com.vkclient.entities.PhotoFeed;
 import com.vkclient.supports.PhotoLoader;
+import com.vkclient.views.External.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.List;

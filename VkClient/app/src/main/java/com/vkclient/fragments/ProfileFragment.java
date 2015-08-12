@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
-import com.meetme.android.horizontallistview.HorizontalListView;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.activities.FriendsListActivity;
@@ -28,6 +27,7 @@ import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 import com.vkclient.supports.RequestCreator;
+import com.vkclient.views.External.HorizontalListView;
 import com.vkclient.views.ProfileInfoView;
 
 import java.util.ArrayList;
