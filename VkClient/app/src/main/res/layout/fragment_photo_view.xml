@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.vkclient.supports.TouchImageView
         style="@style/LargeImageViewStyle"
         android:id="@+id/ivPhoto"
         android:scaleType="fitCenter"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true" />
 
     <ImageButton
         style="@style/ImageButtonStyle"
