@@ -79,7 +79,6 @@ public class SingleDialogFragment extends Fragment {
         if (this.currentRequest != null) {
             this.currentRequest.cancel();
         }
-        this.messages.clear();
         this.currentRequest = RequestCreator.getHistory(this.COUNT, this.profileId);
         this.currentRequest.executeWithListener(this.getHistoryRequest);
     }
@@ -90,6 +89,7 @@ public class SingleDialogFragment extends Fragment {
             super.onComplete(response);
             ownRequest = null;
             fromRequest = null;
+            messages.clear();
             messages.addAll(new MessageParser().getMessagesList(response));
             for (int i = 0; i < messages.size(); i++) {
                 ownRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getUser_id()));
@@ -149,11 +149,11 @@ public class SingleDialogFragment extends Fragment {
             super.onComplete(response);
             try {
                 setMessageInfo(response);
-
+                listAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            listAdapter.notifyDataSetChanged();
+
         }
 
         private void setMessageInfo(VKResponse response) throws JSONException {

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKBatchRequest;
+import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.activities.SingleDialogActivity;
@@ -81,6 +82,7 @@ public class DialogsFragment extends Fragment {
             }
             VKBatchRequest batch = new VKBatchRequest(requests);
             batch.executeWithListener(batchListener);
+            listAdapter.notifyDataSetChanged();
         }
     };
     private final VKBatchRequest.VKBatchRequestListener batchListener = new VKBatchRequest.VKBatchRequestListener() {
@@ -89,16 +91,21 @@ public class DialogsFragment extends Fragment {
             super.onComplete(responses);
             try {
                 setUserInfo(responses);
+                listAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+
+        public void onError(VKError error) {
+            super.onError(error);
+            startLoading();
         }
 
         private void setUserInfo(VKResponse[] responses) throws JSONException {
             for (int i = 0; i < responses.length; i++) {
                 dialogs.get(i).setDialogUserInfo(new UserParser().parseUserName(responses[i]));
             }
-            listAdapter.notifyDataSetChanged();
         }
     };
     private final AdapterView.OnItemClickListener dialogClickListener = new AdapterView.OnItemClickListener() {
