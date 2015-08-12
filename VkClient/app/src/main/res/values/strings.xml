@@ -44,4 +44,6 @@
     <string name="default_name_text">Wait please!</string>
     <string name="loading_text">Loading</string>
     <string name="not_set">not set</string>
+    <string name="show_full_user_info">Show full user</string>
+    <string name="hide_full_user_info">Hide full user</string>
 </resources>

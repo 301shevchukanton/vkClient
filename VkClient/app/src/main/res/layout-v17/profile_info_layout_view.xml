@@ -3,7 +3,8 @@
     style="@style/CentralHorizontalLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/vk_share_dialog_view_padding">
 
     <TextView
         android:id="@+id/caption"

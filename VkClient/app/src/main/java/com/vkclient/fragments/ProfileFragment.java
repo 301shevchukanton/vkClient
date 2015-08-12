@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.api.VKRequest;
@@ -66,6 +67,12 @@ public class ProfileFragment extends Fragment {
         return viewHierarchy;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        showFullUser();
+    }
+
     private void findProfileInfoViews(View viewHierarchy) {
         this.listView = (HorizontalListView) viewHierarchy.findViewById(R.id.lvPhotoFeed);
         this.userName = (TextView) viewHierarchy.findViewById(R.id.tvProfileName);
@@ -91,6 +98,7 @@ public class ProfileFragment extends Fragment {
         container.findViewById(R.id.btSendMessage).setOnClickListener(profileClickListener);
         container.findViewById(R.id.btWallPost).setOnClickListener(profileClickListener);
         container.findViewById(R.id.ivProfilePhoto).setOnClickListener(profileClickListener);
+        container.findViewById(R.id.tbShowFullUser).setOnClickListener(profileClickListener);
     }
 
     private final AdapterView.OnItemClickListener photoFeedClickListener = new AdapterView.OnItemClickListener() {
@@ -125,6 +133,10 @@ public class ProfileFragment extends Fragment {
                     startUserPhotoViewCall(profileId);
                     return null;
                 }
+                case R.id.tbShowFullUser: {
+                    showFullUser();
+                    return null;
+                }
                 default:
                     return null;
             }
@@ -137,6 +149,11 @@ public class ProfileFragment extends Fragment {
         }
         this.currentRequest = RequestCreator.getUserById(userId);
         this.currentRequest.executeWithListener(this.bigPhotoRequestListener);
+    }
+
+    private void showFullUser() {
+        ToggleButton toggleButton = ((ToggleButton) getView().findViewById(R.id.tbShowFullUser));
+        getView().findViewById(R.id.llFullUserInfo).setVisibility(toggleButton.getText() == toggleButton.getTextOn() ? View.VISIBLE : View.GONE);
     }
 
     private void startLoading() {

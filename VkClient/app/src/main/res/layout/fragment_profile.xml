@@ -9,8 +9,11 @@
         <LinearLayout
             android:id="@+id/llButtonsPanel"
             style="@style/ZeroPaddingLayoutStyle"
-            android:layout_below="@+id/llInfo"
-            android:orientation="vertical">
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/llFullUserInfo"
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/btSendMessage"
@@ -39,42 +42,43 @@
                 android:layout_height="@dimen/profile_photo_height"
                 android:src="@drawable/ic_user100" />
 
-            <LinearLayout
-                style="@style/ZeroPaddingLayoutStyle"
-                android:orientation="vertical"
-                android:paddingStart="5dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="133dp">
 
-                <TextView
-                    android:id="@+id/tvProfileName"
-                    style="@style/LargeLabel"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/default_name_text" />
+                <LinearLayout
+                    style="@style/ZeroPaddingLayoutStyle"
+                    android:layout_width="fill_parent"
+                    android:orientation="vertical"
+                    android:paddingStart="5dp">
 
-                <TextView
-                    android:id="@+id/tvProfileStatus"
-                    style="@style/MiddleLabel"
-                    android:layout_gravity="center_horizontal" />
+                    <TextView
+                        android:id="@+id/tvProfileName"
+                        style="@style/LargeLabel"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/default_name_text" />
 
-                <com.vkclient.views.ProfileInfoView
-                    android:id="@+id/piBirthDate"
-                    style="@style/CentralHorizontalLayout" />
+                    <TextView
+                        android:id="@+id/tvProfileStatus"
+                        style="@style/MiddleLabel"
+                        android:layout_gravity="center_horizontal" />
 
-                <com.vkclient.views.ProfileInfoView
-                    android:id="@+id/piTown"
-                    style="@style/CentralHorizontalLayout" />
+                </LinearLayout>
 
-                <com.vkclient.views.ProfileInfoView
-                    android:id="@+id/piRelationships"
-                    style="@style/CentralHorizontalLayout" />
+                <ToggleButton
+                    android:id="@+id/tbShowFullUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="bottom"
+                    android:checked="false"
+                    android:text="New ToggleButton"
+                    android:textOff="@string/show_full_user_info"
+                    android:textOn="@string/hide_full_user_info" />
+            </RelativeLayout>
 
-                <com.vkclient.views.ProfileInfoView
-                    android:id="@+id/piEducation"
-                    style="@style/CentralHorizontalLayout" />
-
-                <com.vkclient.views.ProfileInfoView
-                    android:id="@+id/piLanguages"
-                    style="@style/CentralHorizontalLayout" />
-            </LinearLayout>
         </LinearLayout>
 
         <com.vkclient.views.External.HorizontalListView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -87,5 +91,38 @@
             android:layout_below="@+id/llButtonsPanel"
             android:divider="#878787"
             widget:dividerWidth="2dp" />
+
+        <LinearLayout
+            android:id="@+id/llFullUserInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/llInfo"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:padding="@dimen/vk_share_dialog_view_padding">
+
+            <com.vkclient.views.ProfileInfoView
+                android:id="@+id/piBirthDate"
+                style="@style/CentralHorizontalLayout" />
+
+            <com.vkclient.views.ProfileInfoView
+                android:id="@+id/piTown"
+                style="@style/CentralHorizontalLayout" />
+
+            <com.vkclient.views.ProfileInfoView
+                android:id="@+id/piRelationships"
+                style="@style/CentralHorizontalLayout" />
+
+            <com.vkclient.views.ProfileInfoView
+                android:id="@+id/piEducation"
+                style="@style/CentralHorizontalLayout" />
+
+            <com.vkclient.views.ProfileInfoView
+                android:id="@+id/piLanguages"
+                style="@style/CentralHorizontalLayout" />
+
+        </LinearLayout>
+
     </RelativeLayout>
 </ScrollView>
