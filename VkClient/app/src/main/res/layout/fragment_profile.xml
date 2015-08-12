@@ -56,6 +56,7 @@
                         android:id="@+id/tvProfileName"
                         style="@style/LargeLabel"
                         android:layout_gravity="center_horizontal"
+                        android:paddingTop="@dimen/abc_edit_text_inset_top_material"
                         android:text="@string/default_name_text" />
 
                     <TextView
@@ -99,8 +100,8 @@
             android:layout_below="@+id/llInfo"
             android:layout_centerHorizontal="true"
             android:orientation="vertical"
-            android:visibility="visible"
-            android:padding="@dimen/vk_share_dialog_view_padding">
+            android:padding="@dimen/vk_share_dialog_view_padding"
+            android:visibility="visible">
 
             <com.vkclient.views.ProfileInfoView
                 android:id="@+id/piBirthDate"
