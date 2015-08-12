@@ -15,7 +15,7 @@
     <string name="parents__profile_label">Parents:</string>
     <string name="siblings_profile_label">Siblings:</string>
     <string name="title_activity_friends_list">Friends list:</string>
-    <string name="send_message">Send a message</string>
+    <string name="send_message">Send message</string>
     <string name="view_friends">Friends</string>
     <string name="wall_post">Wall post</string>
     <string name="message_send">Send</string>

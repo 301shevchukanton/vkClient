@@ -70,14 +70,14 @@
                     android:id="@+id/tbShowFullUser"
                     android:layout_width="match_parent"
                     android:layout_height="37dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
                     android:layout_gravity="bottom"
                     android:checked="false"
                     android:text="New ToggleButton"
                     android:textOff="@string/show_full_user_info"
-                    android:textOn="@string/hide_full_user_info" />
+                    android:textOn="@string/hide_full_user_info"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
             </RelativeLayout>
 
         </LinearLayout>

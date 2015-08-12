@@ -4,7 +4,7 @@
     <dimen name="big_padding">32dp</dimen>
     <dimen name="middle_padding">15dp</dimen>
     <dimen name="profile_photo_width">122dp</dimen>
-    <dimen name="profile_photo_height">123dp</dimen>
+    <dimen name="profile_photo_height">130dp</dimen>
     <dimen name="preview_photo_width">60dp</dimen>
     <dimen name="preview_photo_height">60dp</dimen>
     <dimen name="button_text_size">20sp</dimen>
