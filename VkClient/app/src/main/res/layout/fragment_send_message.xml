@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MainLayoutStyle"
+    tools:context="com.vkclient.activities.SendMessageActivity">
+
+    <LinearLayout
+        android:id="@+id/llSendMessageInfo"
+        style="@style/ZeroPaddingLayoutStyle"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/ivMessagePhoto"
+            style="@style/ActionProfilePhoto"
+            android:layout_weight="0.11"
+            android:src="@drawable/abc_ic_menu_share_mtrl_alpha" />
+
+        <TextView
+            android:id="@+id/tvRecipientName"
+            style="@style/LargeLabel" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llMessageBody"
+        style="@style/ZeroPaddingLayoutStyle"
+        android:layout_below="@+id/llSendMessageInfo"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etMessageText"
+            style="@style/MultiLaneInput" />
+
+        <Button
+            android:id="@+id/btSendMessage"
+            style="@style/WideButtonStyle"
+            android:text="@string/message_send" />
+
+    </LinearLayout>
+
+</RelativeLayout>
