@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MainLayoutStyle"
+    tools:context="com.vkclient.activities.WallPostActivity">
+
+    <LinearLayout
+        android:id="@+id/llSendMessageInfo"
+        style="@style/ZeroPaddingLayoutStyle"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/ivPostPhoto"
+            style="@style/ActionProfilePhoto"
+            android:layout_weight="0.11"
+            android:src="@drawable/abc_ic_menu_share_mtrl_alpha" />
+
+        <TextView
+            android:id="@+id/tvPostName"
+            style="@style/LargeLabel"
+            android:focusableInTouchMode="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ZeroPaddingLayoutStyle"
+        android:layout_below="@+id/llSendMessageInfo"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/post"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+
+        <FrameLayout style="@style/ZeroPaddingLayoutStyle">
+
+            <Button
+                android:id="@+id/btWallPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_send" />
+
+            <ImageButton
+                android:id="@+id/ibAddPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:contentDescription="@string/loading_text"
+                android:src="@drawable/ic_camera40" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

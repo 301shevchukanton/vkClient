@@ -1,66 +1,17 @@
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     style="@style/DrawerLayoutStyle">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        style="@style/MainLayoutStyle"
-        tools:context="com.vkclient.activities.WallPostActivity">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/container_wall_post"
+        style="@style/ZeroPaddingLayoutStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="5dp" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            style="@style/ZeroPaddingLayoutStyle"
-            android:weightSum="1"
-            android:id="@+id/llSendMessageInfo">
+    <ListView
+        android:id="@+id/left_drawer"
+        style="@style/DrawerStyle" />
 
-            <ImageView
-                style="@style/ActionProfilePhoto"
-                android:id="@+id/ivPostPhoto"
-                android:src="@drawable/abc_ic_menu_share_mtrl_alpha"
-                android:layout_weight="0.11" />
-
-            <TextView
-                style="@style/LargeLabel"
-                android:id="@+id/tvPostName"
-                android:focusableInTouchMode="true" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            style="@style/ZeroPaddingLayoutStyle"
-            android:layout_below="@+id/llSendMessageInfo">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/post" />
-
-            <FrameLayout
-                style="@style/ZeroPaddingLayoutStyle">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/message_send"
-                    android:id="@+id/btWallPost" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ibAddPhoto"
-                    android:layout_gravity="end|center_vertical"
-                    android:src="@drawable/ic_camera40"
-                    android:contentDescription="@string/loading_text" />
-            </FrameLayout>
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-    <ListView android:id="@+id/left_drawer"
-        style="@style/DrawerStyle"/>
-
-        </android.support.v4.widget.DrawerLayout>
+</android.support.v4.widget.DrawerLayout>
