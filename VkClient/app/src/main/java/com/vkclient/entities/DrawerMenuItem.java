@@ -5,10 +5,12 @@ import com.vkclient.activities.VkSdkActivity;
 public class DrawerMenuItem {
     private String title;
     private VkSdkActivity.NavigationItem key;
+    private int iconResourceId;
 
-    public DrawerMenuItem(String title, VkSdkActivity.NavigationItem key) {
+    public DrawerMenuItem(String title, int iconResourceId, VkSdkActivity.NavigationItem key) {
         this.title = title;
         this.key = key;
+        this.iconResourceId = iconResourceId;
     }
 
     public void setTitle(String title) {
@@ -25,5 +27,9 @@ public class DrawerMenuItem {
 
     public VkSdkActivity.NavigationItem getKey() {
         return key;
+    }
+
+    public int getIconResourceId() {
+        return iconResourceId;
     }
 }

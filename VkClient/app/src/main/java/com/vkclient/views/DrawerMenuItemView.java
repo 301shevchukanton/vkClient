@@ -3,6 +3,7 @@ package com.vkclient.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.vkclient.entities.DrawerMenuItem;
 
 public class DrawerMenuItemView extends LinearLayout {
     private TextView itemText;
+    private ImageView menuIcon;
 
     public DrawerMenuItemView(Context context) {
         this(context, null);
@@ -25,9 +27,11 @@ public class DrawerMenuItemView extends LinearLayout {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.drawer_list_item, this);
         this.itemText = (TextView) findViewById(R.id.drawerText);
+        this.menuIcon = (ImageView) findViewById(R.id.ivMenuIcon);
     }
 
     public void setDrawerItem(DrawerMenuItem drawerItem) {
         this.itemText.setText(drawerItem.getTitle());
+        this.menuIcon.setImageResource(drawerItem.getIconResourceId());
     }
 }
