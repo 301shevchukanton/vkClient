@@ -9,7 +9,12 @@
     <dimen name="preview_photo_height">60dp</dimen>
     <dimen name="button_text_size">20sp</dimen>
     <dimen name="small_image_button">60dp</dimen>
-    <dimen name="drawer_width">240dp</dimen>
+    <dimen name="drawer_width">320dp</dimen>
+    <dimen name="drawer_height">48dp</dimen>
+    <dimen name="drawer_padding">16dp</dimen>
+    <dimen name="drawer_text_padding">32dp</dimen>
+    <dimen name="drawer_icon_size">24dp</dimen>
     <dimen name="drawer_separator_height">2dp</dimen>
     <dimen name="photo_preview_size">60dp</dimen>
+    <dimen name="show_full_user_info">35dp</dimen>
 </resources>

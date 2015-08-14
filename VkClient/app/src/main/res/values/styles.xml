@@ -77,7 +77,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_gravity">start</item>
         <item name="android:choiceMode">singleChoice</item>
-        <item name="android:divider">#dc0f0f0f</item>
+        <item name="android:divider">#12000000</item>
         <item name="android:dividerHeight">@dimen/drawer_separator_height</item>
         <item name="android:background">#fff</item>
     </style>
