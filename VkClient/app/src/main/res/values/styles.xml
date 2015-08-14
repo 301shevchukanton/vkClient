@@ -63,6 +63,7 @@
         <item name="android:layout_width">@dimen/photo_preview_size</item>
         <item name="android:layout_height">@dimen/photo_preview_size</item>
         <item name="android:layout_alignParentRight">true</item>
+        <item name="android:padding">@dimen/vk_share_link_top_margin</item>
     </style>
 
     <style name="TwoLinesItemStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
@@ -131,5 +132,10 @@
         <item name="android:layout_height">140dp</item>
     </style>
 
+    <style name="BodyTextStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/grey</item>
+    </style>
 
 </resources>

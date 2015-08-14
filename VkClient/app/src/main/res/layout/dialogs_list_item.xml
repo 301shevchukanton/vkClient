@@ -16,18 +16,21 @@
         style="@style/ZeroPaddingLayoutStyle"
         android:textAppearance="?attr/textAppearanceListItem"
         android:id="@+id/tvDialogDate"
-        android:layout_alignBaseline="@+id/tvDialogName"
-        android:layout_alignBottom="@+id/tvDialogText"
-        android:layout_toRightOf="@+id/tvDialogName"
-        android:paddingLeft="5dp"
+        android:layout_below="@+id/tvDialogName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/ivDialogPhoto"
-        android:layout_toStartOf="@+id/ivDialogPhoto" />
+        android:layout_toStartOf="@+id/ivDialogPhoto"
+        android:textSize="14sp"
+        android:textColor="@color/black" />
 
     <TextView
-        style="@style/ZeroPaddingLayoutStyle"
+        style="@style/BodyTextStyle"
         android:id="@+id/tvDialogText"
         android:maxHeight="150dp"
-        android:layout_below="@+id/tvDialogName"
+        android:layout_below="@+id/tvDialogDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/ivDialogPhoto"
         android:layout_toStartOf="@+id/ivDialogPhoto" />
 
@@ -35,7 +38,6 @@
         style="@style/PhotoPreview"
         android:id="@+id/ivDialogPhoto"
         android:layout_alignTop="@+id/tvDialogName"
-        android:src="@drawable/ic_user75"
-        android:paddingTop="@dimen/vk_share_link_top_margin" />
+        android:src="@drawable/ic_user75" />
 
 </TwoLineListItem>

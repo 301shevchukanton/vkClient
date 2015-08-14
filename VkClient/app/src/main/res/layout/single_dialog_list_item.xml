@@ -14,20 +14,21 @@
        style="@style/ZeroPaddingLayoutStyle"
         android:textAppearance="?attr/textAppearanceListItem"
         android:id="@+id/tvSingleDialogDate"
-        android:layout_alignBaseline="@+id/tvSingleDialogName"
-        android:layout_alignBottom="@+id/tvSingleDialogText"
-        android:layout_toRightOf="@+id/tvSingleDialogName"
-        android:layout_toLeftOf="@+id/tvSingleDialogPhoto"
-        android:layout_toStartOf="@+id/tvSingleDialogPhoto"
-        android:paddingLeft="15dp" />
+        android:layout_below="@+id/tvSingleDialogName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
     <TextView
-        style="@style/ZeroPaddingLayoutStyle"
+        style="@style/BodyTextStyle"
         android:id="@+id/tvSingleDialogText"
+        android:minLines="1"
+        android:layout_below="@+id/tvSingleDialogDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/tvSingleDialogPhoto"
-        android:layout_toStartOf="@+id/tvSingleDialogPhoto"
-        android:layout_below="@+id/tvSingleDialogName"
-        android:minLines="2" />
+        android:layout_toStartOf="@+id/tvSingleDialogPhoto" />
 
     <ImageView
         style="@style/PhotoPreview"
