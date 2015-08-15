@@ -14,7 +14,7 @@ public class RequestCreator {
     static final String FRIENDS_COUNT = "500";
     static final String PHOTOS_COUNT = "100";
     static final String SORT_BY = "hints";
-    static final String FRIENDS_REQUEST_PARAMS = "id,first_name,last_name,bdate,photo_200,photo_max";
+    static final String FRIENDS_REQUEST_PARAMS = "id,first_name,last_name,bdate,photo_200,photo_max,city";
     public static final String USER_BY_ID_PARAMS = "first_name,last_name,photo_200,photo_max_orig";
     public static final String FULL_USER_PARAMS = "id,first_name,last_name,bdate,city,photo_200,photo_max_orig,online," +
             "online_mobile,lists,domain,has_mobile,contacts,connections,site,education," +

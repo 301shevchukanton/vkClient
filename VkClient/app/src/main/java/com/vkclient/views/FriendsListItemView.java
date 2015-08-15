@@ -20,6 +20,7 @@ public class FriendsListItemView extends LinearLayout {
     private FriendListAdapter.OnPhotoClickListener photoClickListener;
     private TextView friendName;
     private TextView friendBirthDate;
+    private TextView friendCity;
     private User currentFriend;
 
     public FriendsListItemView(Context context) {
@@ -44,18 +45,20 @@ public class FriendsListItemView extends LinearLayout {
         this.friendName = (TextView) findViewById(R.id.tvFriendName);
         this.friendPhoto = (ImageView) findViewById(R.id.ivFriendPhoto);
         this.friendBirthDate = (TextView) findViewById(R.id.tvFriendBirthDate);
+        this.friendCity = (TextView) findViewById(R.id.tvFriendCity);
     }
 
     public void setFriend(final User friend) {
         this.friendName.setText(friend.getName());
         this.currentFriend = friend;
         this.friendPhoto.setOnClickListener(photoViewListener);
+        if (friend.getCity() != null) this.friendCity.setText(friend.getCity() + ", ");
         friendPhoto.setImageResource(R.drawable.ic_user100);
         PhotoLoader.loadPhoto(getContext(), friend.getPhoto(), friendPhoto);
         String birthDateString;
         birthDateString = friend.getBirthDate() != null ? friend.getBirthDate().toString(DateTimeFormat.forPattern(friend.getDateFormat())) :
                 String.valueOf(R.string.not_set);
-        this.friendBirthDate.setText(birthDateString);
+        if (birthDateString.contains(".")) this.friendBirthDate.setText(birthDateString);
     }
 
     private ImageView.OnClickListener photoViewListener = new ImageView.OnClickListener() {

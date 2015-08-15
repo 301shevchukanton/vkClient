@@ -6,19 +6,29 @@
         android:id="@+id/tvFriendName"
         style="@style/ZeroPaddingLayoutStyle"
         android:layout_marginTop="8dp"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_toLeftOf="@+id/ivFriendPhoto"
+        android:layout_toStartOf="@+id/ivFriendPhoto" />
 
     <TextView
         android:id="@+id/tvFriendBirthDate"
-        style="@style/ZeroPaddingLayoutStyle"
-
+        style="@style/DateTextStyle"
         android:layout_below="@id/tvFriendName"
-        android:paddingTop="10dp" />
+        android:layout_toLeftOf="@+id/ivFriendPhoto"
+        android:layout_toRightOf="@+id/tvFriendCity"
+        android:layout_toEndOf="@+id/tvFriendCity" />
 
     <ImageView
         android:id="@+id/ivFriendPhoto"
         style="@style/PhotoPreview"
-        android:layout_alignTop="@+id/tvFriendName"
         android:src="@drawable/ic_user75" />
+
+    <TextView
+        style="@style/CityTextStyle"
+        android:id="@+id/tvFriendCity"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/tvFriendName" />
 
 </RelativeLayout>

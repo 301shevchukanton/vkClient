@@ -155,7 +155,12 @@ public class FriendsListFragment extends Fragment {
                         }
                     }
                 }
-                users.add(setUser(userFull, birthDate, format));
+
+                if (userFull.city != null) {
+                    users.add(setUser(userFull, birthDate, format, userFull.city.title));
+                } else {
+                    users.add(setUser(userFull, birthDate, format));
+                }
             }
             listAdapter.notifyDataSetChanged();
         }
@@ -167,6 +172,17 @@ public class FriendsListFragment extends Fragment {
             user.setBirthDate(birthDate);
             user.setPhoto(userFull.photo_200);
             user.setDateFormat(format);
+            return user;
+        }
+
+        private User setUser(VKApiUserFull userFull, DateTime birthDate, String format, String city) {
+            User user = new User();
+            user.setId(userFull.id);
+            user.setName(userFull.toString());
+            user.setBirthDate(birthDate);
+            user.setPhoto(userFull.photo_200);
+            user.setDateFormat(format);
+            user.setCity(city);
             return user;
         }
     };
