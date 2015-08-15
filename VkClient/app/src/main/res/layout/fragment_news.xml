@@ -6,5 +6,6 @@
 
     <ListView
         style="@style/LargeListViewStyle"
-        android:id="@+id/lvNews" />
+        android:id="@+id/lvNews"
+        android:dividerHeight="@dimen/vk_share_dialog_view_padding" />
 </LinearLayout>
