@@ -17,4 +17,6 @@
     <dimen name="drawer_separator_height">1dp</dimen>
     <dimen name="photo_preview_size">60dp</dimen>
     <dimen name="show_full_user_info">35dp</dimen>
+    <dimen name="news_separator_height">8dp</dimen>
+    <dimen name="news_chapters_padding">3dp</dimen>
 </resources>

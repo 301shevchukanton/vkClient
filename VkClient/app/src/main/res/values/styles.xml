@@ -69,7 +69,6 @@
     <style name="TwoLinesItemStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">?attr/listPreferredItemHeight</item>
         <item name="android:mode">twoLine</item>
     </style>
 
