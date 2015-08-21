@@ -1,128 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
-style="@style/TwoLinesItemStyle">
+    style="@style/TwoLinesItemStyle">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="#ffe9e7e7"
-        android:id="@+id/relativeLayout">
+        android:layout_alignParentTop="true">
 
         <ImageView
-            style="@style/PhotoPreview"
             android:id="@+id/ivPostSourcePhoto"
-            android:src="@drawable/ic_user75"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentRight="false"
+            style="@style/PhotoPreview"
             android:layout_alignParentLeft="false"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentRight="false"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="false"
+            android:src="@drawable/ic_user75" />
 
         <TextView
+            android:id="@+id/tvPostSource"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceListItem"
-            android:id="@+id/tvPostSource"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@+id/ivPostSourcePhoto"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/ivPostSourcePhoto"
-            android:paddingLeft="@dimen/news_separator_height" />
+            android:layout_toRightOf="@+id/ivPostSourcePhoto"
+            android:paddingLeft="@dimen/news_separator_height"
+            android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
-            style="@style/DateTextStyle"
             android:id="@+id/tvPostDate"
+            style="@style/DateTextStyle"
             android:layout_below="@+id/tvPostSource"
-            android:layout_toRightOf="@+id/ivPostSourcePhoto"
             android:layout_toEndOf="@+id/ivPostSourcePhoto"
-            android:paddingLeft="@dimen/news_separator_height" />
+            android:layout_toRightOf="@+id/ivPostSourcePhoto"
+            android:paddingLeft="@dimen/news_separator_height"
+            android:paddingTop="@dimen/vk_share_link_top_margin" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="#ffe0dede"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/relativeLayout2"
-        android:layout_below="@+id/relativeLayout3">
+        android:layout_below="@+id/relativeLayout3"
+        android:background="#fff9fffd">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/tvLikesCount"
-            android:paddingBottom="0dp"
-            android:paddingTop="7dp"
-            android:text="12"
-            android:layout_alignBottom="@+id/ibLikePost"
-            android:layout_toRightOf="@+id/ibLikePost"
-            android:layout_toEndOf="@+id/ibLikePost" />
-
-        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ibSharePost"
-            android:src="@drawable/ic_share_20dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageView2"
+            android:layout_toRightOf="@+id/imageView2"
+            android:paddingBottom="0dp"
+            android:paddingTop="5dp"
+            android:text="12"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:id="@+id/ivSharePost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/activated_button"
             android:baselineAlignBottom="false"
             android:cropToPadding="false"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:padding="@dimen/news_buttons_padding"
+            android:src="@drawable/ic_share_normal" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/tvSharesCount"
-            android:text="123"
-            android:layout_alignBottom="@+id/tvLikesCount"
-            android:layout_toLeftOf="@+id/ibSharePost"
-            android:layout_toStartOf="@+id/ibSharePost" />
-
-        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ibLikePost"
-            android:baselineAlignBottom="false"
-            android:cropToPadding="false"
-            android:layout_alignTop="@+id/ibSharePost"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_alignBottom="@+id/tvLikesCount"
+            android:layout_toLeftOf="@+id/ivSharePost"
+            android:layout_toStartOf="@+id/ivSharePost"
+            android:text="123"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvLikesCount"
+            android:background="@drawable/activated_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/news_buttons_padding"
             android:src="@drawable/ic_like_20" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayout"
-        android:id="@+id/relativeLayout3"
-        android:background="#ffe0dede"
+        android:layout_marginBottom="@dimen/news_chapters_padding"
         android:layout_marginTop="@dimen/news_chapters_padding"
-        android:layout_marginBottom="@dimen/news_chapters_padding">
+        android:background="#fff9fffd">
 
         <com.vkclient.views.External.HorizontalListView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:widget="http://schemas.android.com/apk/res-auto"
             android:id="@+id/lvNewsPhoto"
             android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:divider="#878787"
-            widget:dividerWidth="2dp"
-            android:visibility="visible"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/tvPostText" />
+            android:layout_below="@+id/tvPostText"
+            android:divider="#878787"
+            android:visibility="visible"
+            widget:dividerWidth="2dp" />
 
         <TextView
-            style="@style/BodyTextStyle"
             android:id="@+id/tvPostText"
-            android:elegantTextHeight="false"
-            android:phoneNumber="false"
+            style="@style/BodyTextStyle"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="false" />
+            android:layout_alignParentStart="false"
+            android:elegantTextHeight="false"
+            android:phoneNumber="false" />
     </RelativeLayout>
 
 </TwoLineListItem>

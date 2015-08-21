@@ -19,4 +19,5 @@
     <dimen name="show_full_user_info">35dp</dimen>
     <dimen name="news_separator_height">8dp</dimen>
     <dimen name="news_chapters_padding">3dp</dimen>
+    <dimen name="news_buttons_padding">7dp</dimen>
 </resources>
