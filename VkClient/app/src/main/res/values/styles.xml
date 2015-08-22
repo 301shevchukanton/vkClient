@@ -2,7 +2,7 @@
 
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar"></style>
 
-    <style name="WideButtonStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="WideButtonStyle">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingLeft">@dimen/middle_padding</item>
@@ -19,7 +19,7 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
-    <style name="MainLayoutStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="MainLayoutStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
@@ -28,51 +28,51 @@
         <item name="android:paddingBottom">@dimen/activity_vertical_margin</item>
     </style>
 
-    <style name="ZeroPaddingLayoutStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="ZeroPaddingLayoutStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="ImageButtonStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="ImageButtonStyle" parent="AppTheme">
         <item name="android:layout_width">@dimen/small_image_button</item>
         <item name="android:layout_height">@dimen/small_image_button</item>
     </style>
 
-    <style name="SmallLabel" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="SmallLabel" parent="AppTheme">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">@string/loading_text</item>
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
     </style>
 
-    <style name="MiddleLabel" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="MiddleLabel">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">@string/loading_text</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
     </style>
 
-    <style name="LargeLabel" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="LargeLabel">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">@string/loading_text</item>
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
     </style>
 
-    <style name="PhotoPreview" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="PhotoPreview">
         <item name="android:layout_width">@dimen/photo_preview_size</item>
         <item name="android:layout_height">@dimen/photo_preview_size</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:padding">@dimen/vk_share_link_top_margin</item>
     </style>
 
-    <style name="TwoLinesItemStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="TwoLinesItemStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:mode">twoLine</item>
     </style>
 
-    <style name="DrawerStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="DrawerStyle">
         <item name="android:layout_width">@dimen/drawer_width</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_gravity">start</item>
@@ -82,24 +82,24 @@
         <item name="android:background">#fff</item>
     </style>
 
-    <style name="DrawerLayoutStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="DrawerLayoutStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="LargeListViewStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="LargeListViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="SearchTextStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="SearchTextStyle">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textPersonName</item>
         <item name="android:ems">10</item>
     </style>
 
-    <style name="LargeImageViewStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="LargeImageViewStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_alignParentLeft">true</item>
@@ -107,47 +107,55 @@
         <item name="android:scaleType">centerCrop</item>
     </style>
 
-    <style name="ScrollViewSyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="ScrollViewSyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="CentralHorizontalLayout" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="CentralHorizontalLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
-    <style name="MultiLaneInput" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="MultiLaneInput">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:inputType">textMultiLine</item>
         <item name="android:ems">10</item>
     </style>
 
-    <style name="ActionProfilePhoto" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="ActionProfilePhoto">
         <item name="android:layout_width">122dp</item>
         <item name="android:layout_height">140dp</item>
     </style>
 
-    <style name="BodyTextStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="BodyTextStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/grey</item>
+        <item name="android:textColor">@color/drawer_activated_item_color</item>
     </style>
 
-    <style name="DateTextStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="DateTextStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/second_text</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="CityTextStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="CityTextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/second_text</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="HorizontalListViewStyle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/news_photo_list_height</item>
+        <item name="android:divider">@color/horizontal_lv_divider_color</item>
+        <item name="android:visibility">visible</item>
+    </style>
+
 </resources>
