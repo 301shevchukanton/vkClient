@@ -4,5 +4,5 @@
     <item android:color="@color/drawer_activated_text_color" android:state_selected="true" />
     <item android:color="@color/drawer_activated_text_color" android:state_pressed="true" />
     <item android:color="@color/drawer_activated_text_color" android:state_checked="true" />
-    <item android:color="#000000" />
+    <item android:color="@color/drawer_normal_text_color" />
 </selector>
