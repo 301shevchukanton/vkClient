@@ -23,4 +23,5 @@
     <dimen name="horizontal_list_view_divider_width">2dp</dimen>
     <dimen name="news_photo_list_height">200dp</dimen>
     <dimen name="news_buttons_padding_top">5dp</dimen>
+    <dimen name="default_layout_padding">5dp</dimen>
 </resources>
