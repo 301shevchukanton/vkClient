@@ -117,6 +117,7 @@ public abstract class VkSdkActivity extends ActionBarActivity {
     }
 
     private void startApiCall(Class<?> cls) {
+        this.drawerLayout.closeDrawers();
         Intent i = new Intent(this, cls);
         startActivity(i);
     }
