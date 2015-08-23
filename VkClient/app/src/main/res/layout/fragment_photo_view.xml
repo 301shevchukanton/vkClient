@@ -14,7 +14,7 @@
     <ImageButton
         style="@style/ImageButtonStyle"
         android:id="@+id/ibSharePhoto"
-        android:src="@drawable/ic_share_20dp"
+        android:src="@drawable/ic_share"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/ivPhoto"
         android:layout_alignEnd="@+id/ivPhoto" />

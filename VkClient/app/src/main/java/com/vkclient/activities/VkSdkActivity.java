@@ -46,10 +46,10 @@ public abstract class VkSdkActivity extends ActionBarActivity {
     }
 
     protected void onCreateDrawer() {
-        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_profile), R.drawable.ic_home_45, NavigationItem.PROFILE_INFO));
-        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_friends), R.drawable.ic_friends_45, NavigationItem.FRIENDS_LIST));
-        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_messages), R.drawable.ic_messages_45, NavigationItem.DIALOGS));
-        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_news), R.drawable.ic_news_45, NavigationItem.NEWS));
+        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_profile), R.drawable.ic_home, NavigationItem.PROFILE_INFO));
+        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_friends), R.drawable.ic_friends, NavigationItem.FRIENDS_LIST));
+        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_messages), R.drawable.ic_messages, NavigationItem.DIALOGS));
+        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_news), R.drawable.ic_news, NavigationItem.NEWS));
         this.drawerList = (ListView) findViewById(R.id.left_drawer);
         this.drawerAdapter = new DrawerAdapter(this, this.drawerItems);
         this.drawerList.setAdapter(this.drawerAdapter);

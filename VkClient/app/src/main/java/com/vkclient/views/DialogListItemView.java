@@ -12,7 +12,7 @@ import com.vkclient.entities.Dialog;
 import com.vkclient.supports.PhotoLoader;
 
 
-public class DialogListItemView extends AbstractView {
+public class DialogListItemView extends SuperView {
 
     private TextView text;
     private TextView date;

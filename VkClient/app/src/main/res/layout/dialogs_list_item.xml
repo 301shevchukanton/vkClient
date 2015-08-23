@@ -7,7 +7,7 @@
         style="@style/PhotoPreview"
         android:id="@+id/ivDialogPhoto"
         android:layout_alignTop="@+id/tvDialogName"
-        android:src="@drawable/ic_user75" />
+        android:src="@drawable/ic_user" />
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -86,7 +86,7 @@
                     android:id="@+id/ivProfilePhoto"
                     android:layout_width="@dimen/profile_photo_width"
                     android:layout_height="@dimen/profile_photo_height"
-                    android:src="@drawable/ic_user100" />
+                    android:src="@drawable/ic_user" />
             </RelativeLayout>
 
         </LinearLayout>

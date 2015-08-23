@@ -53,7 +53,7 @@ public class FriendsListItemView extends LinearLayout {
         this.currentFriend = friend;
         this.friendPhoto.setOnClickListener(photoViewListener);
         if (friend.getCity() != null) this.friendCity.setText(friend.getCity() + ", ");
-        friendPhoto.setImageResource(R.drawable.ic_user100);
+        friendPhoto.setImageResource(R.drawable.ic_user);
         PhotoLoader.loadPhoto(getContext(), friend.getPhoto(), friendPhoto);
         String birthDateString;
         birthDateString = friend.getBirthDate() != null ? friend.getBirthDate().toString(DateTimeFormat.forPattern(friend.getDateFormat())) :

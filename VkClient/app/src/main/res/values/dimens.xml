@@ -24,4 +24,6 @@
     <dimen name="news_photo_list_height">200dp</dimen>
     <dimen name="news_buttons_padding_top">5dp</dimen>
     <dimen name="default_layout_padding">5dp</dimen>
+    <dimen name="photo_feed_image_width">193dp</dimen>
+    <dimen name="photo_feed_image_height">195dp</dimen>
 </resources>

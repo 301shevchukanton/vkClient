@@ -10,16 +10,16 @@ import org.joda.time.DateTime;
 
 import java.util.TimeZone;
 
-public abstract class AbstractView extends LinearLayout {
-    public AbstractView(Context context) {
+public abstract class SuperView extends LinearLayout {
+    public SuperView(Context context) {
         this(context, null);
     }
 
-    public AbstractView(Context context, AttributeSet attrs) {
+    public SuperView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public AbstractView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SuperView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

@@ -21,7 +21,7 @@
     <ImageView
         android:id="@+id/ivFriendPhoto"
         style="@style/PhotoPreview"
-        android:src="@drawable/ic_user75" />
+        android:src="@drawable/ic_user" />
 
     <TextView
         style="@style/CityTextStyle"

@@ -19,7 +19,7 @@ import com.vkclient.views.External.HorizontalListView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsListItemView extends AbstractView {
+public class NewsListItemView extends SuperView {
     private TextView text;
     private ImageView photo;
     private TextView postSource;
@@ -69,7 +69,7 @@ public class NewsListItemView extends AbstractView {
         } else {
             this.newsPhoto.setVisibility(View.GONE);
         }
-        photo.setImageResource(R.drawable.ic_user100);
+        photo.setImageResource(R.drawable.ic_user);
         text.setText(post.getText());
         if ((!post.getUserPhotoLink_200().isEmpty()) && post.getUserPhotoLink_200() != null) {
             PhotoLoader.loadPhoto(getContext(), post.getUserPhotoLink_200(), photo);

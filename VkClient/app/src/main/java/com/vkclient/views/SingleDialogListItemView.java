@@ -19,7 +19,7 @@ import com.vkclient.views.External.HorizontalListView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingleDialogListItemView extends AbstractView {
+public class SingleDialogListItemView extends SuperView {
     private TextView nameText;
     private ImageView photo;
     private HorizontalListView messagePhotoListView;

@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
                 android:contentDescription="@string/loading_text"
-                android:src="@drawable/ic_camera40" />
+                android:src="@drawable/ic_camera" />
         </FrameLayout>
 
     </LinearLayout>
