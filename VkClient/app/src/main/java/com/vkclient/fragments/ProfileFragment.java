@@ -39,8 +39,6 @@ public class ProfileFragment extends Fragment {
     private List<PhotoFeed> usersPhoto = new ArrayList<>();
     private PhotoFeedAdapter listAdapter;
     private VKRequest currentRequest;
-    private VKRequest profileInfoRequest;
-    private VKRequest profilePhotoRequest;
     private String profileId;
     private HorizontalListView listView;
     private TextView userName;
@@ -157,14 +155,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void startLoading() {
-        if (this.profileInfoRequest != null) {
-            this.profileInfoRequest.cancel();
-        }
         Logger.logDebug("profid", "onComplete " + profileId);
-        this.profileInfoRequest = RequestCreator.getFullUserById(profileId);
-        this.profileInfoRequest.executeWithListener(this.profileRequestListener);
-        this.profilePhotoRequest = RequestCreator.getPhotosOfUser(profileId);
-        this.profilePhotoRequest.executeWithListener(this.getPhotoFeedRequestListener);
+        RequestCreator.getFullUserById(profileId).executeWithListener(this.profileRequestListener);
+        RequestCreator.getPhotosOfUser(profileId).executeWithListener(this.getPhotoFeedRequestListener);
     }
 
     private void startActivityCall(Class<?> cls) {
@@ -192,7 +185,7 @@ public class ProfileFragment extends Fragment {
             setUserInfo(response);
         }
 
-        private void setViewText(String data, ProfileInfoView profileInfoView) {
+        private void setViewValue(String data, ProfileInfoView profileInfoView) {
             if (!TextUtils.isEmpty(data)) {
                 profileInfoView.setValue(data);
             } else {
@@ -212,11 +205,11 @@ public class ProfileFragment extends Fragment {
         private void setViewsData(User user) {
             userName.setText(user.getName());
             userStatus.setText(user.getStatus());
-            setViewText(user.getBdDateString(), birthDateView);
-            setViewText(user.getCity(), townView);
-            setViewText(user.getRelationship(), relationshipsView);
-            setViewText(user.getUnivers(), educationView);
-            setViewText(user.getLangs(), languagesView);
+            setViewValue(user.getBdDateString(), birthDateView);
+            setViewValue(user.getCity(), townView);
+            setViewValue(user.getRelationship(), relationshipsView);
+            setViewValue(user.getUnivers(), educationView);
+            setViewValue(user.getLangs(), languagesView);
         }
     };
 

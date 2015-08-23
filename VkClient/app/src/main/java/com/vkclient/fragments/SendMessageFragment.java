@@ -24,7 +24,9 @@ import com.vkclient.supports.RequestCreator;
 public class SendMessageFragment extends Fragment {
     private VKRequest currentRequest;
     private String profileId;
-
+    private TextView recipientName;
+    private TextView messageText;
+    private ImageView messagePhoto;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,6 +37,9 @@ public class SendMessageFragment extends Fragment {
         startLoading();
         super.onCreate(savedInstanceState);
         viewHierarchy.findViewById(R.id.btSendMessage).setOnClickListener(this.sendMessageClick);
+        this.recipientName = (TextView) viewHierarchy.findViewById(R.id.tvRecipientName);
+        this.messageText = (TextView) viewHierarchy.findViewById(R.id.etMessageText);
+        this.messagePhoto = (ImageView) viewHierarchy.findViewById(R.id.ivMessagePhoto);
         return viewHierarchy;
     }
 
@@ -56,16 +61,16 @@ public class SendMessageFragment extends Fragment {
 
         private void setUserInfo(VKResponse response) {
             User responseUser = new UserParser().parseUserName(response);
-            ((TextView) getView().findViewById(R.id.tvRecipientName)).setText(responseUser.getName());
+            recipientName.setText(responseUser.getName());
             if (responseUser.getPhotoMax() != null)
-                PhotoLoader.loadPhoto(getActivity(), responseUser.getPhotoMax(), (ImageView) getView().findViewById(R.id.ivMessagePhoto));
+                PhotoLoader.loadPhoto(getActivity(), responseUser.getPhotoMax(), messagePhoto);
         }
     };
 
     private final View.OnClickListener sendMessageClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Message.sendMessage((TextView) getView().findViewById(R.id.etMessageText), profileId);
+            Message.sendMessage(messageText, profileId);
         }
     };
 
