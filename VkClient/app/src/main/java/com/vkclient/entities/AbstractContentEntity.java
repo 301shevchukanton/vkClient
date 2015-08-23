@@ -1,5 +1,10 @@
 package com.vkclient.entities;
 
+import android.content.Context;
+import android.graphics.Color;
+
+import com.example.podkaifom.vkclient.R;
+
 public abstract class AbstractContentEntity {
     protected int id;
     protected long date;
@@ -60,4 +65,7 @@ public abstract class AbstractContentEntity {
         return this.readState;
     }
 
+    public int getBackgroundColor(Context context) {
+        return !getReadState() ? context.getResources().getColor(R.color.unread_message_color) : Color.TRANSPARENT;
+    }
 }

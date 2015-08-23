@@ -1,7 +1,6 @@
 package com.vkclient.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,20 +52,19 @@ public class SingleDialogListItemView extends SuperView {
         nameText.setText(message.getUser_id() == message.getFrom_id() ? message.getUsername() : message.getFromname());
         PhotoLoader.loadPhoto(getContext(),
                 message.getUser_id() == message.getFrom_id() ? message.getUserPhotoLink_200() : message.getFromPhotoLink_200(), photo);
-        String date = getParsedDate(message.getDate()).toString("dd.MM - HH:mm");
-        this.dateText.setText(date);
-        messageBody.setText(message.getBody());
-        messageBody.setBackgroundColor(!message.getReadState() ? Color.LTGRAY : Color.TRANSPARENT);
-        messagesPhotos = new ArrayList<>();
-        PhotoFeedAdapter listAdapter = new PhotoFeedAdapter(getContext(), messagesPhotos, R.layout.photo_feed_item, R.id.ivPhotoFeedImage);
+        this.dateText.setText(getParsedDate(message.getDate()).toString("dd.MM - HH:mm"));
+        this.messageBody.setText(message.getBody());
+        this.messageBody.setBackgroundColor(message.getBackgroundColor(getContext()));
+        this.messagesPhotos = new ArrayList<>();
+        PhotoFeedAdapter listAdapter = new PhotoFeedAdapter(getContext(), this.messagesPhotos, R.layout.photo_feed_item, R.id.ivPhotoFeedImage);
         if (!message.getMessagesPhotos().isEmpty()) {
-            messagesPhotos.addAll(message.getMessagesPhotos());
-            messagePhotoListView.setOnItemClickListener(photoFeedClickListener);
-            messagePhotoListView.setAdapter(listAdapter);
-            messagePhotoListView.setVisibility(View.VISIBLE);
+            this.messagesPhotos.addAll(message.getMessagesPhotos());
+            this.messagePhotoListView.setOnItemClickListener(this.photoFeedClickListener);
+            this.messagePhotoListView.setAdapter(listAdapter);
+            this.messagePhotoListView.setVisibility(View.VISIBLE);
             listAdapter.notifyDataSetChanged();
         } else {
-            messagePhotoListView.setVisibility(View.GONE);
+            this.messagePhotoListView.setVisibility(View.GONE);
         }
     }
 

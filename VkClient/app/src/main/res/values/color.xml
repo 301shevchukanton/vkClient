@@ -7,4 +7,5 @@
     <item name="drawer_normal_text_color" type="color">#000000</item>
     <item name="news_activity_layout_color" type="color">#fff9fffd</item>
     <item name="horizontal_lv_divider_color" type="color">#878787</item>
+    <item name="unread_message_color" type="color">#76868087</item>
 </resources>

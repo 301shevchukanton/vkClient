@@ -1,7 +1,6 @@
 package com.vkclient.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -44,7 +43,7 @@ public class DialogListItemView extends SuperView {
         this.text.setText(dialog.getBody());
         this.name.setText(dialog.getUsername());
         this.date.setText(getParsedDate(dialog.getDate()).toString("dd.MM - HH:mm"));
-        this.text.setBackgroundColor(!dialog.getReadState() ? Color.LTGRAY : Color.TRANSPARENT);
+        this.text.setBackgroundColor(dialog.getBackgroundColor(getContext()));
         if ((!dialog.getUserPhotoLink_200().isEmpty()) && dialog.getUserPhotoLink_200() != null) {
             PhotoLoader.loadPhoto(getContext(), dialog.getUserPhotoLink_200(), this.photo);
         }
