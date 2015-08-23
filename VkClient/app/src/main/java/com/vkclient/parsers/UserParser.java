@@ -8,33 +8,47 @@ import org.json.JSONObject;
 
 public class UserParser {
 
+    private static final String LAST_NAME = "last_name";
+    private static final String FIRST_NAME = "first_name";
+    private static final String STATUS = "status";
+    private static final String BDATE = "bdate";
+    private static final String CITY = "city";
+    private static final String ID = "id";
+    private static final String RESPONSE = "response";
+    private static final String TITLE = "title";
+    private static final String RELATION = "relation";
+    private static final String UNIVERSITIES = "universities";
+    private static final String NAME = "name";
+    private static final String PHOTO_MAX_ORIG = "photo_max_orig";
+    private static final String PHOTO_DEFAULT = "photo_200";
+
     public User parse(VKResponse response) {
         try {
-            JSONObject object = response.json.getJSONArray("response").getJSONObject(0);
+            JSONObject object = response.json.getJSONArray(RESPONSE).getJSONObject(0);
             User result = new User();
-            result.setId(Integer.parseInt(object.getString("id")));
-            if (object.getString("last_name") != null && object.getString("first_name") != null) {
-                result.setName(object.getString("first_name") + " " + object.getString("last_name"));
+            result.setId(Integer.parseInt(object.getString(ID)));
+            if (object.getString(LAST_NAME) != null && object.getString(FIRST_NAME) != null) {
+                result.setName(object.getString(FIRST_NAME) + " " + object.getString(LAST_NAME));
             }
-            if (object.has("status")) {
-                result.setStatus(object.getString("status"));
+            if (object.has(STATUS)) {
+                result.setStatus(object.getString(STATUS));
             }
-            if (object.has("bdate")) {
-                result.setBdDateString(object.getString("bdate"));
+            if (object.has(BDATE)) {
+                result.setBdDateString(object.getString(BDATE));
             }
-            if (object.has("city")) {
-                result.setCity(object.getJSONObject("city").getString("title"));
+            if (object.has(CITY)) {
+                result.setCity(object.getJSONObject(CITY).getString(TITLE));
             }
-            if (object.has("relation")) {
-                result.setRelationship(User.RELATIONSHIP_STATUS[Integer.parseInt(object.getString("relation"))]);
+            if (object.has(RELATION)) {
+                result.setRelationship(User.RELATIONSHIP_STATUS[Integer.parseInt(object.getString(RELATION))]);
             }
-            if (object.has("universities") && !object.getJSONArray("universities").isNull(0)) {
-                result.setUnivers(object.getJSONArray("universities").getJSONObject(0).getString("name"));
+            if (object.has(UNIVERSITIES) && !object.getJSONArray(UNIVERSITIES).isNull(0)) {
+                result.setUnivers(object.getJSONArray(UNIVERSITIES).getJSONObject(0).getString(NAME));
             } else {
                 result.setUnivers("");
             }
-            if (object.has("photo_max_orig")) {
-                result.setPhoto(object.getString("photo_max_orig"));
+            if (object.has(PHOTO_MAX_ORIG)) {
+                result.setPhoto(object.getString(PHOTO_MAX_ORIG));
             }
             result.setLangs(User.getLangs(object));
             return result;
@@ -47,11 +61,11 @@ public class UserParser {
         try {
             JSONObject object = response.json;
             User result = new User();
-            result.setName(object.getJSONArray("response").getJSONObject(0).getString("first_name") + " " +
-                    object.getJSONArray("response").getJSONObject(0).getString("last_name"));
-            result.setPhotoMax(object.getJSONArray("response").getJSONObject(0).getString("photo_max_orig"));
-            if (object.getJSONArray("response").getJSONObject(0).has("photo_200")) {
-                result.setPhoto(object.getJSONArray("response").getJSONObject(0).getString("photo_200"));
+            result.setName(object.getJSONArray(RESPONSE).getJSONObject(0).getString(FIRST_NAME) + " " +
+                    object.getJSONArray(RESPONSE).getJSONObject(0).getString(LAST_NAME));
+            result.setPhotoMax(object.getJSONArray(RESPONSE).getJSONObject(0).getString(PHOTO_MAX_ORIG));
+            if (object.getJSONArray(RESPONSE).getJSONObject(0).has(PHOTO_DEFAULT)) {
+                result.setPhoto(object.getJSONArray(RESPONSE).getJSONObject(0).getString(PHOTO_DEFAULT));
             }
             return result;
         } catch (JSONException e) {
