@@ -23,6 +23,25 @@ public class RequestCreator {
     public static final String NEWS_COUNT = "100";
     public static final String DIALOGS_COUNT = "30";
     public static final String DIALOGS_PRIVIEW_LENGTH = "50";
+    public static final String LIKES_ADD = "likes.add";
+    public static final String LIKES_DELETE = "likes.delete";
+    public static final String TYPE = "type";
+    public static final String POST = "post";
+    public static final String OWNER_ID = "owner_id";
+    public static final String ITEM_ID = "item_id";
+    public static final String FILTERS = "filters";
+    public static final String PHOTO_SIZE = "photo_200";
+    public static final String NEWSFEED_GET = "newsfeed.get";
+    public static final String MESSAGES_GET_DIALOGS = "messages.getDialogs";
+    public static final String MESSAGES_GET_HISTORY = "messages.getHistory";
+    public static final String LIKES_IS_LIKED = "likes.isLiked";
+    public static final String PREVIEW_LENGTH = "preview_length";
+    public static final String ORDER = "order";
+    public static final String PHOTOS_GET_ALL = "photos.getAll";
+    public static final String EXTENDED = "extended";
+    public static final String VK_TRUE = "1";
+    public static final String EXTRA_PHOTO_SIZES = "photo_sizes";
+    public static final String VK_FALSE = "0";
 
     public static VKRequest getUserById(String userId) {
         return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
@@ -35,31 +54,27 @@ public class RequestCreator {
     }
 
     public static VKRequest getNewsFeed() {
-        return new VKRequest("newsfeed.get", VKParameters.from(VKApiConst.COUNT, NEWS_COUNT, "filters", "post", VKApiConst.FIELDS, "photo_200"), VKRequest.HttpMethod.GET);
+        return new VKRequest(NEWSFEED_GET, VKParameters.from(VKApiConst.COUNT, NEWS_COUNT, FILTERS, POST, VKApiConst.FIELDS, PHOTO_SIZE), VKRequest.HttpMethod.GET);
     }
 
     public static VKRequest getDialogs() {
-        return new VKRequest("messages.getDialogs", VKParameters.from(VKApiConst.COUNT, DIALOGS_COUNT, "preview_length", DIALOGS_PRIVIEW_LENGTH), VKRequest.HttpMethod.GET);
+        return new VKRequest(MESSAGES_GET_DIALOGS, VKParameters.from(VKApiConst.COUNT, DIALOGS_COUNT, PREVIEW_LENGTH, DIALOGS_PRIVIEW_LENGTH), VKRequest.HttpMethod.GET);
     }
 
     public static VKRequest getHistory(String count, String profileId) {
-        return new VKRequest("messages.getHistory", VKParameters.from(VKApiConst.COUNT, count, VKApiConst.USER_ID, profileId), VKRequest.HttpMethod.GET);
+        return new VKRequest(MESSAGES_GET_HISTORY, VKParameters.from(VKApiConst.COUNT, count, VKApiConst.USER_ID, profileId), VKRequest.HttpMethod.GET);
     }
 
-    public static VKRequest likePost(String ownerId, String itemId) {
-        return new VKRequest("likes.add", VKParameters.from("type", "post", "owner_id", ownerId, "item_id", itemId), VKRequest.HttpMethod.GET);
-    }
-
-    public static VKRequest dislikePost(String ownerId, String itemId) {
-        return new VKRequest("likes.delete", VKParameters.from("type", "post", "owner_id", ownerId, "item_id", itemId), VKRequest.HttpMethod.GET);
+    public static VKRequest likePost(String ownerId, String itemId, Boolean like) {
+        return new VKRequest(like ? LIKES_ADD : LIKES_DELETE, VKParameters.from(TYPE, POST, OWNER_ID, ownerId, ITEM_ID, itemId), VKRequest.HttpMethod.GET);
     }
 
     public static VKRequest postIsLiked(String ownerId, String itemId) {
-        return new VKRequest("likes.isLiked", VKParameters.from("type", "post", "owner_id", ownerId, "item_id", itemId), VKRequest.HttpMethod.GET);
+        return new VKRequest(LIKES_IS_LIKED, VKParameters.from(TYPE, POST, OWNER_ID, ownerId, ITEM_ID, itemId), VKRequest.HttpMethod.GET);
     }
 
     public static VKRequest getFriends(String userId) {
-        return VKApi.friends().get(VKParameters.from(VKApiConst.USER_ID, userId, "order", SORT_BY, VKApiConst.COUNT, FRIENDS_COUNT, VKApiConst.FIELDS, FRIENDS_REQUEST_PARAMS));
+        return VKApi.friends().get(VKParameters.from(VKApiConst.USER_ID, userId, ORDER, SORT_BY, VKApiConst.COUNT, FRIENDS_COUNT, VKApiConst.FIELDS, FRIENDS_REQUEST_PARAMS));
     }
 
     public static VKRequest uploadPhotoToUser(String userId, Bitmap photo) {
@@ -67,6 +82,6 @@ public class RequestCreator {
     }
 
     public static VKRequest getPhotosOfUser(String userId) {
-        return new VKRequest("photos.getAll", VKParameters.from("owner_id", userId, "extended", "1", "count", PHOTOS_COUNT, "photo_sizes", "0"), VKRequest.HttpMethod.GET);
+        return new VKRequest(PHOTOS_GET_ALL, VKParameters.from(OWNER_ID, userId, EXTENDED, VK_TRUE, VKApiConst.COUNT, PHOTOS_COUNT, EXTRA_PHOTO_SIZES, VK_FALSE), VKRequest.HttpMethod.GET);
     }
 }

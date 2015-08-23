@@ -25,7 +25,7 @@ public class SingleDialogListItemView extends SuperView {
     private TextView dateText;
     private TextView messageBody;
     private List<PhotoFeed> messagesPhotos;
-
+    ;
     public SingleDialogListItemView(Context context) {
         this(context, null);
     }

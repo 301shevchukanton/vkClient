@@ -33,7 +33,8 @@
             android:label="@string/title_activity_wall_post"></activity>
         <activity
             android:name="com.vkclient.activities.DialogsActivity"
-            android:label="@string/title_activity_dialogs"></activity>
+            android:label="@string/title_activity_dialogs"
+            android:launchMode="singleTop"></activity>
         <activity
             android:name="com.vkclient.activities.SingleDialogActivity"
             android:label="@string/title_activity_single_dialog"
