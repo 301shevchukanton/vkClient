@@ -40,7 +40,7 @@ public class FriendsListFragment extends Fragment {
     private static final String BUNDLE_FILTER_TEXT = "BUNDLE_FILTER_TEXT";
     private static final String ACTIVITY_EXTRA = "id";
 
-    private EditText filterText = null;
+    private EditText filterText;
     private VKRequest currentRequest;
     private ListView friendsList;
     private String profileId;
