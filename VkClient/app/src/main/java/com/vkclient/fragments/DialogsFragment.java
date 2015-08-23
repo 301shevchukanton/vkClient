@@ -35,6 +35,7 @@ import java.util.List;
 
 public class DialogsFragment extends Fragment {
 
+    public static final String PROFILE_EXTRA = "userid";
     private VKRequest currentRequest;
     private ListView listView;
     private List<Dialog> dialogs = new ArrayList<>();
@@ -45,19 +46,19 @@ public class DialogsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View viewHierarchy = inflater.inflate(R.layout.fragment_dialogs, container, false);
         this.listView = (ListView) viewHierarchy.findViewById(R.id.lvDialogs);
-        if (VKSdk.wakeUpSession()) {
-            startLoading();
-        }
         this.listView.setOnItemClickListener(this.dialogClickListener);
         this.listAdapter = new DialogsListAdapter(getActivity(), this.dialogs);
         this.listView.setAdapter(this.listAdapter);
         setHasOptionsMenu(true);
+        if (VKSdk.wakeUpSession()) {
+            startLoading();
+        }
         return viewHierarchy;
     }
 
     private void startSingleDialogApiCall(int user_id) {
         Intent i = new Intent(getActivity(), SingleDialogActivity.class);
-        i.putExtra("userid", String.valueOf(user_id));
+        i.putExtra(PROFILE_EXTRA, String.valueOf(user_id));
         startActivity(i);
     }
 

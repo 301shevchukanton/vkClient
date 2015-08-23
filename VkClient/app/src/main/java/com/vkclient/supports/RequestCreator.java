@@ -66,7 +66,7 @@ public class RequestCreator {
     private static final String EXTRA_PHOTO_SIZES = "photo_sizes";
     private static final String VK_TRUE = "1";
     private static final String VK_FALSE = "0";
-    private static final String FULL_USER_PARAMS[] = {ID, FIRST_NAME, LAST_NAME, BDATE, CITY, PHOTO_SIZE, PHOTO_MAX_ORIGINAL, ONLINE,
+    private static final String FULL_USER_INFO_REQUEST_PARAMS[] = {ID, FIRST_NAME, LAST_NAME, BDATE, CITY, PHOTO_SIZE, PHOTO_MAX_ORIGINAL, ONLINE,
             ONLINE_MOBILE, LISTS, DOMAIN, HAS_MOBILE, CONTACTS, CONNECTIONS, SITE, EDUCATION,
             UNIVERSITIES, SCHOOLS, CAN_POST, CAN_SEE_ALL_POSTS, CAN_SEE_AUDIO, CAN_WRITE_PRIVATE_MESSAGE,
             STATUS, LAST_SEEN, COMMON_COUNT, RELATION, RELATIVES, COUNTERS, LANGUAGES, PERSONAL_INFO};
@@ -74,7 +74,7 @@ public class RequestCreator {
 
     private static final String FRIENDS_REQUEST_PARAMS[] = {ID, FIRST_NAME, LAST_NAME, BDATE, PHOTO_SIZE, PHOTO_MAX, CITY};
 
-    private static final String USER_BY_ID_PARAMS[] = {FIRST_NAME, LAST_NAME, PHOTO_SIZE, PHOTO_MAX_ORIGINAL};
+    private static final String USER_BY_ID_REQUEST_PARAMS[] = {FIRST_NAME, LAST_NAME, PHOTO_SIZE, PHOTO_MAX_ORIGINAL};
 
     private static String getParamsFromArray(String array[]) {
         String result = "";
@@ -86,12 +86,12 @@ public class RequestCreator {
 
     public static VKRequest getUserById(String userId) {
         return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
-                getParamsFromArray(USER_BY_ID_PARAMS)));
+                getParamsFromArray(USER_BY_ID_REQUEST_PARAMS)));
     }
 
     public static VKRequest getFullUserById(String userId) {
         return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,
-                getParamsFromArray(FULL_USER_PARAMS)));
+                getParamsFromArray(FULL_USER_INFO_REQUEST_PARAMS)));
     }
 
     public static VKRequest getNewsFeed() {

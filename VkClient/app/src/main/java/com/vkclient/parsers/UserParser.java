@@ -42,11 +42,8 @@ public class UserParser {
             if (object.has(RELATION)) {
                 result.setRelationship(User.RELATIONSHIP_STATUS[Integer.parseInt(object.getString(RELATION))]);
             }
-            if (object.has(UNIVERSITIES) && !object.getJSONArray(UNIVERSITIES).isNull(0)) {
-                result.setUnivers(object.getJSONArray(UNIVERSITIES).getJSONObject(0).getString(NAME));
-            } else {
-                result.setUnivers("");
-            }
+            result.setUnivers(object.has(UNIVERSITIES) && !object.getJSONArray(UNIVERSITIES).isNull(0)
+                    ? object.getJSONArray(UNIVERSITIES).getJSONObject(0).getString(NAME) : "");
             if (object.has(PHOTO_MAX_ORIG)) {
                 result.setPhoto(object.getString(PHOTO_MAX_ORIG));
             }

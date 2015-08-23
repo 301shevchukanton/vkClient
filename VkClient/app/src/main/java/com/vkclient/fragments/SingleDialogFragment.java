@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SingleDialogFragment extends Fragment {
-    public static final String ACTIVITY_EXTRA = "userid";
     private final String COUNT = "150";
     private ListView messagesList;
     private Button sendDialog;
@@ -56,7 +55,7 @@ public class SingleDialogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewHierarchy = inflater.inflate(R.layout.fragment_single_dialog, container, false);
-        this.profileId = getActivity().getIntent().getStringExtra(ACTIVITY_EXTRA);
+        this.profileId = getActivity().getIntent().getStringExtra(DialogsFragment.PROFILE_EXTRA);
         Logger.logDebug("profid", "ic_user id taked" + profileId);
         super.onCreate(savedInstanceState);
         findViews(viewHierarchy);
