@@ -57,8 +57,7 @@ public class FriendsListItemView extends LinearLayout {
         }
         friendPhoto.setImageResource(R.drawable.ic_user);
         PhotoLoader.loadPhoto(getContext(), friend.getPhoto(), friendPhoto);
-        String birthDateString;
-        birthDateString = friend.getBirthDate() != null ? friend.getBirthDate().toString(DateTimeFormat.forPattern(friend.getDateFormat())) :
+        String birthDateString = friend.getBirthDate() != null ? friend.getBirthDate().toString(DateTimeFormat.forPattern(friend.getDateFormat())) :
                 String.valueOf(R.string.not_set);
         if (birthDateString.contains(".")) {
             this.friendBirthDate.setText(birthDateString);
