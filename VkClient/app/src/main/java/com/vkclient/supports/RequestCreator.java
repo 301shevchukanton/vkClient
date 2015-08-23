@@ -11,37 +11,71 @@ import com.vk.sdk.api.photo.VKUploadImage;
 
 public class RequestCreator {
 
-    static final String FRIENDS_COUNT = "500";
-    static final String PHOTOS_COUNT = "100";
-    static final String SORT_BY = "hints";
-    static final String FRIENDS_REQUEST_PARAMS = "id,first_name,last_name,bdate,photo_200,photo_max,city";
-    public static final String USER_BY_ID_PARAMS = "first_name,last_name,photo_200,photo_max_orig";
-    public static final String FULL_USER_PARAMS = "id,first_name,last_name,bdate,city,photo_200,photo_max_orig,online," +
-            "online_mobile,lists,domain,has_mobile,contacts,connections,site,education," +
-            "universities,schools,can_post,can_see_all_posts,can_see_audio,can_write_private_message," +
-            "status,last_seen,common_count,relation,relatives,counters,langs,personal";
-    public static final String NEWS_COUNT = "100";
-    public static final String DIALOGS_COUNT = "30";
-    public static final String DIALOGS_PRIVIEW_LENGTH = "50";
-    public static final String LIKES_ADD = "likes.add";
-    public static final String LIKES_DELETE = "likes.delete";
-    public static final String TYPE = "type";
-    public static final String POST = "post";
-    public static final String OWNER_ID = "owner_id";
-    public static final String ITEM_ID = "item_id";
-    public static final String FILTERS = "filters";
-    public static final String PHOTO_SIZE = "photo_200";
-    public static final String NEWSFEED_GET = "newsfeed.get";
-    public static final String MESSAGES_GET_DIALOGS = "messages.getDialogs";
-    public static final String MESSAGES_GET_HISTORY = "messages.getHistory";
-    public static final String LIKES_IS_LIKED = "likes.isLiked";
-    public static final String PREVIEW_LENGTH = "preview_length";
-    public static final String ORDER = "order";
-    public static final String PHOTOS_GET_ALL = "photos.getAll";
-    public static final String EXTENDED = "extended";
-    public static final String VK_TRUE = "1";
-    public static final String EXTRA_PHOTO_SIZES = "photo_sizes";
-    public static final String VK_FALSE = "0";
+    private static final String FRIENDS_COUNT = "500";
+    private static final String PHOTOS_COUNT = "100";
+    private static final String PHOTO_SIZE = "photo_200";
+    private static final String SORT_BY = "hints";
+    private static final String ID = "id";
+    private static final String FIRST_NAME = "first_name";
+    private static final String LAST_NAME = "last_name";
+    private static final String BDATE = "bdate";
+    private static final String PHOTO_MAX = "photo_max";
+    private static final String ONLINE = "online";
+    private static final String PHOTO_MAX_ORIGINAL = "photo_max_orig";
+    private static final String CITY = "city";
+    private static final String ONLINE_MOBILE = "online_mobile";
+    private static final String LISTS = "lists";
+    private static final String DOMAIN = "domain";
+    private static final String HAS_MOBILE = "has_mobile";
+    private static final String CONTACTS = "contacts";
+    private static final String CONNECTIONS = "connections";
+    private static final String SITE = "site";
+    private static final String EDUCATION = "education";
+    private static final String UNIVERSITIES = "universities";
+    private static final String SCHOOLS = "schools";
+    private static final String CAN_POST = "can_post";
+    private static final String CAN_SEE_ALL_POSTS = "can_see_all_posts";
+    private static final String CAN_SEE_AUDIO = "can_see_audio";
+    private static final String CAN_WRITE_PRIVATE_MESSAGE = "can_write_private_message";
+    private static final String STATUS = "status";
+    private static final String LAST_SEEN = "last_seen";
+    private static final String COMMON_COUNT = "common_count";
+    private static final String RELATION = "relation";
+    private static final String RELATIVES = "relatives";
+    private static final String COUNTERS = "counters";
+    private static final String LANGUAGES = "langs";
+    private static final String PERSONAL_INFO = "personal";
+    private static final String NEWS_COUNT = "100";
+    private static final String DIALOGS_COUNT = "30";
+    private static final String DIALOGS_PRIVIEW_LENGTH = "50";
+    private static final String LIKES_ADD = "likes.add";
+    private static final String LIKES_DELETE = "likes.delete";
+    private static final String TYPE = "type";
+    private static final String POST = "post";
+    private static final String OWNER_ID = "owner_" + ID;
+    private static final String ITEM_ID = "item_" + ID;
+    private static final String FILTERS = "filters";
+    private static final String NEWSFEED_GET = "newsfeed.get";
+    private static final String MESSAGES_GET_DIALOGS = "messages.getDialogs";
+    private static final String MESSAGES_GET_HISTORY = "messages.getHistory";
+    private static final String LIKES_IS_LIKED = "likes.isLiked";
+    private static final String PREVIEW_LENGTH = "preview_length";
+    private static final String ORDER = "order";
+    private static final String PHOTOS_GET_ALL = "photos.getAll";
+    private static final String EXTENDED = "extended";
+    private static final String EXTRA_PHOTO_SIZES = "photo_sizes";
+    private static final String VK_TRUE = "1";
+    private static final String VK_FALSE = "0";
+
+    private static final String FULL_USER_PARAMS = ID + "," + FIRST_NAME + "," + LAST_NAME + "," + BDATE + "," + CITY + "," + PHOTO_SIZE + "," + PHOTO_MAX_ORIGINAL + "," + ONLINE + "," +
+            ONLINE_MOBILE + "," + LISTS + "," + DOMAIN + "," + HAS_MOBILE + "," + CONTACTS + "," + CONNECTIONS + "," + SITE + "," + EDUCATION + "," +
+            UNIVERSITIES + "," + SCHOOLS + "," + CAN_POST + "," + CAN_SEE_ALL_POSTS + "," + CAN_SEE_AUDIO + "," + CAN_WRITE_PRIVATE_MESSAGE + "," +
+            STATUS + "," + LAST_SEEN + "," + COMMON_COUNT + "," + RELATION + "," + RELATIVES + "," + COUNTERS + "," + LANGUAGES + "," + PERSONAL_INFO;
+
+    static final String FRIENDS_REQUEST_PARAMS = ID + "," + FIRST_NAME + "," + LAST_NAME + "," + BDATE + "," + PHOTO_SIZE + "," + PHOTO_MAX + "," + CITY;
+
+    public static final String USER_BY_ID_PARAMS = FIRST_NAME + "," + LAST_NAME + "," + PHOTO_SIZE + "," + PHOTO_MAX_ORIGINAL;
+
 
     public static VKRequest getUserById(String userId) {
         return VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, userId, VKApiConst.FIELDS,

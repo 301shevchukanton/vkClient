@@ -16,17 +16,26 @@ public class UserParser {
             if (object.getString("last_name") != null && object.getString("first_name") != null) {
                 result.setName(object.getString("first_name") + " " + object.getString("last_name"));
             }
-            if (object.has("status")) result.setStatus(object.getString("status"));
-            if (object.has("bdate")) result.setBdDateString(object.getString("bdate"));
-            if (object.has("city"))
+            if (object.has("status")) {
+                result.setStatus(object.getString("status"));
+            }
+            if (object.has("bdate")) {
+                result.setBdDateString(object.getString("bdate"));
+            }
+            if (object.has("city")) {
                 result.setCity(object.getJSONObject("city").getString("title"));
-            if (object.has("relation"))
+            }
+            if (object.has("relation")) {
                 result.setRelationship(User.RELATIONSHIP_STATUS[Integer.parseInt(object.getString("relation"))]);
-            if (object.has("universities") && !object.getJSONArray("universities").isNull(0))
+            }
+            if (object.has("universities") && !object.getJSONArray("universities").isNull(0)) {
                 result.setUnivers(object.getJSONArray("universities").getJSONObject(0).getString("name"));
-            else result.setUnivers("");
-            if (object.has("photo_max_orig"))
+            } else {
+                result.setUnivers("");
+            }
+            if (object.has("photo_max_orig")) {
                 result.setPhoto(object.getString("photo_max_orig"));
+            }
             result.setLangs(User.getLangs(object));
             return result;
         } catch (JSONException e) {
