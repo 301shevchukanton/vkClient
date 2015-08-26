@@ -10,9 +10,12 @@ import com.vkclient.supports.Logger;
 
 
 public class FriendsListActivity extends VkSdkActivity {
+
+    private static final String ID = "id";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        profileId = getIntent().getStringExtra("id");
+        profileId = getIntent().getStringExtra(ID);
         Logger.logDebug("profid", "profile id taked" + profileId);
         super.onCreate(savedInstanceState);
         FragmentManager fragmentManager = getFragmentManager();

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsListItemView extends SuperView {
+    private static final String DATE_FORMAT = "dd.MM - HH:mm";
     private TextView text;
     private ImageView photo;
     private TextView postSource;
@@ -55,7 +56,7 @@ public class NewsListItemView extends SuperView {
 
     public void setPost(News post) {
         this.postSource.setText(post.getSourceName());
-        this.postDate.setText(getParsedDate(post.getDate()).toString("dd.MM - HH:mm"));
+        this.postDate.setText(getParsedDate(post.getDate()).toString(DATE_FORMAT));
         this.likesCount.setText(post.getLikesCount());
         this.repostsCount.setText(post.getRepostsCount());
         this.messagesPhotos = new ArrayList<>();

@@ -10,9 +10,12 @@ import com.vkclient.fragments.ProfileFragment;
 import com.vkclient.supports.Logger;
 
 public class ProfileActivity extends VkSdkActivity {
+
+    private static final String ID = "id";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        profileId = getIntent().getStringExtra("id");
+        profileId = getIntent().getStringExtra(ID);
         Logger.logDebug("profid", "profileid " + profileId);
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);

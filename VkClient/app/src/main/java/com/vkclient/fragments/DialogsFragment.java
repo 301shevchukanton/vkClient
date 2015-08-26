@@ -36,6 +36,7 @@ import java.util.List;
 public class DialogsFragment extends Fragment {
 
     public static final String PROFILE_EXTRA = "userid";
+    public static final String PROFILE_CHAT_ID = "chatid";
     private VKRequest currentRequest;
     private ListView listView;
     private List<Dialog> dialogs = new ArrayList<>();
@@ -56,9 +57,10 @@ public class DialogsFragment extends Fragment {
         return viewHierarchy;
     }
 
-    private void startSingleDialogApiCall(int user_id) {
+    private void startSingleDialogApiCall(int user_id, int chat_id) {
         Intent i = new Intent(getActivity(), SingleDialogActivity.class);
         i.putExtra(PROFILE_EXTRA, String.valueOf(user_id));
+        i.putExtra(PROFILE_CHAT_ID, String.valueOf(chat_id));
         startActivity(i);
     }
 
@@ -115,8 +117,11 @@ public class DialogsFragment extends Fragment {
                                 int position, long id) {
             ((TextView) view.findViewById(R.id.tvDialogName)).getText();
             for (int i = 0; i < dialogs.size(); i++) {
-                if (dialogs.get(i).getUsername() == ((TextView) view.findViewById(R.id.tvDialogName)).getText()) {
-                    startSingleDialogApiCall(dialogs.get(i).getUser_id());
+                if (dialogs.get(i).getChatId() != 0 && dialogs.get(i).getTitle() == ((TextView) view.findViewById(R.id.tvDialogName)).getText()) {
+                    startSingleDialogApiCall(0, dialogs.get(i).getChatId());
+                    break;
+                } else if (dialogs.get(i).getUsername() == ((TextView) view.findViewById(R.id.tvDialogName)).getText()) {
+                    startSingleDialogApiCall(dialogs.get(i).getUser_id(), 0);
                     break;
                 }
             }

@@ -42,4 +42,6 @@
     <string name="not_set">not set</string>
     <string name="show_full_user_info">Show full user</string>
     <string name="hide_full_user_info">Hide full user</string>
+    <string name="token_received">Token received</string>
+    <string name="token_accepted">Token accepted</string>
 </resources>

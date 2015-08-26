@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 public class User {
     public final static String[] RELATIONSHIP_STATUS = {"nonset", "single", "in a relationship", "engaged", "married", "married", "actively searching", "in love"};
+    private static final String PERSONAL = "personal";
+    private static final String LANGS = "langs";
     private int id;
     private String name;
     private String status;
@@ -104,7 +106,7 @@ public class User {
     public static String getLangs(JSONObject r) {
         try {
             String langs = "";
-            JSONArray langsArray = r.getJSONObject("personal").getJSONArray("langs");
+            JSONArray langsArray = r.getJSONObject(PERSONAL).getJSONArray(LANGS);
             for (int i = 0; i < langsArray.length(); i++)
                 langs += langsArray.getString(i) + "; ";
             return langs;

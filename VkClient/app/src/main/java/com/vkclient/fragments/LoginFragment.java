@@ -21,7 +21,7 @@ import com.vkclient.activities.ProfileActivity;
 import com.vkclient.supports.AlertBuilder;
 
 public class LoginFragment extends Fragment {
-    final String APPLICATION_ID = "4929437";
+    private final String APPLICATION_ID = "4929437";
     private Button signIn;
 
     @Override
@@ -73,13 +73,13 @@ public class LoginFragment extends Fragment {
 
         @Override
         public void onReceiveNewToken(VKAccessToken newToken) {
-            Toast.makeText(getActivity(), "Token received", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.token_received), Toast.LENGTH_SHORT).show();
             startClientActivity();
         }
 
         @Override
         public void onAcceptUserToken(VKAccessToken token) {
-            Toast.makeText(getActivity(), "Token acepted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.token_accepted), Toast.LENGTH_SHORT).show();
             startClientActivity();
         }
     };

@@ -3,41 +3,40 @@ package com.vkclient.entities;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
+import com.vkclient.supports.RequestCreator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Message extends AbstractContentEntity {
-    private final int from_id;
+    private final int fromId;
     private String fromPhotoLink_200 = "";
-    private String fromname = "";
+    private String fromName = "";
     private List<PhotoFeed> messagesPhotos = new ArrayList<>();
 
     public Message(int mId, int mUser_id, int mFrom_id, long mDate, boolean mReadState, String mBody, List<PhotoFeed> messagesPhotos) {
         this.id = mId;
         this.user_id = mUser_id;
-        this.from_id = mFrom_id;
+        this.fromId = mFrom_id;
         this.date = mDate;
         this.readState = mReadState;
         this.body = mBody;
         this.messagesPhotos.addAll(messagesPhotos);
     }
 
-    public int getFrom_id() {
-        return this.from_id;
+    public int getFromId() {
+        return this.fromId;
     }
 
-    public void setFromname(String fromname) {
-        this.fromname = fromname;
+    public void setFromName(String fromName) {
+        this.fromName = fromName;
     }
 
-    public String getFromname() {
-        return this.fromname;
+    public String getFromName() {
+        return this.fromName;
     }
 
     public void setFromPhotoLink_200(String fromPhotoLink_200) {
@@ -48,14 +47,14 @@ public class Message extends AbstractContentEntity {
         return this.fromPhotoLink_200;
     }
 
-    static public void sendMessage(final TextView msgView, String profileId) {
-        String msg = msgView.getText().toString();
-        VKRequest currentRequest = new VKRequest("messages.send", VKParameters.from(VKApiConst.USER_ID, profileId, VKApiConst.MESSAGE, msg), VKRequest.HttpMethod.GET);
-        currentRequest.executeWithListener(new SendMessageListener(msgView));
+    static public void sendMessage(final TextView messageView, String profileId) {
+        String message = messageView.getText().toString();
+        RequestCreator.sendMessageRequest(profileId, message).executeWithListener(new SendMessageListener(messageView));
     }
 
-    public void setMessagesPhotos(List<PhotoFeed> messagesPhotos) {
-        this.messagesPhotos = messagesPhotos;
+    static public void sendChatMessage(final TextView messageView, String chatId) {
+        String message = messageView.getText().toString();
+        RequestCreator.sendChatMessageRequest(chatId, message).executeWithListener(new SendMessageListener(messageView));
     }
 
     public List<PhotoFeed> getMessagesPhotos() {

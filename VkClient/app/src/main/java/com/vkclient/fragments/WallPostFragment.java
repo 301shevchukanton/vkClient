@@ -39,7 +39,6 @@ import java.io.InputStream;
 public class WallPostFragment extends Fragment {
     private VKRequest currentRequest;
     private Bitmap photo;
-    private Bitmap selectedBitmap = null;
     private String profileId;
     protected String msg;
 
@@ -102,8 +101,8 @@ public class WallPostFragment extends Fragment {
         InputStream imageStream;
         try {
             imageStream = getActivity().getContentResolver().openInputStream(selectedImage);
-            this.selectedBitmap = BitmapFactory.decodeStream(imageStream);
-            this.photo = this.selectedBitmap;
+            Bitmap selectedBitmap = BitmapFactory.decodeStream(imageStream);
+            this.photo = selectedBitmap;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -13,7 +13,6 @@ public class SingleDialogActivity extends VkSdkActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        profileId = getIntent().getStringExtra("userid");
         Logger.logDebug("profid", "ic_user id taked" + profileId);
         super.onCreate(savedInstanceState);
         FragmentManager fragmentManager = getFragmentManager();

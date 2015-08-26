@@ -27,6 +27,7 @@ public class SendMessageFragment extends Fragment {
     private TextView recipientName;
     private TextView messageText;
     private ImageView messagePhoto;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

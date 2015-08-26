@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SingleDialogListItemView extends SuperView {
+    private static final String DATE_FORMAT = "dd.MM - HH:mm";
     private TextView nameText;
     private ImageView photo;
     private HorizontalListView messagePhotoListView;
@@ -26,6 +27,7 @@ public class SingleDialogListItemView extends SuperView {
     private TextView messageBody;
     private List<PhotoFeed> messagesPhotos;
     ;
+
     public SingleDialogListItemView(Context context) {
         this(context, null);
     }
@@ -49,10 +51,10 @@ public class SingleDialogListItemView extends SuperView {
     }
 
     public void setMessagesListItem(Message message) {
-        nameText.setText(message.getUser_id() == message.getFrom_id() ? message.getUsername() : message.getFromname());
+        nameText.setText(message.getUser_id() == message.getFromId() ? message.getUsername() : message.getFromName());
         PhotoLoader.loadPhoto(getContext(),
-                message.getUser_id() == message.getFrom_id() ? message.getUserPhotoLink_200() : message.getFromPhotoLink_200(), photo);
-        this.dateText.setText(getParsedDate(message.getDate()).toString("dd.MM - HH:mm"));
+                message.getUser_id() == message.getFromId() ? message.getUserPhotoLink_200() : message.getFromPhotoLink_200(), photo);
+        this.dateText.setText(getParsedDate(message.getDate()).toString(DATE_FORMAT));
         this.messageBody.setText(message.getBody());
         this.messageBody.setBackgroundColor(message.getBackgroundColor(getContext()));
         this.messagesPhotos = new ArrayList<>();

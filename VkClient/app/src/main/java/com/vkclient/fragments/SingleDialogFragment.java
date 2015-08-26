@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
+import com.vk.sdk.api.VKBatchRequest;
+import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.adapters.MessagesListAdapter;
@@ -21,7 +23,6 @@ import com.vkclient.entities.User;
 import com.vkclient.listeners.AbstractRequestListener;
 import com.vkclient.parsers.MessageParser;
 import com.vkclient.parsers.UserParser;
-import com.vkclient.supports.Logger;
 import com.vkclient.supports.RequestCreator;
 
 import org.json.JSONException;
@@ -31,11 +32,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SingleDialogFragment extends Fragment {
-    private final String COUNT = "150";
+    private static final String RESPONSE_PARAM = "response";
+    private static final String FIRST_NAME = "first_name";
+    private static final String LAST_NAME = "last_name";
+    private static final String PHOTO_SIZE = "photo_200";
+    private static final String ZERO_CHAT_ID = "0";
+    private final String MESSAGES_COUNT = "15";
     private ListView messagesList;
     private Button sendDialog;
     private TextView messageBody;
     private String profileId;
+    private String chatId;
     private VKRequest currentRequest;
     private List<Message> messages = new ArrayList<>();
     private MessagesListAdapter listAdapter;
@@ -56,7 +63,7 @@ public class SingleDialogFragment extends Fragment {
                              Bundle savedInstanceState) {
         View viewHierarchy = inflater.inflate(R.layout.fragment_single_dialog, container, false);
         this.profileId = getActivity().getIntent().getStringExtra(DialogsFragment.PROFILE_EXTRA);
-        Logger.logDebug("profid", "ic_user id taked" + profileId);
+        this.chatId = getActivity().getIntent().getStringExtra(DialogsFragment.PROFILE_CHAT_ID);
         super.onCreate(savedInstanceState);
         findViews(viewHierarchy);
         if (VKSdk.wakeUpSession()) {
@@ -78,10 +85,31 @@ public class SingleDialogFragment extends Fragment {
         if (this.currentRequest != null) {
             this.currentRequest.cancel();
         }
-        this.currentRequest = RequestCreator.getHistory(this.COUNT, this.profileId);
-        this.currentRequest.executeWithListener(this.getHistoryRequest);
+        if (!chatId.equals(ZERO_CHAT_ID)) {
+            this.currentRequest = RequestCreator.getHistoryById(this.MESSAGES_COUNT, this.chatId);
+            this.currentRequest.executeWithListener(this.getHistoryByChatIdRequestListener);
+        } else {
+            this.currentRequest = RequestCreator.getHistory(this.MESSAGES_COUNT, this.profileId);
+            this.currentRequest.executeWithListener(this.getHistoryRequest);
+        }
     }
 
+    final AbstractRequestListener getHistoryByChatIdRequestListener = new AbstractRequestListener() {
+        @Override
+        public void onComplete(final VKResponse response) {
+            super.onComplete(response);
+            ownRequest = null;
+            messages.clear();
+            messages.addAll(new MessageParser().getMessagesList(response));
+            VKRequest[] requests = new VKRequest[messages.size()];
+            for (int i = 0; i < messages.size(); i++) {
+                requests[i] = RequestCreator.getUserById(String.valueOf(messages.get(i).getUser_id()));
+            }
+            VKBatchRequest batch = new VKBatchRequest(requests);
+            batch.executeWithListener(singleDialogChatRequest);
+            listAdapter.notifyDataSetChanged();
+        }
+    };
     final AbstractRequestListener getHistoryRequest = new AbstractRequestListener() {
         @Override
         public void onComplete(final VKResponse response) {
@@ -92,13 +120,14 @@ public class SingleDialogFragment extends Fragment {
             messages.addAll(new MessageParser().getMessagesList(response));
             for (int i = 0; i < messages.size(); i++) {
                 ownRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getUser_id()));
-                if (messages.get(i).getUser_id() != messages.get(i).getFrom_id()) {
-                    fromRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getFrom_id()));
+                if (messages.get(i).getUser_id() != messages.get(i).getFromId()) {
+                    fromRequest = RequestCreator.getUserById(String.valueOf(messages.get(i).getFromId()));
                 }
             }
             if (ownRequest != null) ownRequestExecution(ownRequest, messages.size());
         }
     };
+
 
     private void ownRequestExecution(VKRequest request, final int arrayLength) {
         request.executeWithListener(new SingleDialogOwnerRequest(arrayLength));
@@ -107,6 +136,35 @@ public class SingleDialogFragment extends Fragment {
     private void fromRequestExecution(VKRequest request, final int arrayLength) {
         request.executeWithListener(new SingleDialogFromRequest(arrayLength));
     }
+
+    private final VKBatchRequest.VKBatchRequestListener singleDialogChatRequest = new VKBatchRequest.VKBatchRequestListener() {
+        @Override
+        public void onComplete(VKResponse[] responses) {
+            super.onComplete(responses);
+            try {
+                setMessageInfo(responses);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            listAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onError(VKError error) {
+            super.onError(error);
+            startLoading();
+        }
+
+        private void setMessageInfo(VKResponse[] responses) throws JSONException {
+            for (int i = 0; i < responses.length; i++) {
+                User responseUser = new UserParser().parseUserName(responses[i]);
+                messages.get(i).setUsername(responseUser.getName());
+                messages.get(i).setUserPhotoLink_200(responseUser.getPhoto());
+                messages.get(i).setFromName(responseUser.getName());
+                messages.get(i).setFromPhotoLink_200(responseUser.getPhoto());
+            }
+        }
+    };
 
     final class SingleDialogOwnerRequest extends AbstractRequestListener {
         private int arrayLength;
@@ -156,19 +214,23 @@ public class SingleDialogFragment extends Fragment {
         }
 
         private void setMessageInfo(VKResponse response) throws JSONException {
-            JSONObject r = response.json.getJSONArray("response").getJSONObject(0);
+            JSONObject r = response.json.getJSONArray(RESPONSE_PARAM).getJSONObject(0);
             for (int i = 0; i < arrayLength; i++) {
-                messages.get(i).setFromname(r.getString("first_name") + " " + r.getString("last_name"));
-                messages.get(i).setFromPhotoLink_200(r.getString("photo_200"));
+                messages.get(i).setFromName(r.getString(FIRST_NAME) + " " + r.getString(LAST_NAME));
+                messages.get(i).setFromPhotoLink_200(r.getString(PHOTO_SIZE));
             }
         }
     }
 
     public final View.OnClickListener singleDialogClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(final View v) {
-            if (v == sendDialog) {
-                Message.sendMessage(messageBody, profileId);
+        public void onClick(final View view) {
+            if (view == sendDialog) {
+                if (!chatId.equals(ZERO_CHAT_ID)) {
+                    Message.sendChatMessage(messageBody, chatId);
+                } else {
+                    Message.sendMessage(messageBody, profileId);
+                }
                 try {
                     Thread.sleep(50, 0);
                 } catch (InterruptedException e) {

@@ -39,6 +39,8 @@ public class FriendsListFragment extends Fragment {
 
     private static final String BUNDLE_FILTER_TEXT = "BUNDLE_FILTER_TEXT";
     private static final String ACTIVITY_EXTRA = "id";
+    private static final String FULL_DATE = "dd.MM.yyyy";
+    private static final String PART_DAY = "dd.MM";
 
     private EditText filterText;
     private VKRequest currentRequest;
@@ -139,7 +141,7 @@ public class FriendsListFragment extends Fragment {
             super.onComplete(response);
             VKUsersArray usersArray = (VKUsersArray) response.parsedModel;
             users.clear();
-            final String[] formats = new String[]{"dd.MM.yyyy", "dd.MM"};
+            final String[] formats = new String[]{FULL_DATE, PART_DAY};
             for (VKApiUserFull userFull : usersArray) {
                 DateTime birthDate = null;
                 String format = null;

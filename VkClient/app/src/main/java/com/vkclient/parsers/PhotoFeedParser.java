@@ -11,6 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoFeedParser {
+    private static final String ID = "id";
+    private static final String ALBUM_ID = "album_id";
+    private static final String OWNER_ID = "owner_id";
+    private static final String POST_ID = "post_id";
+    private static final String EMPTY_PARAM = "";
+    private static final String PHOTO_SMALL = "photo_130";
+    private static final String PHOTO_LARGE = "photo_604";
+    private static final String TEXT_PARAM = "text";
+    private static final String LIKES = "likes";
+    private static final String COUNT = "count";
+    private static final String RESPONSE_PARAM = "response";
+    private static final String ITEMS_PARAM = "items";
     private JSONArray photoFeedArray;
 
 
@@ -18,14 +30,14 @@ public class PhotoFeedParser {
         try {
             JSONObject photoFeedJSON = this.photoFeedArray.getJSONObject(index);
             PhotoFeed result = new PhotoFeed();
-            result.setPhotoId(photoFeedJSON.getString("id"));
-            result.setAlbumId(photoFeedJSON.getString("album_id"));
-            result.setOwnerId(photoFeedJSON.getString("owner_id"));
-            result.setPostId(photoFeedJSON.has("post_id") ? photoFeedJSON.getString("post_id") : "");
-            result.setPhotoSmall(photoFeedJSON.getString("photo_130"));
-            result.setPhotoLarge(photoFeedJSON.getString("photo_604"));
-            result.setText(photoFeedJSON.getString("text"));
-            result.setLikes(photoFeedJSON.getJSONObject("likes").getString("count"));
+            result.setPhotoId(photoFeedJSON.getString(ID));
+            result.setAlbumId(photoFeedJSON.getString(ALBUM_ID));
+            result.setOwnerId(photoFeedJSON.getString(OWNER_ID));
+            result.setPostId(photoFeedJSON.has(POST_ID) ? photoFeedJSON.getString(POST_ID) : EMPTY_PARAM);
+            result.setPhotoSmall(photoFeedJSON.getString(PHOTO_SMALL));
+            result.setPhotoLarge(photoFeedJSON.getString(PHOTO_LARGE));
+            result.setText(photoFeedJSON.getString(TEXT_PARAM));
+            result.setLikes(photoFeedJSON.getJSONObject(LIKES).getString(COUNT));
             return result;
         } catch (JSONException e) {
             return null;
@@ -34,7 +46,7 @@ public class PhotoFeedParser {
 
     public List<PhotoFeed> getPhotoFeedList(VKResponse response) {
         try {
-            this.photoFeedArray = response.json.getJSONObject("response").getJSONArray("items");
+            this.photoFeedArray = response.json.getJSONObject(RESPONSE_PARAM).getJSONArray(ITEMS_PARAM);
             List<PhotoFeed> result = new ArrayList<>();
             for (int i = 0; i < this.photoFeedArray.length(); i++) {
                 result.add(this.getPhoto(i));

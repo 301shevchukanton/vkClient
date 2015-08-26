@@ -75,6 +75,8 @@ public class RequestCreator {
     private static final String FRIENDS_REQUEST_PARAMS[] = {ID, FIRST_NAME, LAST_NAME, BDATE, PHOTO_SIZE, PHOTO_MAX, CITY};
 
     private static final String USER_BY_ID_REQUEST_PARAMS[] = {FIRST_NAME, LAST_NAME, PHOTO_SIZE, PHOTO_MAX_ORIGINAL};
+    private static final String CHAT_ID = "chat_id";
+    private static final String MESSAGES_SEND = "messages.send";
 
     private static String getParamsFromArray(String array[]) {
         String result = "";
@@ -106,6 +108,10 @@ public class RequestCreator {
         return new VKRequest(MESSAGES_GET_HISTORY, VKParameters.from(VKApiConst.COUNT, count, VKApiConst.USER_ID, profileId), VKRequest.HttpMethod.GET);
     }
 
+    public static VKRequest getHistoryById(String count, String chatId) {
+        return new VKRequest(MESSAGES_GET_HISTORY, VKParameters.from(VKApiConst.COUNT, count, CHAT_ID, chatId), VKRequest.HttpMethod.GET);
+    }
+
     public static VKRequest likePost(String ownerId, String itemId, Boolean like) {
         return new VKRequest(like ? LIKES_ADD : LIKES_DELETE, VKParameters.from(TYPE, POST, OWNER_ID, ownerId, ITEM_ID, itemId), VKRequest.HttpMethod.GET);
     }
@@ -125,4 +131,13 @@ public class RequestCreator {
     public static VKRequest getPhotosOfUser(String userId) {
         return new VKRequest(PHOTOS_GET_ALL, VKParameters.from(OWNER_ID, userId, EXTENDED, VK_TRUE, VKApiConst.COUNT, PHOTOS_COUNT, EXTRA_PHOTO_SIZES, VK_FALSE), VKRequest.HttpMethod.GET);
     }
+
+    public static VKRequest sendMessageRequest(String profileId, String message) {
+        return new VKRequest(MESSAGES_SEND, VKParameters.from(VKApiConst.USER_ID, profileId, VKApiConst.MESSAGE, message), VKRequest.HttpMethod.GET);
+    }
+
+    public static VKRequest sendChatMessageRequest(String chatId, String message) {
+        return new VKRequest(MESSAGES_SEND, VKParameters.from(CHAT_ID, chatId, VKApiConst.MESSAGE, message), VKRequest.HttpMethod.GET);
+    }
 }
+

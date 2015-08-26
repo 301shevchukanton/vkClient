@@ -16,6 +16,7 @@ import com.vkclient.supports.PhotoLoader;
 import org.joda.time.format.DateTimeFormat;
 
 public class FriendsListItemView extends LinearLayout {
+    private static final String SEPARATOR = ", ";
     private ImageView friendPhoto;
     private FriendListAdapter.OnPhotoClickListener photoClickListener;
     private TextView friendName;
@@ -53,7 +54,7 @@ public class FriendsListItemView extends LinearLayout {
         this.currentFriend = friend;
         this.friendPhoto.setOnClickListener(photoViewListener);
         if (friend.getCity() != null) {
-            this.friendCity.setText(friend.getCity() + ", ");
+            this.friendCity.setText(friend.getCity() + SEPARATOR);
         }
         friendPhoto.setImageResource(R.drawable.ic_user);
         PhotoLoader.loadPhoto(getContext(), friend.getPhoto(), friendPhoto);
