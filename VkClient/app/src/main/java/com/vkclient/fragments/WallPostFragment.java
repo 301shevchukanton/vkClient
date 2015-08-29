@@ -78,7 +78,7 @@ public class WallPostFragment extends Fragment {
     private void showError(VKError error) {
         AlertBuilder.showErrorMessage(getActivity(), error.errorMessage);
         if (error.httpError != null) {
-            Logger.logWarning("Test", "Error in request or upload" + error.httpError);
+            Logger.logError("Test", getString(R.string.request_error) + error.httpError);
         }
     }
 
@@ -86,7 +86,6 @@ public class WallPostFragment extends Fragment {
         if (this.currentRequest != null) {
             this.currentRequest.cancel();
         }
-        Logger.logDebug("profid", "onComplete " + profileId);
         this.currentRequest = RequestCreator.getFullUserById(profileId);
         this.currentRequest.executeWithListener(this.userFullRequestListener);
     }
@@ -110,7 +109,7 @@ public class WallPostFragment extends Fragment {
 
     private void post() {
         this.msg = ((TextView) getView().findViewById(R.id.post)).getText().toString();
-        Toast.makeText(getActivity(), "posted successful", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), getString(R.string.posted_successful), Toast.LENGTH_LONG).show();
         ((TextView) getView().findViewById(R.id.post)).setText("");
         if (this.photo != null) {
             VKRequest request = RequestCreator.uploadPhotoToUser(profileId, this.photo);
@@ -138,12 +137,10 @@ public class WallPostFragment extends Fragment {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
-            Logger.logDebug("profid", "onComplete " + response);
             setUserInfo(response);
         }
 
         private void setUserInfo(VKResponse response) {
-            Logger.logDebug("profid", "seting inf " + profileId);
             User user = new UserParser().parse(response);
             ((TextView) getView().findViewById(R.id.tvPostName)).setText(user.getName());
             PhotoLoader.loadPhoto(getActivity(), user.getPhoto(), (ImageView) getView().findViewById(R.id.ivPostPhoto));

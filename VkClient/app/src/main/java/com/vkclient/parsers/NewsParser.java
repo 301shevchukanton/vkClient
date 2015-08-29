@@ -3,7 +3,6 @@ package com.vkclient.parsers;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.News;
 import com.vkclient.entities.PhotoFeed;
-import com.vkclient.supports.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,27 +12,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsParser {
+
+    private static final String ATTACHMENTS = "attachments";
+    private static final String PHOTO = "photo";
+    private static final String ID = "id";
+    private static final String ALBUM_ID = "album_id";
+    private static final String OWNER_ID = "owner_id";
+    private static final String PHOTO_SMALL = "photo_75";
+    private static final String PHOTO_BIG = "photo_604";
+    private static final String TEXT = "text";
+    private static final String EMPTY_PARAM = "";
+    private static final String TYPE = "type";
+    private static final String SOURCE_ID = "source_id";
+    private static final String DATE = "date";
+    private static final String POST_TYPE = "post_type";
+    private static final String POST_ID = "post_id";
+    private static final String LIKES = "likes";
+    private static final String COUNT = "count";
+    private static final String REPOSTS = "reposts";
+    private static final String RESPONSE = "response";
+    private static final String ITEMS = "items";
+    private static final String GROUPS = "groups";
+    private static final String NAME = "name";
+    private static final String PHOTO_NORMAL = "photo_200";
+    private static final String PROFILES = "profiles";
+    private static final String FIRST_NAME = "first_name";
+    private static final String LAST_NAME = "last_name";
+    private static final String PHOTO_MIDDLE = "photo_100";
+
     public static News parse(JSONObject object) {
         News result = null;
         List<PhotoFeed> messagesPhotos = new ArrayList<>();
         try {
             JSONObject messageJSON = object;
-            if (messageJSON.has("attachments")) {
-                JSONArray attachmentsJSON = messageJSON.getJSONArray("attachments");
+            if (messageJSON.has(ATTACHMENTS)) {
+                JSONArray attachmentsJSON = messageJSON.getJSONArray(ATTACHMENTS);
                 for (int i = 0; i < attachmentsJSON.length(); i++) {
 
-                    if (attachmentsJSON.getJSONObject(i).has("photo")) {
-                        JSONObject photoJson = attachmentsJSON.getJSONObject(i).getJSONObject("photo");
-                        Logger.logDebug("Dialogs_Photos:", attachmentsJSON.getJSONObject(i).getString("photo"));
+                    if (attachmentsJSON.getJSONObject(i).has(PHOTO)) {
+                        JSONObject photoJson = attachmentsJSON.getJSONObject(i).getJSONObject(PHOTO);
                         messagesPhotos.add(new PhotoFeed(
-                                photoJson.getString("id"),
-                                photoJson.getString("album_id"),
-                                photoJson.getString("owner_id"),
-                                "",
-                                photoJson.getString("photo_75"),
-                                photoJson.getString("photo_604"),
-                                photoJson.getString("text"),
-                                ""));
+                                photoJson.getString(ID),
+                                photoJson.getString(ALBUM_ID),
+                                photoJson.getString(OWNER_ID),
+                                EMPTY_PARAM,
+                                photoJson.getString(PHOTO_SMALL),
+                                photoJson.getString(PHOTO_BIG),
+                                photoJson.getString(TEXT),
+                                EMPTY_PARAM));
                     }
                 }
             }
@@ -41,14 +67,14 @@ public class NewsParser {
             e.printStackTrace();
         }
         try {
-            result = new News(object.getString("type"),
-                    object.getString("source_id"),
-                    Long.parseLong(object.getString("date")),
-                    object.getString("post_id"),
-                    object.getString("post_type"), messagesPhotos);
-            result.setText(object.getString("text"));
-            result.setLikesCount(object.getJSONObject("likes").getString("count"));
-            result.setRepostsCount(object.getJSONObject("reposts").getString("count"));
+            result = new News(object.getString(TYPE),
+                    object.getString(SOURCE_ID),
+                    Long.parseLong(object.getString(DATE)),
+                    object.getString(POST_ID),
+                    object.getString(POST_TYPE), messagesPhotos);
+            result.setText(object.getString(TEXT));
+            result.setLikesCount(object.getJSONObject(LIKES).getString(COUNT));
+            result.setRepostsCount(object.getJSONObject(REPOSTS).getString(COUNT));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -60,8 +86,8 @@ public class NewsParser {
         JSONObject object = response.json;
         try {
             List<News> result = new ArrayList<>();
-            for (int i = 0; i < object.getJSONObject("response").getJSONArray("items").length(); i++) {
-                result.add(this.parse(object.getJSONObject("response").getJSONArray("items").getJSONObject(i)));
+            for (int i = 0; i < object.getJSONObject(RESPONSE).getJSONArray(ITEMS).length(); i++) {
+                result.add(this.parse(object.getJSONObject(RESPONSE).getJSONArray(ITEMS).getJSONObject(i)));
                 getPostSourceInfo(object, result.get(i));
             }
             return result;
@@ -74,12 +100,12 @@ public class NewsParser {
         JSONArray source;
         if (newsObject.getSourceId().contains("-")) {
             try {
-                source = object.getJSONObject("response").getJSONArray("groups");
-                newsObject.setSourceId(newsObject.getSourceId().replace("-", ""));
+                source = object.getJSONObject(RESPONSE).getJSONArray(GROUPS);
+                newsObject.setSourceId(newsObject.getSourceId().replace("-", EMPTY_PARAM));
                 for (int i = 0; i < source.length(); i++) {
-                    if (source.getJSONObject(i).getString("id").equals(newsObject.getSourceId())) {
-                        newsObject.setSourceName(source.getJSONObject(i).getString("name"));
-                        newsObject.setUserPhotoLink_200(source.getJSONObject(i).getString("photo_200"));
+                    if (source.getJSONObject(i).getString(ID).equals(newsObject.getSourceId())) {
+                        newsObject.setSourceName(source.getJSONObject(i).getString(NAME));
+                        newsObject.setUserPhotoLink_200(source.getJSONObject(i).getString(PHOTO_NORMAL));
                     }
                 }
             } catch (JSONException e) {
@@ -87,12 +113,12 @@ public class NewsParser {
             }
         } else {
             try {
-                source = object.getJSONObject("response").getJSONArray("profiles");
+                source = object.getJSONObject(RESPONSE).getJSONArray(PROFILES);
                 for (int i = 0; i < source.length(); i++) {
-                    if (source.getJSONObject(i).getString("id").equals(newsObject.getSourceId())) {
-                        newsObject.setSourceName(source.getJSONObject(i).getString("first_name") + " "
-                                + source.getJSONObject(i).getString("last_name"));
-                        newsObject.setUserPhotoLink_200(source.getJSONObject(i).getString("photo_100"));
+                    if (source.getJSONObject(i).getString(ID).equals(newsObject.getSourceId())) {
+                        newsObject.setSourceName(source.getJSONObject(i).getString(FIRST_NAME) + " "
+                                + source.getJSONObject(i).getString(LAST_NAME));
+                        newsObject.setUserPhotoLink_200(source.getJSONObject(i).getString(PHOTO_MIDDLE));
                     }
                 }
             } catch (JSONException e) {

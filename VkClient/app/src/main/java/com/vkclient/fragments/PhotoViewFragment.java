@@ -12,7 +12,7 @@ import com.example.podkaifom.vkclient.R;
 import com.vkclient.supports.PhotoLoader;
 
 public class PhotoViewFragment extends Fragment {
-    private static String photoUrl;
+    private static String photoUrl = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

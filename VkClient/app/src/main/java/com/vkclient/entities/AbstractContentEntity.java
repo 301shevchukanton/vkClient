@@ -9,7 +9,7 @@ public abstract class AbstractContentEntity {
     protected int id;
     protected long date;
     protected int user_id;
-    protected String body;
+    protected String body = "";
     protected String username = "";
     protected String userPhotoLink_200 = "";
     protected boolean readState;

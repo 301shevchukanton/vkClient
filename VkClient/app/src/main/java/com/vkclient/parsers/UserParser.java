@@ -3,6 +3,7 @@ package com.vkclient.parsers;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +22,8 @@ public class UserParser {
     private static final String NAME = "name";
     private static final String PHOTO_MAX_ORIG = "photo_max_orig";
     private static final String PHOTO_DEFAULT = "photo_200";
+    private static final String PERSONAL = "personal";
+    private static final String LANGS = "langs";
 
     public User parse(VKResponse response) {
         try {
@@ -47,7 +50,7 @@ public class UserParser {
             if (object.has(PHOTO_MAX_ORIG)) {
                 result.setPhoto(object.getString(PHOTO_MAX_ORIG));
             }
-            result.setLangs(User.getLangs(object));
+            result.setLangs(UserParser.getLangs(object));
             return result;
         } catch (JSONException e) {
             return null;
@@ -67,6 +70,18 @@ public class UserParser {
             return result;
         } catch (JSONException e) {
             return null;
+        }
+    }
+
+    public static String getLangs(JSONObject r) {
+        try {
+            String langs = "";
+            JSONArray langsArray = r.getJSONObject(PERSONAL).getJSONArray(LANGS);
+            for (int i = 0; i < langsArray.length(); i++)
+                langs += langsArray.getString(i) + "; ";
+            return langs;
+        } catch (JSONException e) {
+            return "";
         }
     }
 

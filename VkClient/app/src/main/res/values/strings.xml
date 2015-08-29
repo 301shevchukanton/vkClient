@@ -44,4 +44,6 @@
     <string name="hide_full_user_info">Hide full user</string>
     <string name="token_received">Token received</string>
     <string name="token_accepted">Token accepted</string>
+    <string name="request_error">Error in request or upload</string>
+    <string name="posted_successful">posted successful</string>
 </resources>

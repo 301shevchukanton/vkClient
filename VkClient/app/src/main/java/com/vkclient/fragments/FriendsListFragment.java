@@ -45,7 +45,7 @@ public class FriendsListFragment extends Fragment {
     private EditText filterText;
     private VKRequest currentRequest;
     private ListView friendsList;
-    private String profileId;
+    private String profileId = "";
     private List<User> users = new ArrayList<User>();
     private FriendListAdapter listAdapter;
 

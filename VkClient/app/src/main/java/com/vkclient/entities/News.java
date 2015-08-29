@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class News extends AbstractContentEntity {
-    private String sourceId;
-    private String postId;
-    private String postType;
-    private String type;
-    private String text;
+    private String sourceId = "";
+    private String postId = "";
+    private String postType = "";
+    private String type = "";
+    private String text = "";
     private String sourceName = "";
     private String likesCount = "";
     private String repostsCount = "";
@@ -29,30 +29,6 @@ public class News extends AbstractContentEntity {
 
     public String getSourceId() {
         return sourceId;
-    }
-
-    public void setPostId(String postId) {
-        this.postId = postId;
-    }
-
-    public String getPostId() {
-        return postId;
-    }
-
-    public void setPostType(String postType) {
-        this.postType = postType;
-    }
-
-    public String getPostType() {
-        return postType;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public void setText(String text) {
@@ -85,10 +61,6 @@ public class News extends AbstractContentEntity {
 
     public String getRepostsCount() {
         return repostsCount;
-    }
-
-    public void setPostPhotos(List<PhotoFeed> postPhotos) {
-        this.postPhotos = postPhotos;
     }
 
     public List<PhotoFeed> getPostPhotos() {
