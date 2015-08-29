@@ -95,8 +95,8 @@ public class ProfileFragment extends Fragment {
         container.findViewById(R.id.btProfileFriends).setOnClickListener(profileClickListener);
         container.findViewById(R.id.btSendMessage).setOnClickListener(profileClickListener);
         container.findViewById(R.id.btWallPost).setOnClickListener(profileClickListener);
-        container.findViewById(R.id.ivProfilePhoto).setOnClickListener(profileClickListener);
-        container.findViewById(R.id.tbShowFullUser).setOnClickListener(profileClickListener);
+        container.findViewById(R.id.ivProfilePhoto).setOnClickListener(userPhotoClick);
+        container.findViewById(R.id.tbShowFullUser).setOnClickListener(fullUserShow);
     }
 
     private final AdapterView.OnItemClickListener photoFeedClickListener = new AdapterView.OnItemClickListener() {
@@ -109,6 +109,11 @@ public class ProfileFragment extends Fragment {
 
     private void photoViewCall(String photoUrl) {
         startActivity(PhotoViewActivity.getPhotoViewIntent(getActivity(), photoUrl));
+    }
+
+    private void showFullUser() {
+        ToggleButton toggleButton = ((ToggleButton) getView().findViewById(R.id.tbShowFullUser));
+        getView().findViewById(R.id.llFullUserInfo).setVisibility(toggleButton.getText() == toggleButton.getTextOn() ? View.VISIBLE : View.GONE);
     }
 
     private final View.OnClickListener profileClickListener = new View.OnClickListener() {
@@ -127,32 +132,29 @@ public class ProfileFragment extends Fragment {
                     return SendMessageActivity.class;
                 case R.id.btWallPost:
                     return WallPostActivity.class;
-                case R.id.ivProfilePhoto: {
-                    startUserPhotoViewCall(profileId);
-                    return null;
-                }
-                case R.id.tbShowFullUser: {
-                    showFullUser();
-                    return null;
-                }
                 default:
                     return null;
             }
         }
     };
 
-    public void startUserPhotoViewCall(String userId) {
-        if (this.currentRequest != null) {
-            this.currentRequest.cancel();
+    private final View.OnClickListener userPhotoClick = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            if (currentRequest != null) {
+                currentRequest.cancel();
+            }
+            currentRequest = RequestCreator.getUserById(profileId);
+            currentRequest.executeWithListener(bigPhotoRequestListener);
         }
-        this.currentRequest = RequestCreator.getUserById(userId);
-        this.currentRequest.executeWithListener(this.bigPhotoRequestListener);
-    }
+    };
 
-    private void showFullUser() {
-        ToggleButton toggleButton = ((ToggleButton) getView().findViewById(R.id.tbShowFullUser));
-        getView().findViewById(R.id.llFullUserInfo).setVisibility(toggleButton.getText() == toggleButton.getTextOn() ? View.VISIBLE : View.GONE);
-    }
+    private final View.OnClickListener fullUserShow = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            showFullUser();
+        }
+    };
 
     private void startLoading() {
         Logger.logDebug("profid", "onComplete " + profileId);
@@ -177,6 +179,7 @@ public class ProfileFragment extends Fragment {
             photoViewCall(new UserParser().parseUserName(response).getPhotoMax());
         }
     };
+    
     private final AbstractRequestListener profileRequestListener = new AbstractRequestListener() {
         @Override
         public void onComplete(VKResponse response) {
