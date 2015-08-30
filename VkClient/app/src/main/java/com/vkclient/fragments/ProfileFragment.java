@@ -121,7 +121,7 @@ public class ProfileFragment extends Fragment {
         public void onClick(final View v) {
             Class activityClass = getActivityClassForId(v.getId());
             if (activityClass != null)
-                startActivityCall(getActivityClassForId(v.getId()));
+                startActivityCall(activityClass);
         }
 
         private Class getActivityClassForId(int id) {
