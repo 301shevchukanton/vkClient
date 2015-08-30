@@ -7,6 +7,7 @@ import com.vkclient.fragments.WallPostFragment;
 
 
 public class WallPostActivity extends VkSdkActivity {
+    @Override
     protected Fragment createFragment() {
         return new WallPostFragment();
     }

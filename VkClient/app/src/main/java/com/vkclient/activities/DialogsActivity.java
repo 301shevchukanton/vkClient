@@ -9,8 +9,7 @@ public class DialogsActivity extends VkSdkActivity {
 
     @Override
     protected Fragment createFragment() {
-        Fragment dialogsFragment = new DialogsFragment();
-        return dialogsFragment;
+        return new DialogsFragment();
     }
 
     @Override
