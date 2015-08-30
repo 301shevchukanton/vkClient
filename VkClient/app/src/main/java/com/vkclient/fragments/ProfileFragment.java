@@ -1,8 +1,9 @@
 package com.vkclient.fragments;
 
-import android.app.Fragment;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,8 +121,9 @@ public class ProfileFragment extends Fragment {
         @Override
         public void onClick(final View v) {
             Class activityClass = getActivityClassForId(v.getId());
-            if (activityClass != null)
+            if (activityClass != null) {
                 startActivityCall(activityClass);
+            }
         }
 
         private Class getActivityClassForId(int id) {
@@ -179,7 +181,7 @@ public class ProfileFragment extends Fragment {
             photoViewCall(new UserParser().parseUserName(response).getPhotoMax());
         }
     };
-    
+
     private final AbstractRequestListener profileRequestListener = new AbstractRequestListener() {
         @Override
         public void onComplete(VKResponse response) {

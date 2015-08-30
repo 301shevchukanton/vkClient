@@ -1,28 +1,19 @@
 package com.vkclient.activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.example.podkaifom.vkclient.R;
-import com.vk.sdk.VKUIHelper;
 import com.vkclient.fragments.PhotoViewFragment;
 
 public class PhotoViewActivity extends VkSdkActivity {
     public static final String PHOTO_EXTRA = "photo";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        VKUIHelper.onCreate(this);
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment photoViewFragment = fragmentManager.findFragmentById(R.id.container_photo_view);
-        if (photoViewFragment == null) {
-            photoViewFragment = new PhotoViewFragment();
-            fragmentManager.beginTransaction().add(R.id.container_photo_view, photoViewFragment).commit();
-        }
+    protected Fragment createFragment() {
+        return new PhotoViewFragment();
     }
 
     public static Intent getPhotoViewIntent(Context context, String photoUrl) {
@@ -33,6 +24,6 @@ public class PhotoViewActivity extends VkSdkActivity {
 
     @Override
     int getLayoutResource() {
-        return R.layout.activity_photo_view;
+        return R.layout.activity_single_fragment;
     }
 }

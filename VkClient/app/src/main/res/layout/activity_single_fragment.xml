@@ -3,11 +3,12 @@
     style="@style/DrawerLayoutStyle">
 
     <LinearLayout
-        android:id="@+id/container_send_message"
+        android:id="@+id/fragmentContainer"
         style="@style/ZeroPaddingLayoutStyle"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:padding="5dp" />
 
     <ListView
         android:id="@+id/left_drawer"

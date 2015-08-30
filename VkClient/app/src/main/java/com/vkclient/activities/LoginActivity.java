@@ -20,10 +20,10 @@ public class LoginActivity extends Activity {
         String[] fingerprint = VKUtil.getCertificateFingerprint(this, this.getPackageName());
         Logger.logDebug("Fingerprint", fingerprint[0]);
         FragmentManager fragmentManager = getFragmentManager();
-        Fragment loginFragment = fragmentManager.findFragmentById(R.id.container_login);
+        Fragment loginFragment = fragmentManager.findFragmentById(R.id.fragmentContainer);
         if (loginFragment == null) {
             loginFragment = new LoginFragment();
-            fragmentManager.beginTransaction().add(R.id.container_login, loginFragment).commit();
+            fragmentManager.beginTransaction().add(R.id.fragmentContainer, loginFragment).commit();
         }
     }
 

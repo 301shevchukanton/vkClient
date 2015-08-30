@@ -1,28 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.vkclient.views.External.TouchImageView
-        style="@style/LargeImageViewStyle"
         android:id="@+id/ivPhoto"
-        android:scaleType="fitCenter"
+        style="@style/LargeImageViewStyle"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:scaleType="fitCenter" />
 
-    <ImageButton
-        style="@style/ImageButtonStyle"
-        android:id="@+id/ibSharePhoto"
-        android:src="@drawable/ic_share"
+    <RelativeLayout
+        android:id="@+id/likeAndShareLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/ivPhoto"
-        android:layout_alignEnd="@+id/ivPhoto" />
-
-    <ImageButton
-        style="@style/ImageButtonStyle"
-        android:id="@+id/ibLikePhoto"
-        android:layout_alignTop="@+id/ibSharePhoto"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rlContentLayout">
+
+        <TextView
+            android:id="@+id/tvLikesCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/ivLikeButton"
+            android:layout_toRightOf="@+id/ivLikeButton"
+            android:paddingTop="@dimen/news_buttons_padding_top"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:id="@+id/ivSharePost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/activated_button"
+            android:baselineAlignBottom="false"
+            android:clickable="true"
+            android:cropToPadding="false"
+            android:focusable="true"
+            android:padding="@dimen/news_buttons_padding"
+            android:src="@drawable/ic_share" />
+
+        <TextView
+            android:id="@+id/tvSharesCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvLikesCount"
+            android:layout_toLeftOf="@+id/ivSharePost"
+            android:layout_toStartOf="@+id/ivSharePost"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:id="@+id/ivLikeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvLikesCount"
+            android:background="@drawable/activated_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/news_buttons_padding"
+            android:src="@drawable/ic_like" />
+    </RelativeLayout>
 </RelativeLayout>

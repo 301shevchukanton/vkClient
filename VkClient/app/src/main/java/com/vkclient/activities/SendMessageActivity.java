@@ -1,8 +1,6 @@
 package com.vkclient.activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.fragments.SendMessageFragment;
@@ -10,19 +8,13 @@ import com.vkclient.fragments.SendMessageFragment;
 
 public class SendMessageActivity extends VkSdkActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment sendMessageFragment = fragmentManager.findFragmentById(R.id.container_send_message);
-        if (sendMessageFragment == null) {
-            sendMessageFragment = new SendMessageFragment();
-            fragmentManager.beginTransaction().add(R.id.container_send_message, sendMessageFragment).commit();
-        }
+    protected Fragment createFragment() {
+        return new SendMessageFragment();
     }
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_send_message;
+        return R.layout.activity_single_fragment;
     }
 }
 

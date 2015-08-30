@@ -3,6 +3,8 @@ package com.vkclient.activities;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class VkSdkActivity extends ActionBarActivity {
+    private static final String ID = "id";
     protected String profileId = VKApiConst.OWNER_ID;
     private List<DrawerMenuItem> drawerItems = new ArrayList<>();
     private ListView drawerList;
@@ -37,12 +40,23 @@ public abstract class VkSdkActivity extends ActionBarActivity {
 
     abstract int getLayoutResource();
 
+    abstract Fragment createFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(getLayoutResource());
         onCreateDrawer();
+        profileId = getIntent().getStringExtra(ID);
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
+        if (fragment == null) {
+            fragment = createFragment();
+            manager.beginTransaction()
+                    .add(R.id.fragmentContainer, fragment)
+                    .commit();
+        }
     }
 
     protected void onCreateDrawer() {

@@ -1,33 +1,20 @@
 package com.vkclient.activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.fragments.FriendsListFragment;
-import com.vkclient.supports.Logger;
 
 
 public class FriendsListActivity extends VkSdkActivity {
 
-    private static final String ID = "id";
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        profileId = getIntent().getStringExtra(ID);
-        Logger.logDebug("profid", "profile id taked" + profileId);
-        super.onCreate(savedInstanceState);
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment friendsListFragment = fragmentManager.findFragmentById(R.id.container_friends_list);
-        if (friendsListFragment == null) {
-            friendsListFragment = new FriendsListFragment();
-            fragmentManager.beginTransaction().add(R.id.container_friends_list, friendsListFragment).commit();
-        }
+    protected Fragment createFragment() {
+        return new FriendsListFragment();
     }
 
     @Override
     int getLayoutResource() {
-        return R.layout.activity_friends_list;
+        return R.layout.activity_single_fragment;
     }
 }

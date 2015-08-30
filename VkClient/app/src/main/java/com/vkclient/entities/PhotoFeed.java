@@ -10,7 +10,9 @@ public class PhotoFeed {
     private String text = "";
     private String likes = "";
 
+    public PhotoFeed() {
 
+    }
     public PhotoFeed(String photoId, String albumId, String ownerId, String postId, String photoSmall, String photoLarge, String text, String likes) {
         this.photoId = photoId;
         this.albumId = albumId;
