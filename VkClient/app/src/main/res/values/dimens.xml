@@ -26,4 +26,5 @@
     <dimen name="default_layout_padding">5dp</dimen>
     <dimen name="photo_feed_image_width">193dp</dimen>
     <dimen name="photo_feed_image_height">195dp</dimen>
+    <dimen name="zero_width_panel">0dp</dimen>
 </resources>
