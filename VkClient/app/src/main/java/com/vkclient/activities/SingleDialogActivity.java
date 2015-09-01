@@ -8,7 +8,6 @@ import com.vkclient.fragments.SingleDialogFragment;
 
 
 public class SingleDialogActivity extends VkSdkActivity {
-
     @Override
     protected Fragment createFragment() {
         return new SingleDialogFragment();

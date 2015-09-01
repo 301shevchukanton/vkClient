@@ -77,6 +77,7 @@ public class RequestCreator {
     private static final String USER_BY_ID_REQUEST_PARAMS[] = {FIRST_NAME, LAST_NAME, PHOTO_SIZE, PHOTO_MAX_ORIGINAL};
     private static final String CHAT_ID = "chat_id";
     private static final String MESSAGES_SEND = "messages.send";
+    private static final int MESSAGES_COUNT = 120;
 
     private static String getParamsFromArray(String array[]) {
         String result = "";
@@ -104,8 +105,8 @@ public class RequestCreator {
         return new VKRequest(MESSAGES_GET_DIALOGS, VKParameters.from(VKApiConst.COUNT, DIALOGS_COUNT, PREVIEW_LENGTH, DIALOGS_PRIVIEW_LENGTH), VKRequest.HttpMethod.GET);
     }
 
-    public static VKRequest getHistory(String count, String profileId) {
-        return new VKRequest(MESSAGES_GET_HISTORY, VKParameters.from(VKApiConst.COUNT, count, VKApiConst.USER_ID, profileId), VKRequest.HttpMethod.GET);
+    public static VKRequest getHistory(String profileId) {
+        return new VKRequest(MESSAGES_GET_HISTORY, VKParameters.from(VKApiConst.COUNT, MESSAGES_COUNT, VKApiConst.USER_ID, profileId), VKRequest.HttpMethod.GET);
     }
 
     public static VKRequest getHistoryById(String count, String chatId) {

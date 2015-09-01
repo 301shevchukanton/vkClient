@@ -32,12 +32,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SingleDialogFragment extends Fragment {
+    public static final String PROFILE_EXTRA = "userid";
+    public static final String PROFILE_CHAT_ID = "chatid";
     private static final String RESPONSE_PARAM = "response";
     private static final String FIRST_NAME = "first_name";
     private static final String LAST_NAME = "last_name";
     private static final String PHOTO_SIZE = "photo_200";
     private static final String ZERO_CHAT_ID = "0";
-    private final String MESSAGES_COUNT = "15";
+    private final String MESSAGES_COUNT = "12";
     private ListView messagesList;
     private Button sendDialog;
     private TextView messageBody;
@@ -58,12 +60,27 @@ public class SingleDialogFragment extends Fragment {
         }
     }
 
+    public static SingleDialogFragment newInstance(int profileId, int chatId) {
+        Bundle args = new Bundle();
+        args.putString(PROFILE_EXTRA, String.valueOf(profileId));
+        args.putString(PROFILE_CHAT_ID, String.valueOf(chatId));
+        SingleDialogFragment fragment = new SingleDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewHierarchy = inflater.inflate(R.layout.fragment_single_dialog, container, false);
-        this.profileId = getActivity().getIntent().getStringExtra(DialogsFragment.PROFILE_EXTRA);
-        this.chatId = getActivity().getIntent().getStringExtra(DialogsFragment.PROFILE_CHAT_ID);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            profileId = bundle.getString(PROFILE_EXTRA, "30661428");
+            chatId = bundle.getString(PROFILE_CHAT_ID, "30661428");
+        } else {
+            this.profileId = getActivity().getIntent().getStringExtra(DialogsFragment.PROFILE_EXTRA);
+            this.chatId = getActivity().getIntent().getStringExtra(DialogsFragment.PROFILE_CHAT_ID);
+        }
         super.onCreate(savedInstanceState);
         findViews(viewHierarchy);
         if (VKSdk.wakeUpSession()) {
@@ -89,7 +106,7 @@ public class SingleDialogFragment extends Fragment {
             this.currentRequest = RequestCreator.getHistoryById(this.MESSAGES_COUNT, this.chatId);
             this.currentRequest.executeWithListener(this.getHistoryByChatIdRequestListener);
         } else {
-            this.currentRequest = RequestCreator.getHistory(this.MESSAGES_COUNT, this.profileId);
+            this.currentRequest = RequestCreator.getHistory(this.profileId);
             this.currentRequest.executeWithListener(this.getHistoryRequest);
         }
     }
