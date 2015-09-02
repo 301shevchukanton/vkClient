@@ -29,7 +29,7 @@
 
         <EditText
             android:id="@+id/etMessageText"
-            style="@style/MultiLaneInput" />
+            style="@style/MultiLineInput" />
 
         <Button
             android:id="@+id/btSendMessage"

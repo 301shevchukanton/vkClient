@@ -9,8 +9,6 @@
         android:id="@+id/drawerText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/drawer_height"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentRight="false"
         android:layout_toEndOf="@+id/ivMenuIcon"
         android:layout_toRightOf="@+id/ivMenuIcon"
         android:gravity="center_vertical"
@@ -18,7 +16,7 @@
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="@drawable/activated_text"
         android:paddingLeft="@dimen/drawer_text_padding"
-        android:textSize="14sp"
+        android:textSize="@dimen/drawer_list_text_size"
         android:enabled="true" />
 
     <ImageView

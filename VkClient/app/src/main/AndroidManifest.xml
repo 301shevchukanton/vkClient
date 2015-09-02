@@ -23,7 +23,7 @@
             android:label="@string/title_activity_profile"></activity>
         <activity
             android:name="com.vkclient.activities.FriendsListActivity"
-            android:label="@string/title_activity_friends_list"
+            android:label="@string/friends_list_attivity_title"
             android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name="com.vkclient.activities.SendMessageActivity"

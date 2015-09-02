@@ -26,5 +26,11 @@
     <dimen name="default_layout_padding">5dp</dimen>
     <dimen name="photo_feed_image_width">193dp</dimen>
     <dimen name="photo_feed_image_height">195dp</dimen>
+    <dimen name="action_profile_photo_width">122dp</dimen>
+    <dimen name="action_profile_photo_height">140dp</dimen>
     <dimen name="zero_width_panel">0dp</dimen>
+    <dimen name="share_link_top_margin">@dimen/vk_share_link_top_margin</dimen>
+    <dimen name="default_text_size">14sp</dimen>
+    <dimen name="profile_small_label_padding">2dp</dimen>
+    <dimen name="drawer_list_text_size">14sp</dimen>
 </resources>

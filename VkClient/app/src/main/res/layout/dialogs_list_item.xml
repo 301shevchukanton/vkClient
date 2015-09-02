@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/TwoLinesItemStyle"
     android:padding="@dimen/abc_control_padding_material">
 
     <ImageView
-        style="@style/PhotoPreview"
         android:id="@+id/ivDialogPhoto"
-        android:layout_alignTop="@+id/tvDialogName"
+        style="@style/PhotoPreview"
         android:src="@drawable/ic_user" />
 
     <RelativeLayout
@@ -17,44 +16,44 @@
         android:background="@color/vk_share_link_color">
 
         <RelativeLayout
+            android:id="@+id/rlDialogText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rlDialogInfo"
-            android:background="@color/switch_thumb_normal_material_light"
             android:layout_marginTop="1dp"
-            android:id="@+id/rlDialogText">
-
-            <TextView
-                style="@style/BodyTextStyle"
-                android:id="@+id/tvDialogText"
-                android:maxHeight="150dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rlDialogInfo"
             android:background="@color/switch_thumb_normal_material_light">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceListItem"
-                android:id="@+id/tvDialogName"
-                android:layout_alignParentTop="true"
+                android:id="@+id/tvDialogText"
+                style="@style/BodyTextStyle"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:maxHeight="150dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlDialogInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/switch_thumb_normal_material_light">
 
             <TextView
-                style="@style/DateTextStyle"
-                android:textAppearance="?attr/textAppearanceListItem"
-                android:id="@+id/tvDialogDate"
-                android:layout_below="@+id/tvDialogName"
+                android:id="@+id/tvDialogName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="false" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:textAppearance="?attr/textAppearanceListItem" />
+
+            <TextView
+                android:id="@+id/tvDialogDate"
+                style="@style/DateTextStyle"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/tvDialogName"
+                android:textAppearance="?attr/textAppearanceListItem" />
         </RelativeLayout>
     </RelativeLayout>
 
-</TwoLineListItem>
+</RelativeLayout>

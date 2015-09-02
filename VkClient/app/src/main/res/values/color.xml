@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="buttons_activated_color" type="color">#FF33B5E5</item>
-    <item name="drawer_activated_item_color" type="color">#ff3c3c3c</item>
-    <item name="second_text" type="color">#87000000</item>
-    <item name="drawer_activated_text_color" type="color">#FFFFFF</item>
-    <item name="drawer_normal_text_color" type="color">#000000</item>
-    <item name="news_activity_layout_color" type="color">#fff9fffd</item>
-    <item name="horizontal_lv_divider_color" type="color">#878787</item>
-    <item name="unread_message_color" type="color">#76868087</item>
+    <color name="buttons_activated_color">#FF33B5E5</color>
+    <color name="drawer_activated_item_color">#ff3c3c3c</color>
+    <color name="second_text">#87000000</color>
+    <color name="drawer_activated_text_color">#FFFFFF</color>
+    <color name="drawer_normal_text_color">#000000</color>
+    <color name="news_activity_layout_color">#fff9fffd</color>
+    <color name="horizontal_lv_divider_color">#878787</color>
+    <color name="unread_message_color">#76868087</color>
+    <color name="divider_color">#12000000</color>
+    <color name="drawer_background">#fff</color>
 </resources>

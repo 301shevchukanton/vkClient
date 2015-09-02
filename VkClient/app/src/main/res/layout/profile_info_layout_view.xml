@@ -13,5 +13,5 @@
     <TextView
         android:id="@+id/value"
         style="@style/SmallLabel"
-        android:paddingLeft="2dp" />
+        android:paddingLeft="@dimen/profile_small_label_padding" />
 </LinearLayout>

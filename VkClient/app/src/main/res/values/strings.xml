@@ -12,9 +12,9 @@
     <string name="relationship_status_label">Relationship status:</string>
     <string name="studied_at_profile_label">Studied at:</string>
     <string name="languages_profile_label">Languages:</string>
-    <string name="parents__profile_label">Parents:</string>
+    <string name="parents_profile_label">Parents:</string>
     <string name="siblings_profile_label">Siblings:</string>
-    <string name="title_activity_friends_list">Friends list:</string>
+    <string name="friends_list_attivity_title">Friends list:</string>
     <string name="send_message">Send message</string>
     <string name="view_friends">Friends</string>
     <string name="wall_post">Wall post</string>
@@ -28,12 +28,11 @@
     <string name="share">Share</string>
     <string name="like">Like</string>
 
-    <string name="drawer_profile">My Profile</string>
-    <string name="drawer_news">News feed</string>
-    <string name="drawer_messages">Messages</string>
-    <string name="drawer_friends">Friends</string>
+    <string name="drawer_item_profile">My Profile</string>
+    <string name="drawer_item_news">News feed</string>
+    <string name="drawer_item_messages">Messages</string>
+    <string name="drawer_item_friends">Friends</string>
     <string name="title_activity_news">News feed:</string>
-    <string name="hello_world">Hello world!</string>
     <string name="drawer_close"></string>
     <string name="drawer_open">Select:</string>
     <string name="name_input_hint">name:</string>

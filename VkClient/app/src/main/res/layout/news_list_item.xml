@@ -38,7 +38,7 @@
             android:layout_toEndOf="@+id/ivPostSourcePhoto"
             android:layout_toRightOf="@+id/ivPostSourcePhoto"
             android:paddingLeft="@dimen/news_separator_height"
-            android:paddingTop="@dimen/vk_share_link_top_margin" />
+            android:paddingTop="@dimen/share_link_top_margin" />
     </RelativeLayout>
 
     <RelativeLayout
