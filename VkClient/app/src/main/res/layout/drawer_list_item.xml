@@ -1,32 +1,29 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/drawer_height"
+    android:background="@drawable/activated_background"
+    android:orientation="horizontal"
     android:paddingLeft="@dimen/drawer_padding"
-    android:paddingRight="@dimen/drawer_padding"
-    android:background="@drawable/activated_background">
-
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/drawerText"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/drawer_height"
-        android:layout_toEndOf="@+id/ivMenuIcon"
-        android:layout_toRightOf="@+id/ivMenuIcon"
-        android:gravity="center_vertical"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColor="@drawable/activated_text"
-        android:paddingLeft="@dimen/drawer_text_padding"
-        android:textSize="@dimen/drawer_list_text_size"
-        android:enabled="true" />
+    android:paddingRight="@dimen/drawer_padding">
 
     <ImageView
         android:id="@+id/ivMenuIcon"
         android:layout_width="@dimen/drawer_icon_size"
         android:layout_height="@dimen/drawer_icon_size"
-        android:src="@drawable/ic_home"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/activated_background" />
+        android:layout_marginTop="@dimen/drawer_icon_padding_top"
+        android:background="@drawable/activated_background"
+        android:src="@drawable/ic_home" />
 
-</RelativeLayout>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/drawerText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/drawer_height"
+        android:enabled="true"
+        android:gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:paddingLeft="@dimen/drawer_text_padding"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textColor="@drawable/activated_text"
+        android:textSize="@dimen/drawer_list_text_size" />
+
+</LinearLayout>
