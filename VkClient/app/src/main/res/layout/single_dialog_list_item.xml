@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/TwoLinesItemStyle">
+
     <TextView
-        style="@style/ZeroPaddingLayoutStyle"
-        android:textAppearance="?attr/textAppearanceListItem"
         android:id="@+id/tvSingleDialogName"
+        style="@style/ZeroPaddingLayoutStyle"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_width="wrap_content" />
+        android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
-        style="@style/DateTextStyle"
-        android:textAppearance="?attr/textAppearanceListItem"
         android:id="@+id/tvSingleDialogDate"
-        android:layout_below="@+id/tvSingleDialogName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        style="@style/BodyTextStyle"
-        android:id="@+id/tvSingleDialogText"
-        android:minLines="1"
-        android:layout_below="@+id/tvSingleDialogDate"
+        style="@style/DateTextStyle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvSingleDialogName"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+    <TextView
+        android:id="@+id/tvSingleDialogText"
+        style="@style/BodyTextStyle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvSingleDialogDate"
         android:layout_toLeftOf="@+id/tvSingleDialogPhoto"
-        android:layout_toStartOf="@+id/tvSingleDialogPhoto" />
+        android:layout_toStartOf="@+id/tvSingleDialogPhoto"
+        android:minLines="1" />
 
     <ImageView
-        style="@style/PhotoPreview"
         android:id="@+id/tvSingleDialogPhoto"
+        style="@style/PhotoPreview"
         android:layout_alignTop="@+id/tvSingleDialogName" />
 
     <com.vkclient.views.External.HorizontalListView
-        style="@style/HorizontalListViewStyle"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lvMessagesPhoto"
-        android:layout_below="@+id/tvSingleDialogText"
+        style="@style/HorizontalListViewStyle"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvSingleDialogText" />
 
 </TwoLineListItem>

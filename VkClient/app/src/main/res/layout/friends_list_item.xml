@@ -6,17 +6,17 @@
         android:id="@+id/tvFriendName"
         style="@style/ZeroPaddingLayoutStyle"
         android:layout_marginTop="8dp"
-        android:textAppearance="?attr/textAppearanceListItem"
         android:layout_toLeftOf="@+id/ivFriendPhoto"
-        android:layout_toStartOf="@+id/ivFriendPhoto" />
+        android:layout_toStartOf="@+id/ivFriendPhoto"
+        android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
         android:id="@+id/tvFriendBirthDate"
         style="@style/DateTextStyle"
         android:layout_below="@id/tvFriendName"
+        android:layout_toEndOf="@+id/tvFriendCity"
         android:layout_toLeftOf="@+id/ivFriendPhoto"
-        android:layout_toRightOf="@+id/tvFriendCity"
-        android:layout_toEndOf="@+id/tvFriendCity" />
+        android:layout_toRightOf="@+id/tvFriendCity" />
 
     <ImageView
         android:id="@+id/ivFriendPhoto"
@@ -24,11 +24,11 @@
         android:src="@drawable/ic_user" />
 
     <TextView
-        style="@style/CityTextStyle"
         android:id="@+id/tvFriendCity"
-        android:layout_centerVertical="true"
+        style="@style/CityTextStyle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/tvFriendName" />
+        android:layout_below="@id/tvFriendName"
+        android:layout_centerVertical="true" />
 
 </RelativeLayout>

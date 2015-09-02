@@ -34,4 +34,5 @@
     <dimen name="profile_small_label_padding">2dp</dimen>
     <dimen name="drawer_list_text_size">14sp</dimen>
     <dimen name="drawer_icon_padding_top">12dp</dimen>
+    <dimen name="activity_padding">5dp</dimen>
 </resources>

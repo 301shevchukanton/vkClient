@@ -8,26 +8,24 @@
         android:orientation="horizontal"
         android:showDividers="middle">
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/fragmentContainer"
             style="@style/ZeroPaddingLayoutStyle"
             android:layout_width="@dimen/zero_width_panel"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/vk_share_gray_line"
-            android:orientation="vertical"
             android:padding="@dimen/news_buttons_padding_top" />
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/detailFragmentContainer"
             style="@style/ZeroPaddingLayoutStyle"
             android:layout_width="@dimen/zero_width_panel"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:orientation="vertical"
             android:padding="@dimen/news_buttons_padding_top">
 
-        </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
 
     <ListView

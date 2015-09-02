@@ -2,13 +2,12 @@
     android:id="@+id/drawer_layout"
     style="@style/DrawerLayoutStyle">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/fragmentContainer"
         style="@style/ZeroPaddingLayoutStyle"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="5dp" />
+        android:padding="@dimen/activity_padding" />
 
     <ListView
         android:id="@+id/left_drawer"

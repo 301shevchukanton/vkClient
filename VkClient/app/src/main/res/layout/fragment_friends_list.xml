@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    style="@style/MainLayoutStyle">
+    style="@style/MainLayoutStyle"
+    android:orientation="vertical">
 
     <EditText
-        style="@style/SearchTextStyle"
         android:id="@+id/etSearchFriends"
+        style="@style/SearchTextStyle"
         android:hint="@string/name_input_hint" />
 
     <ListView
-        style="@style/LargeListViewStyle"
-        android:id="@+id/lvFriends" />
+        android:id="@+id/lvFriends"
+        style="@style/LargeListViewStyle" />
 
 
 </LinearLayout>

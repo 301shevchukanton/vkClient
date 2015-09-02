@@ -14,9 +14,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/llFullUserInfo"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:paddingBottom="@dimen/share_link_top_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/share_link_top_margin">
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/btSendMessage"
@@ -44,14 +44,14 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:id="@+id/linearLayout"
                     style="@style/ZeroPaddingLayoutStyle"
                     android:layout_width="fill_parent"
-                    android:orientation="vertical"
-                    android:paddingStart="@dimen/default_layout_padding"
                     android:layout_height="wrap_content"
-                    android:id="@+id/linearLayout"
+                    android:layout_toEndOf="@+id/ivProfilePhoto"
                     android:layout_toRightOf="@+id/ivProfilePhoto"
-                    android:layout_toEndOf="@+id/ivProfilePhoto">
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/default_layout_padding">
 
                     <TextView
                         android:id="@+id/tvProfileName"
@@ -71,16 +71,15 @@
                     android:id="@+id/tbShowFullUser"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/show_full_user_info"
-                    android:layout_gravity="bottom"
-                    android:checked="false"
-                    android:text="New ToggleButton"
-                    android:textOff="@string/show_full_user_info"
-                    android:textOn="@string/hide_full_user_info"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_toRightOf="@+id/ivProfilePhoto"
+                    android:layout_gravity="bottom"
+                    android:layout_marginRight="@dimen/vk_share_top_button_padding_right"
                     android:layout_toEndOf="@+id/ivProfilePhoto"
-                    android:layout_marginRight="@dimen/vk_share_top_button_padding_right" />
+                    android:layout_toRightOf="@+id/ivProfilePhoto"
+                    android:checked="false"
+                    android:textOff="@string/show_full_user_info"
+                    android:textOn="@string/hide_full_user_info" />
 
                 <ImageView
                     android:id="@+id/ivProfilePhoto"
@@ -92,8 +91,8 @@
         </LinearLayout>
 
         <com.vkclient.views.External.HorizontalListView xmlns:android="http://schemas.android.com/apk/res/android"
-            style="@style/HorizontalListViewStyle"
             android:id="@+id/lvPhotoFeed"
+            style="@style/HorizontalListViewStyle"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/llButtonsPanel" />
@@ -105,8 +104,8 @@
             android:layout_below="@+id/llInfo"
             android:layout_centerHorizontal="true"
             android:orientation="vertical"
-            android:visibility="visible"
-            android:paddingTop="@dimen/share_link_top_margin">
+            android:paddingTop="@dimen/share_link_top_margin"
+            android:visibility="visible">
 
             <com.vkclient.views.ProfileInfoView
                 android:id="@+id/piBirthDate"
