@@ -21,7 +21,7 @@ public class DialogsActivity extends VkSdkActivity implements DialogFriendListFr
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_dialogs;
+        return R.layout.activity_navigation;
     }
 
     public void onDialogSelected(Dialog dialog) {

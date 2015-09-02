@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="activity_dialogs" type="layout">@layout/activity_twopanel</item>
+    <item name="activity_navigation" type="layout">@layout/activity_twopanel</item>
 </resources>

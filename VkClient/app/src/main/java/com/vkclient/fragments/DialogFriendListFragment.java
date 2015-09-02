@@ -34,6 +34,9 @@ import java.util.List;
 
 
 public class DialogFriendListFragment extends Fragment {
+
+    public static final String PROFILE_EXTRA = "userid";
+    public static final String PROFILE_CHAT_ID = "chatid";
     private VKRequest currentRequest;
     private ListView listView;
     private List<Dialog> dialogs = new ArrayList<>();

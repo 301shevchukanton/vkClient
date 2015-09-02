@@ -78,8 +78,8 @@ public class SingleDialogFragment extends Fragment {
             profileId = bundle.getString(PROFILE_EXTRA, "30661428");
             chatId = bundle.getString(PROFILE_CHAT_ID, "30661428");
         } else {
-            this.profileId = getActivity().getIntent().getStringExtra(DialogsFragment.PROFILE_EXTRA);
-            this.chatId = getActivity().getIntent().getStringExtra(DialogsFragment.PROFILE_CHAT_ID);
+            this.profileId = getActivity().getIntent().getStringExtra(DialogFriendListFragment.PROFILE_EXTRA);
+            this.chatId = getActivity().getIntent().getStringExtra(DialogFriendListFragment.PROFILE_CHAT_ID);
         }
         super.onCreate(savedInstanceState);
         findViews(viewHierarchy);

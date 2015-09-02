@@ -10,33 +10,17 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKApiConst;
-import com.vkclient.adapters.DrawerAdapter;
-import com.vkclient.entities.DrawerMenuItem;
+import com.vkclient.fragments.NavigationPanelFragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class VkSdkActivity extends ActionBarActivity {
+public abstract class VkSdkActivity extends ActionBarActivity implements NavigationPanelFragment.Callbacks {
     private static final String ID = "id";
     protected String profileId = VKApiConst.OWNER_ID;
-    private List<DrawerMenuItem> drawerItems = new ArrayList<>();
-    private ListView drawerList;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
-    private DrawerAdapter drawerAdapter;
-
-    public enum NavigationItem {
-        PROFILE_INFO,
-        NEWS,
-        DIALOGS,
-        FRIENDS_LIST
-    }
 
     abstract int getLayoutResource();
 
@@ -47,27 +31,24 @@ public abstract class VkSdkActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(getLayoutResource());
-        onCreateDrawer();
         profileId = getIntent().getStringExtra(ID);
+        initializeFragment(new NavigationPanelFragment(), R.id.navigationPanelContainer);
+        setupNavigationPanel();
+        initializeFragment(createFragment(), R.id.fragmentContainer);
+    }
+
+    private void initializeFragment(Fragment fragment, int containerLayoutId) {
         FragmentManager manager = getSupportFragmentManager();
-        Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
-        if (fragment == null) {
-            fragment = createFragment();
+        Fragment drawerFragment = manager.findFragmentById(containerLayoutId);
+        if (drawerFragment == null) {
+            drawerFragment = fragment;
             manager.beginTransaction()
-                    .add(R.id.fragmentContainer, fragment)
+                    .add(containerLayoutId, drawerFragment)
                     .commit();
         }
     }
 
-    protected void onCreateDrawer() {
-        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_item_profile), R.drawable.ic_home, NavigationItem.PROFILE_INFO));
-        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_item_friends), R.drawable.ic_friends, NavigationItem.FRIENDS_LIST));
-        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_item_messages), R.drawable.ic_messages, NavigationItem.DIALOGS));
-        this.drawerItems.add(new DrawerMenuItem(getString(R.string.drawer_item_news), R.drawable.ic_news, NavigationItem.NEWS));
-        this.drawerList = (ListView) findViewById(R.id.left_drawer);
-        this.drawerAdapter = new DrawerAdapter(this, this.drawerItems);
-        this.drawerList.setAdapter(this.drawerAdapter);
-        this.drawerList.setOnItemClickListener(this.drawerListener);
+    private void setupNavigationPanel() {
         this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         this.toggle = new ActionBarDrawerToggle(this, this.drawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerClosed(View view) {
@@ -93,18 +74,6 @@ public abstract class VkSdkActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        this.toggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        this.toggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         VKUIHelper.onResume(this);
@@ -124,40 +93,28 @@ public abstract class VkSdkActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         if (this.toggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void startApiCall(Class<?> cls) {
-        this.drawerLayout.closeDrawers();
-        Intent i = new Intent(this, cls);
-        startActivity(i);
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        this.toggle.syncState();
     }
 
-    private ListView.OnItemClickListener drawerListener = new ListView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            switch (drawerAdapter.getItem(position).getKey()) {
-                case PROFILE_INFO: {
-                    startApiCall(ProfileActivity.class);
-                    break;
-                }
-                case NEWS: {
-                    startApiCall(NewsActivity.class);
-                    break;
-                }
-                case DIALOGS: {
-                    startApiCall(DialogsActivity.class);
-                    break;
-                }
-                case FRIENDS_LIST: {
-                    startApiCall(FriendsListActivity.class);
-                    break;
-                }
-            }
-        }
-    };
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        this.toggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onDrawerItemSelected() {
+        this.drawerLayout.closeDrawers();
+    }
 
 }

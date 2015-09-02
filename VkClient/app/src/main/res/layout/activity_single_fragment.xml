@@ -9,8 +9,8 @@
         android:layout_height="match_parent"
         android:padding="@dimen/activity_padding" />
 
-    <ListView
-        android:id="@+id/left_drawer"
+    <FrameLayout
+        android:id="@+id/navigationPanelContainer"
         style="@style/DrawerStyle" />
 
 </android.support.v4.widget.DrawerLayout>

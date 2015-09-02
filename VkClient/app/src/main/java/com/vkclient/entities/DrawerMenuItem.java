@@ -1,13 +1,13 @@
 package com.vkclient.entities;
 
-import com.vkclient.activities.VkSdkActivity;
+import com.vkclient.fragments.NavigationPanelFragment;
 
 public class DrawerMenuItem {
     private String title = "";
-    private VkSdkActivity.NavigationItem key;
+    private NavigationPanelFragment.NavigationItem key;
     private int iconResourceId;
 
-    public DrawerMenuItem(String title, int iconResourceId, VkSdkActivity.NavigationItem key) {
+    public DrawerMenuItem(String title, int iconResourceId, NavigationPanelFragment.NavigationItem key) {
         this.title = title;
         this.key = key;
         this.iconResourceId = iconResourceId;
@@ -17,7 +17,7 @@ public class DrawerMenuItem {
         return title;
     }
 
-    public VkSdkActivity.NavigationItem getKey() {
+    public NavigationPanelFragment.NavigationItem getKey() {
         return key;
     }
 

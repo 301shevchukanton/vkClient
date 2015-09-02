@@ -13,7 +13,7 @@
             style="@style/ZeroPaddingLayoutStyle"
             android:layout_width="@dimen/zero_width_panel"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:background="@color/vk_share_gray_line"
             android:padding="@dimen/news_buttons_padding_top" />
 
@@ -28,8 +28,8 @@
         </FrameLayout>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/left_drawer"
+    <FrameLayout
+        android:id="@+id/navigationPanelContainer"
         style="@style/DrawerStyle" />
 
 </android.support.v4.widget.DrawerLayout>

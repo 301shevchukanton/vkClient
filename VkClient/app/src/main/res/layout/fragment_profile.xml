@@ -109,7 +109,7 @@
 
             <com.vkclient.views.ProfileInfoView
                 android:id="@+id/piBirthDate"
-                style="@style/CentralHorizontalLayout" />
+                style="@style/FullUserInfoLayout" />
 
             <com.vkclient.views.ProfileInfoView
                 android:id="@+id/piTown"
