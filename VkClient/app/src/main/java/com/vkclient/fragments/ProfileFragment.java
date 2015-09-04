@@ -29,8 +29,8 @@ import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 import com.vkclient.supports.RequestCreator;
-import com.vkclient.views.External.HorizontalListView;
 import com.vkclient.views.ProfileInfoView;
+import com.vkclient.views.external.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,8 +10,4 @@ public class Logger {
     public static void logError(String key, String message) {
         Log.e(key, message);
     }
-
-    public static void logWarning(String key, String message) {
-        Log.w(key, message);
-    }
 }

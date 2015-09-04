@@ -3,6 +3,7 @@ package com.vkclient.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -26,7 +27,6 @@ import com.vkclient.adapters.FriendListAdapter;
 import com.vkclient.entities.User;
 import com.vkclient.listeners.AbstractRequestListener;
 import com.vkclient.parsers.UserParser;
-import com.vkclient.supports.Logger;
 import com.vkclient.supports.RequestCreator;
 
 import org.joda.time.DateTime;
@@ -37,89 +37,114 @@ import java.util.List;
 
 public class FriendsListFragment extends Fragment {
 
-    private static final String BUNDLE_FILTER_TEXT = "BUNDLE_FILTER_TEXT";
     private static final String ACTIVITY_EXTRA = "id";
     private static final String FULL_DATE = "dd.MM.yyyy";
     private static final String PART_DAY = "dd.MM";
-
+    private static final String FULL_USERS_INSTANCE_KEY = "full_users_list";
+    private static final String USERS_INSTANCE_KEY = "users_list";
+    private ParcelableTextWatcher filterTextWatcher;
     private EditText filterText;
     private VKRequest currentRequest;
     private ListView friendsList;
-    private String profileId = "";
+    private String profileId;
     private List<User> users = new ArrayList<User>();
     private FriendListAdapter listAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.profileId = getActivity().getIntent().getStringExtra(ACTIVITY_EXTRA);
         View viewHierarchy = inflater.inflate(R.layout.fragment_friends_list, container, false);
         findFriendsListViews(viewHierarchy);
-        profileId = getActivity().getIntent().getStringExtra(ACTIVITY_EXTRA);
+        setupWatcher(savedInstanceState);
+        setupViews();
         return viewHierarchy;
     }
 
-    private void findFriendsListViews(View view) {
-        this.friendsList = (ListView) view.findViewById(R.id.lvFriends);
-        this.filterText = (EditText) view.findViewById(R.id.etSearchFriends);
+    private void setupWatcher(Bundle savedInstanceState) {
+        filterTextWatcher = new ParcelableTextWatcher();
         this.filterText.addTextChangedListener(filterTextWatcher);
-        startLoading();
+        if (savedInstanceState != null && savedInstanceState.containsKey(FULL_USERS_INSTANCE_KEY)) {
+            filterTextWatcher.fullUsersArray = savedInstanceState.getParcelableArrayList(FULL_USERS_INSTANCE_KEY);
+            users = savedInstanceState.getParcelableArrayList(USERS_INSTANCE_KEY);
+        } else {
+            startLoading();
+        }
+    }
+
+    private void setupViews() {
         this.friendsList.setOnItemClickListener(this.friendClickListener);
         this.listAdapter = new FriendListAdapter(getActivity(), this.users);
         this.listAdapter.setOnPhotoClickListener(photoClickListener);
         this.friendsList.setAdapter(this.listAdapter);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(BUNDLE_FILTER_TEXT, this.filterText.getText().toString());
+    private void findFriendsListViews(View view) {
+        this.friendsList = (ListView) view.findViewById(R.id.lvFriends);
+        this.filterText = (EditText) view.findViewById(R.id.etSearchFriends);
     }
 
-    private TextWatcher filterTextWatcher = new TextWatcher() {
-        List<User> fullUsersArray = new ArrayList<User>();
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(FULL_USERS_INSTANCE_KEY, (ArrayList<? extends Parcelable>) filterTextWatcher.fullUsersArray);
+        outState.putParcelableArrayList(USERS_INSTANCE_KEY, (ArrayList<? extends Parcelable>) users);
+        super.onSaveInstanceState(outState);
+    }
+
+    private class ParcelableTextWatcher implements TextWatcher {
+        public List<User> fullUsersArray = new ArrayList<User>();
 
         public void afterTextChanged(Editable s) {
         }
 
         public void beforeTextChanged(CharSequence s, int start, int count,
                                       int after) {
-            if (fullUsersArray.isEmpty()) fullUsersArray.addAll(users);
+            if (this.fullUsersArray.isEmpty()) {
+                this.fullUsersArray.addAll(users);
+            }
+
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            filterList(fullUsersArray, s.toString());
+            filterList(this.fullUsersArray, s.toString());
         }
-    };
+    }
+
 
     private void filterList(List<User> fullUsersArray, String filterText) {
         List<User> temp = new ArrayList<User>();
         int textLength = filterText.length();
         for (int i = 0; i < fullUsersArray.size(); i++) {
-            if (textLength <= fullUsersArray.get(i).getName().length()) {
-                if (filterText.equalsIgnoreCase(
-                        (String) fullUsersArray.get(i).getName().subSequence(0,
-                                textLength))) {
-                    temp.add(fullUsersArray.get(i));
-                }
+            addFilteredUser(fullUsersArray, filterText, temp, textLength, i);
+        }
+        this.users.clear();
+        this.users.addAll(temp);
+        this.listAdapter.notifyDataSetChanged();
+    }
+
+    private void addFilteredUser(List<User> fullUsersArray, String filterText, List<User> temp, int textLength, int i) {
+        if (textLength <= fullUsersArray.get(i).getName().length()) {
+            if (userFound(fullUsersArray, filterText, textLength, i)) {
+                temp.add(fullUsersArray.get(i));
             }
         }
-        users.clear();
-        users.addAll(temp);
-        listAdapter.notifyDataSetChanged();
+    }
+
+    private boolean userFound(List<User> fullUsersArray, String filterText, int textLength, int i) {
+        return filterText.equalsIgnoreCase(
+                (String) fullUsersArray.get(i).getName().subSequence(0,
+                        textLength));
     }
 
     private void startLoading() {
-        if (this.currentRequest != null) {
-            this.currentRequest.cancel();
-        }
         this.currentRequest = RequestCreator.getFriends(profileId);
         this.currentRequest.executeWithListener(this.getFriendsRequestListener);
     }
 
     private void startUserApiCall(int id) {
         Intent i = new Intent(getActivity(), ProfileActivity.class);
-        i.putExtra("id", String.valueOf(id));
+        i.putExtra(ACTIVITY_EXTRA, String.valueOf(id));
         startActivity(i);
     }
 
@@ -132,7 +157,6 @@ public class FriendsListFragment extends Fragment {
                     break;
                 }
             }
-            Logger.logDebug("VkList", "id: " + id);
         }
     };
     private final AbstractRequestListener getFriendsRequestListener = new AbstractRequestListener() {
@@ -141,30 +165,42 @@ public class FriendsListFragment extends Fragment {
             super.onComplete(response);
             VKUsersArray usersArray = (VKUsersArray) response.parsedModel;
             users.clear();
+            addUsersInfo(usersArray);
+            listAdapter.notifyDataSetChanged();
+        }
+
+        private void addUsersInfo(VKUsersArray usersArray) {
             final String[] formats = new String[]{FULL_DATE, PART_DAY};
             for (VKApiUserFull userFull : usersArray) {
-                DateTime birthDate = null;
-                String format = null;
-                if (!TextUtils.isEmpty(userFull.bdate)) {
-                    for (int i = 0; i < formats.length; i++) {
-                        format = formats[i];
-                        try {
-                            birthDate = DateTimeFormat.forPattern(format).parseDateTime(userFull.bdate);
-                        } catch (Exception ignored) {
-                        }
-                        if (birthDate != null) {
-                            break;
-                        }
+                addUserInfo(formats, userFull);
+            }
+        }
+
+        private void addUserInfo(String[] formats, VKApiUserFull userFull) {
+            DateTime birthDate = null;
+            String format = null;
+            if (!TextUtils.isEmpty(userFull.bdate)) {
+                for (int i = 0; i < formats.length; i++) {
+                    format = formats[i];
+                    birthDate = getDateTime(userFull, birthDate, format);
+                    if (birthDate != null) {
+                        break;
                     }
                 }
-
-                if (userFull.city != null) {
-                    users.add(setUser(userFull, birthDate, format, userFull.city.title));
-                } else {
-                    users.add(setUser(userFull, birthDate, format));
-                }
             }
-            listAdapter.notifyDataSetChanged();
+            if (userFull.city != null) {
+                users.add(setUser(userFull, birthDate, format, userFull.city.title));
+            } else {
+                users.add(setUser(userFull, birthDate, format));
+            }
+        }
+
+        private DateTime getDateTime(VKApiUserFull userFull, DateTime birthDate, String format) {
+            try {
+                birthDate = DateTimeFormat.forPattern(format).parseDateTime(userFull.bdate);
+            } catch (Exception ignored) {
+            }
+            return birthDate;
         }
 
         private User setUser(VKApiUserFull userFull, DateTime birthDate, String format) {
@@ -197,11 +233,8 @@ public class FriendsListFragment extends Fragment {
     };
 
     public void startPhotoViewCall(String userId) {
-        if (currentRequest != null) {
-            currentRequest.cancel();
-        }
-        currentRequest = RequestCreator.getUserById(userId);
-        currentRequest.executeWithListener(bigPhotoRequestListener);
+        this.currentRequest = RequestCreator.getUserById(userId);
+        this.currentRequest.executeWithListener(this.bigPhotoRequestListener);
     }
 
     private AbstractRequestListener bigPhotoRequestListener = new AbstractRequestListener() {

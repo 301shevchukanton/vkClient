@@ -53,6 +53,26 @@ public class MessageParser {
         }
     }
 
+    private void parseMessagePhotos(JSONArray attachmentsJSON, List<PhotoFeed> messagesPhotos, int position) {
+        try {
+            if (attachmentsJSON.getJSONObject(position).has(PHOTO)) {
+                JSONObject photoJson = attachmentsJSON.getJSONObject(position).getJSONObject(PHOTO);
+                messagesPhotos.add(new PhotoFeed(
+                        photoJson.getString(ID_PARAM),
+                        photoJson.getString(ALBUM_ID),
+                        photoJson.getString(OWNER_ID),
+                        EMPTY_PARAM,
+                        photoJson.getString(PHOTO_SMALL),
+                        photoJson.getString(PHOTO_LARGE),
+                        photoJson.getString(TEXT),
+                        EMPTY_PARAM));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private Message getMessage(JSONObject object, int index) {
         try {
             JSONObject messageJSON = object.getJSONObject(RESPONSE_PARAM).getJSONArray(ITEMS_PARAM).getJSONObject(index);
@@ -60,18 +80,7 @@ public class MessageParser {
             if (messageJSON.has(ATTACHMENTS_PARAM)) {
                 JSONArray attachmentsJSON = messageJSON.getJSONArray(ATTACHMENTS_PARAM);
                 for (int i = 0; i < attachmentsJSON.length(); i++) {
-                    if (attachmentsJSON.getJSONObject(i).has(PHOTO)) {
-                        JSONObject photoJson = attachmentsJSON.getJSONObject(i).getJSONObject(PHOTO);
-                        messagesPhotos.add(new PhotoFeed(
-                                photoJson.getString(ID_PARAM),
-                                photoJson.getString(ALBUM_ID),
-                                photoJson.getString(OWNER_ID),
-                                EMPTY_PARAM,
-                                photoJson.getString(PHOTO_SMALL),
-                                photoJson.getString(PHOTO_LARGE),
-                                photoJson.getString(TEXT),
-                                EMPTY_PARAM));
-                    }
+                    parseMessagePhotos(attachmentsJSON, messagesPhotos, i);
                 }
             }
 

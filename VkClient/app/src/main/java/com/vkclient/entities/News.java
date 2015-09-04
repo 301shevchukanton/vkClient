@@ -1,9 +1,12 @@
 package com.vkclient.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class News extends AbstractContentEntity {
+public class News extends AbstractContentEntity implements Parcelable {
     private String sourceId = "";
     private String postId = "";
     private String postType = "";
@@ -21,6 +24,15 @@ public class News extends AbstractContentEntity {
         this.type = type;
         this.postType = postType;
         this.postPhotos.addAll(postPhotos);
+    }
+
+    private News(Parcel inputParcel) {
+        this.sourceId = inputParcel.readString();
+        this.postId = inputParcel.readString();
+        this.date = inputParcel.readLong();
+        this.type = inputParcel.readString();
+        this.postType = inputParcel.readString();
+        inputParcel.readList(postPhotos, null);
     }
 
     public void setSourceId(String sourceId) {
@@ -66,4 +78,26 @@ public class News extends AbstractContentEntity {
     public List<PhotoFeed> getPostPhotos() {
         return postPhotos;
     }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(sourceId);
+        out.writeString(postId);
+        out.writeLong(date);
+        out.writeString(type);
+        out.writeString(postType);
+    }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<News> CREATOR = new Parcelable.Creator<News>() {
+        public News createFromParcel(Parcel inputParcel) {
+            return new News(inputParcel);
+        }
+
+        public News[] newArray(int size) {
+            return new News[size];
+        }
+    };
 }

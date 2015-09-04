@@ -75,13 +75,12 @@ public class SingleDialogFragment extends Fragment {
         View viewHierarchy = inflater.inflate(R.layout.fragment_single_dialog, container, false);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            profileId = bundle.getString(PROFILE_EXTRA, "30661428");
-            chatId = bundle.getString(PROFILE_CHAT_ID, "30661428");
+            this.profileId = bundle.getString(PROFILE_EXTRA, null);
+            this.chatId = bundle.getString(PROFILE_CHAT_ID, null);
         } else {
             this.profileId = getActivity().getIntent().getStringExtra(DialogFriendListFragment.PROFILE_EXTRA);
             this.chatId = getActivity().getIntent().getStringExtra(DialogFriendListFragment.PROFILE_CHAT_ID);
         }
-        super.onCreate(savedInstanceState);
         findViews(viewHierarchy);
         if (VKSdk.wakeUpSession()) {
             startLoading();
@@ -99,10 +98,7 @@ public class SingleDialogFragment extends Fragment {
     }
 
     private void startLoading() {
-        if (this.currentRequest != null) {
-            this.currentRequest.cancel();
-        }
-        if (!chatId.equals(ZERO_CHAT_ID)) {
+        if (!this.chatId.equals(ZERO_CHAT_ID)) {
             this.currentRequest = RequestCreator.getHistoryById(this.MESSAGES_COUNT, this.chatId);
             this.currentRequest.executeWithListener(this.getHistoryByChatIdRequestListener);
         } else {
@@ -158,11 +154,7 @@ public class SingleDialogFragment extends Fragment {
         @Override
         public void onComplete(VKResponse[] responses) {
             super.onComplete(responses);
-            try {
-                setMessageInfo(responses);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            setMessageInfo(responses);
             listAdapter.notifyDataSetChanged();
         }
 
@@ -172,7 +164,7 @@ public class SingleDialogFragment extends Fragment {
             startLoading();
         }
 
-        private void setMessageInfo(VKResponse[] responses) throws JSONException {
+        private void setMessageInfo(VKResponse[] responses) {
             for (int i = 0; i < responses.length; i++) {
                 User responseUser = new UserParser().parseUserName(responses[i]);
                 messages.get(i).setUsername(responseUser.getName());
@@ -193,16 +185,12 @@ public class SingleDialogFragment extends Fragment {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
-            try {
-                setMessageInfo(response);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            setMessageInfo(response);
             if (fromRequest != null) fromRequestExecution(fromRequest, messages.size());
             else listAdapter.notifyDataSetChanged();
         }
 
-        private void setMessageInfo(VKResponse response) throws JSONException {
+        private void setMessageInfo(VKResponse response) {
             User responseUser = new UserParser().parseUserName(response);
             for (int i = 0; i < arrayLength; i++) {
                 messages.get(i).setUsername(responseUser.getName());

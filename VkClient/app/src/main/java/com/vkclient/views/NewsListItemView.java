@@ -14,12 +14,12 @@ import com.vkclient.adapters.PhotoFeedAdapter;
 import com.vkclient.entities.News;
 import com.vkclient.entities.PhotoFeed;
 import com.vkclient.supports.PhotoLoader;
-import com.vkclient.views.External.HorizontalListView;
+import com.vkclient.views.external.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsListItemView extends SuperView {
+public class NewsListItemView extends ListItemView {
     private static final String DATE_FORMAT = "dd.MM - HH:mm";
     private TextView text;
     private ImageView photo;
@@ -56,7 +56,7 @@ public class NewsListItemView extends SuperView {
 
     public void setPost(News post) {
         this.postSource.setText(post.getSourceName());
-        this.postDate.setText(getParsedDate(post.getDate()).toString(DATE_FORMAT));
+        this.postDate.setText(getParsedDate(post.getDate()).toString(this.DATE_FORMAT));
         this.likesCount.setText(post.getLikesCount());
         this.repostsCount.setText(post.getRepostsCount());
         this.messagesPhotos = new ArrayList<>();
@@ -70,10 +70,10 @@ public class NewsListItemView extends SuperView {
         } else {
             this.newsPhoto.setVisibility(View.GONE);
         }
-        photo.setImageResource(R.drawable.ic_user);
-        text.setText(post.getText());
+        this.photo.setImageResource(R.drawable.ic_user);
+        this.text.setText(post.getText());
         if ((!post.getUserPhotoLink_200().isEmpty()) && post.getUserPhotoLink_200() != null) {
-            PhotoLoader.loadPhoto(getContext(), post.getUserPhotoLink_200(), photo);
+            PhotoLoader.loadPhoto(getContext(), post.getUserPhotoLink_200(), this.photo);
         }
     }
 

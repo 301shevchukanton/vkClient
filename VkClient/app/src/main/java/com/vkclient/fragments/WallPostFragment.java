@@ -37,6 +37,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class WallPostFragment extends Fragment {
+    private static final int OK_REQUEST_CODE = 1;
     private VKRequest currentRequest;
     private Bitmap photo;
     private String profileId;
@@ -48,7 +49,6 @@ public class WallPostFragment extends Fragment {
         View viewHierarchy = inflater.inflate(R.layout.fragment_wall_post, container, false);
         profileId = getActivity().getIntent().getStringExtra("id");
         startLoading();
-        super.onCreate(savedInstanceState);
         viewHierarchy.findViewById(R.id.ibAddPhoto).setOnClickListener(this.wallPostClickListener);
         viewHierarchy.findViewById(R.id.btWallPost).setOnClickListener(this.wallPostClickListener);
         return viewHierarchy;
@@ -57,7 +57,7 @@ public class WallPostFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
+        if (resultCode == Activity.RESULT_OK && requestCode == OK_REQUEST_CODE) {
             Uri selectedImage = data.getData();
             selectPhoto(selectedImage);
         }
@@ -83,9 +83,6 @@ public class WallPostFragment extends Fragment {
     }
 
     private void startLoading() {
-        if (this.currentRequest != null) {
-            this.currentRequest.cancel();
-        }
         this.currentRequest = RequestCreator.getFullUserById(profileId);
         this.currentRequest.executeWithListener(this.userFullRequestListener);
     }

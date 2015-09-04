@@ -1,8 +1,11 @@
 package com.vkclient.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.joda.time.DateTime;
 
-public class User {
+public class User implements Parcelable {
     public final static String[] RELATIONSHIP_STATUS = {"nonset", "single", "in a relationship", "engaged", "married", "married", "actively searching", "in love"};
     private int id;
     private String name;
@@ -24,6 +27,15 @@ public class User {
         this.photo = null;
         this.photoMax = null;
         this.id = 1;
+    }
+
+    private User(Parcel in) {
+        this.name = in.readString();
+        this.birthDate = (DateTime) in.readValue(null);
+        this.dateFormat = in.readString();
+        this.photo = in.readString();
+        this.photoMax = in.readString();
+        this.id = in.readInt();
     }
 
     public void setId(int id) {
@@ -121,4 +133,27 @@ public class User {
     public DateTime getBirthDate() {
         return birthDate;
     }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(this.name);
+        out.writeValue(this.birthDate);
+        out.writeString(this.dateFormat);
+        out.writeString(this.photo);
+        out.writeString(this.photoMax);
+        out.writeInt(this.id);
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

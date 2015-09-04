@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.vkclient.views.External.TouchImageView
+    <com.vkclient.views.external.TouchImageView
         android:id="@+id/ivPhoto"
         style="@style/LargeImageViewStyle"
         android:layout_alignParentBottom="true"

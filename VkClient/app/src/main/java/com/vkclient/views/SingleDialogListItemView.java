@@ -13,12 +13,12 @@ import com.vkclient.adapters.PhotoFeedAdapter;
 import com.vkclient.entities.Message;
 import com.vkclient.entities.PhotoFeed;
 import com.vkclient.supports.PhotoLoader;
-import com.vkclient.views.External.HorizontalListView;
+import com.vkclient.views.external.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingleDialogListItemView extends SuperView {
+public class SingleDialogListItemView extends ListItemView {
     private static final String DATE_FORMAT = "dd.MM - HH:mm";
     private TextView nameText;
     private ImageView photo;

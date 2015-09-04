@@ -2,6 +2,7 @@ package com.vkclient.fragments;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsFragment extends Fragment {
+    private static final String INSTANCE_STATE_KEY = "key";
     private VKRequest currentRequest;
     private ListView listView;
     private List<News> news = new ArrayList<>();
@@ -35,25 +37,25 @@ public class NewsFragment extends Fragment {
         View viewHierarchy = inflater.inflate(R.layout.fragment_news, container, false);
         VKUIHelper.onCreate(getActivity());
         this.listView = (ListView) viewHierarchy.findViewById(R.id.lvNews);
-        Object items = getActivity().getLastNonConfigurationInstance();
-        if (items != null) {
-            this.news = ((List<News>) items);
-            this.listAdapter = new NewsListAdapter(getActivity(), this.news);
-            this.listView.setAdapter(this.listAdapter);
-            this.listAdapter.notifyDataSetChanged();
-        } else if (VKSdk.wakeUpSession()) {
-            startLoading();
+        if (savedInstanceState == null || !savedInstanceState.containsKey(INSTANCE_STATE_KEY)) {
+            if (VKSdk.wakeUpSession()) {
+                startLoading();
+            }
+        } else {
+            this.news = savedInstanceState.getParcelableArrayList("key");
         }
         this.listAdapter = new NewsListAdapter(getActivity(), this.news);
         this.listView.setAdapter(this.listAdapter);
         return viewHierarchy;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("key", (ArrayList<? extends Parcelable>) news);
+        super.onSaveInstanceState(outState);
+    }
 
     private void startLoading() {
-        if (this.currentRequest != null) {
-            this.currentRequest.cancel();
-        }
         this.currentRequest = RequestCreator.getNewsFeed();
         this.currentRequest.executeWithListener(this.getHistoryRequestListener);
     }

@@ -52,12 +52,12 @@ public class FriendsListItemView extends LinearLayout {
     public void setFriend(final User friend) {
         this.friendName.setText(friend.getName());
         this.currentFriend = friend;
-        this.friendPhoto.setOnClickListener(photoViewListener);
+        this.friendPhoto.setOnClickListener(this.photoViewListener);
         if (friend.getCity() != null) {
-            this.friendCity.setText(friend.getCity() + SEPARATOR);
+            this.friendCity.setText(friend.getCity() + this.SEPARATOR);
         }
         friendPhoto.setImageResource(R.drawable.ic_user);
-        PhotoLoader.loadPhoto(getContext(), friend.getPhoto(), friendPhoto);
+        PhotoLoader.loadPhoto(getContext(), friend.getPhoto(), this.friendPhoto);
         String birthDateString = friend.getBirthDate() != null ? friend.getBirthDate().toString(DateTimeFormat.forPattern(friend.getDateFormat())) :
                 String.valueOf(R.string.not_set);
         if (birthDateString.contains(".")) {

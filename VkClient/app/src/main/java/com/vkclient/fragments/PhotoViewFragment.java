@@ -12,14 +12,14 @@ import com.example.podkaifom.vkclient.R;
 import com.vkclient.supports.PhotoLoader;
 
 public class PhotoViewFragment extends Fragment {
+    private static final String PHOTO = "photo";
     private static String photoUrl = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
         View viewHierarchy = inflater.inflate(R.layout.fragment_photo_view, container, false);
-        this.photoUrl = getActivity().getIntent().getStringExtra("photo");
+        this.photoUrl = getActivity().getIntent().getStringExtra(PHOTO);
         PhotoLoader.loadPhoto(getActivity(), photoUrl, (ImageView) viewHierarchy.findViewById(R.id.ivPhoto));
         return viewHierarchy;
     }

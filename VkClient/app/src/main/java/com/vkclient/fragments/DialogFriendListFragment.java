@@ -59,9 +59,6 @@ public class DialogFriendListFragment extends Fragment {
     }
 
     private void startLoading() {
-        if (this.currentRequest != null) {
-            this.currentRequest.cancel();
-        }
         this.currentRequest = RequestCreator.getDialogs();
         this.currentRequest.executeWithListener(this.getHistoryRequestListener);
     }

@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/activated_button"
+            android:background="@drawable/selector_activated_button"
             android:baselineAlignBottom="false"
             android:clickable="true"
             android:cropToPadding="false"
@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/tvLikesCount"
-            android:background="@drawable/activated_button"
+            android:background="@drawable/selector_activated_button"
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/news_buttons_padding"
@@ -105,7 +105,7 @@
         android:layout_marginTop="@dimen/news_chapters_padding"
         android:background="@color/news_activity_layout_color">
 
-        <com.vkclient.views.External.HorizontalListView xmlns:android="http://schemas.android.com/apk/res/android"
+        <com.vkclient.views.external.HorizontalListView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/lvNewsPhoto"
             style="@style/HorizontalListViewStyle"
             android:layout_alignParentLeft="true"

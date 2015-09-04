@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/drawer_height"
-    android:background="@drawable/activated_background"
+    android:background="@drawable/selector_activated_background"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/drawer_padding"
     android:paddingRight="@dimen/drawer_padding">
@@ -11,7 +11,7 @@
         android:layout_width="@dimen/drawer_icon_size"
         android:layout_height="@dimen/drawer_icon_size"
         android:layout_marginTop="@dimen/drawer_icon_padding_top"
-        android:background="@drawable/activated_background"
+        android:background="@drawable/selector_activated_background"
         android:src="@drawable/ic_home" />
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,7 +23,7 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:paddingLeft="@dimen/drawer_text_padding"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColor="@drawable/activated_text"
+        android:textColor="@drawable/selector_activated_text"
         android:textSize="@dimen/drawer_list_text_size" />
 
 </LinearLayout>

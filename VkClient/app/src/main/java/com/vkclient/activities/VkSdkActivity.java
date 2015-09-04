@@ -32,6 +32,7 @@ public abstract class VkSdkActivity extends ActionBarActivity implements Navigat
         VKUIHelper.onCreate(this);
         setContentView(getLayoutResource());
         profileId = getIntent().getStringExtra(ID);
+
         initializeFragment(new NavigationPanelFragment(), R.id.navigationPanelContainer);
         setupNavigationPanel();
         initializeFragment(createFragment(), R.id.fragmentContainer);

@@ -27,7 +27,6 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
         VKUIHelper.onCreate(getActivity());
         View viewHierarchy = inflater.inflate(R.layout.fragment_login, container, false);
         VKSdk.initialize(this.sdkListener, this.APPLICATION_ID);
