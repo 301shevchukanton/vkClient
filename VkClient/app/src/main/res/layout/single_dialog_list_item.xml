@@ -34,7 +34,7 @@
         style="@style/PhotoPreview"
         android:layout_alignTop="@+id/tvSingleDialogName" />
 
-    <com.vkclient.views.external.HorizontalListView
+    <com.vkclient.views.externalViews.HorizontalListView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lvMessagesPhoto"
         style="@style/HorizontalListViewStyle"

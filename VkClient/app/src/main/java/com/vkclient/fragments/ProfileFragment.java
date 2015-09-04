@@ -30,7 +30,7 @@ import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
 import com.vkclient.supports.RequestCreator;
 import com.vkclient.views.ProfileInfoView;
-import com.vkclient.views.external.HorizontalListView;
+import com.vkclient.views.externalViews.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -24,7 +24,7 @@
  * It has been substantially rewritten and added to from the original version.
  */
 // @formatter:on
-package com.vkclient.views.External;
+package com.vkclient.views.externalViews;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

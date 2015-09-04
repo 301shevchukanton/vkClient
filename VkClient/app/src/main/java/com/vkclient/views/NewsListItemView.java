@@ -14,7 +14,7 @@ import com.vkclient.adapters.PhotoFeedAdapter;
 import com.vkclient.entities.News;
 import com.vkclient.entities.PhotoFeed;
 import com.vkclient.supports.PhotoLoader;
-import com.vkclient.views.external.HorizontalListView;
+import com.vkclient.views.externalViews.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.List;
