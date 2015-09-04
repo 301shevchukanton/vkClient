@@ -52,8 +52,11 @@ public class SingleDialogListItemView extends ListItemView {
 
     public void setMessagesListItem(Message message) {
         nameText.setText(message.getUser_id() == message.getFromId() ? message.getUsername() : message.getFromName());
-        PhotoLoader.loadPhoto(getContext(),
-                message.getUser_id() == message.getFromId() ? message.getUserPhotoLink_200() : message.getFromPhotoLink_200(), photo);
+
+        if (!message.getUserPhotoLink_200().isEmpty()) {
+            PhotoLoader.loadPhoto(getContext(),
+                    message.getUser_id() == message.getFromId() ? message.getUserPhotoLink_200() : message.getFromPhotoLink_200(), photo);
+        }
         this.dateText.setText(getParsedDate(message.getDate()).toString(DATE_FORMAT));
         this.messageBody.setText(message.getBody());
         this.messageBody.setBackgroundColor(message.getBackgroundColor(getContext()));

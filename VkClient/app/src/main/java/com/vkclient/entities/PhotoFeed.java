@@ -13,6 +13,7 @@ public class PhotoFeed {
     public PhotoFeed() {
 
     }
+
     public PhotoFeed(String photoId, String albumId, String ownerId, String postId, String photoSmall, String photoLarge, String text, String likes) {
         this.photoId = photoId;
         this.albumId = albumId;
