@@ -73,4 +73,7 @@ public class FriendsListItemView extends LinearLayout {
         }
     };
 
+    public String getFriendName() {
+        return friendName.getText().toString();
+    }
 }

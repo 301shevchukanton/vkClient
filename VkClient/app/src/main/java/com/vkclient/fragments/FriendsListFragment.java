@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.api.VKRequest;
@@ -28,6 +27,7 @@ import com.vkclient.entities.User;
 import com.vkclient.listeners.AbstractRequestListener;
 import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.RequestCreator;
+import com.vkclient.views.FriendsListItemView;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -152,7 +152,7 @@ public class FriendsListFragment extends Fragment {
         public void onItemClick(AdapterView<?> parent, View view,
                                 int position, long id) {
             for (int i = 0; i < users.size(); i++) {
-                if (users.get(i).getName().equals(((TextView) view.findViewById(R.id.tvFriendName)).getText())) {
+                if (users.get(i).getName().equals(((FriendsListItemView) view).getFriendName())) {
                     startUserApiCall(users.get(i).getId());
                     break;
                 }
