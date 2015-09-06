@@ -66,6 +66,8 @@ public class UserParser {
             result.setPhotoMax(object.getJSONArray(RESPONSE).getJSONObject(0).getString(PHOTO_MAX_ORIG));
             if (object.getJSONArray(RESPONSE).getJSONObject(0).has(PHOTO_DEFAULT)) {
                 result.setPhoto(object.getJSONArray(RESPONSE).getJSONObject(0).getString(PHOTO_DEFAULT));
+            } else {
+                result.setPhoto(object.getJSONArray(RESPONSE).getJSONObject(0).getString(PHOTO_MAX_ORIG));
             }
             return result;
         } catch (JSONException e) {

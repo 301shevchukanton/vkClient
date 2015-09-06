@@ -11,7 +11,7 @@ public abstract class AbstractContentEntity {
     protected int user_id;
     protected String body = "";
     protected String username = "";
-    protected String userPhotoLink_200 = "";
+    protected String userPhotoLink = "";
     protected boolean readState;
 
     protected AbstractContentEntity() {
@@ -49,16 +49,16 @@ public abstract class AbstractContentEntity {
     public void setDialogUserInfo(User user) {
         this.username = user.getName();
         if (user.getPhoto() != null) {
-            this.userPhotoLink_200 = user.getPhoto();
+            this.userPhotoLink = user.getPhoto();
         }
     }
 
-    public void setUserPhotoLink_200(String userPhotoLink_200) {
-        this.userPhotoLink_200 = userPhotoLink_200;
+    public void setUserPhotoLink(String userPhotoLink) {
+        this.userPhotoLink = userPhotoLink;
     }
 
-    public String getUserPhotoLink_200() {
-        return userPhotoLink_200;
+    public String getUserPhotoLink() {
+        return this.userPhotoLink;
     }
 
     public boolean getReadState() {

@@ -105,7 +105,7 @@ public class NewsParser {
                 for (int i = 0; i < source.length(); i++) {
                     if (source.getJSONObject(i).getString(ID).equals(newsObject.getSourceId())) {
                         newsObject.setSourceName(source.getJSONObject(i).getString(NAME));
-                        newsObject.setUserPhotoLink_200(source.getJSONObject(i).getString(PHOTO_NORMAL));
+                        newsObject.setUserPhotoLink(source.getJSONObject(i).getString(PHOTO_NORMAL));
                     }
                 }
             } catch (JSONException e) {
@@ -118,7 +118,7 @@ public class NewsParser {
                     if (source.getJSONObject(i).getString(ID).equals(newsObject.getSourceId())) {
                         newsObject.setSourceName(source.getJSONObject(i).getString(FIRST_NAME) + " "
                                 + source.getJSONObject(i).getString(LAST_NAME));
-                        newsObject.setUserPhotoLink_200(source.getJSONObject(i).getString(PHOTO_MIDDLE));
+                        newsObject.setUserPhotoLink(source.getJSONObject(i).getString(PHOTO_MIDDLE));
                     }
                 }
             } catch (JSONException e) {

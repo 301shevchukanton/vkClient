@@ -5,6 +5,7 @@
     <item
         android:id="@+id/refresh_messages"
         android:icon="@android:drawable/ic_popup_sync"
+
         app:showAsAction="ifRoom">
     </item>
 </menu>

@@ -45,8 +45,8 @@ public class DialogListItemView extends ListItemView {
         this.name.setText(dialog.getTitle().equals(" ... ") ? dialog.getUsername() : dialog.getTitle());
         this.date.setText(getParsedDate(dialog.getDate()).toString(this.DATE_FORMAT));
         this.text.setBackgroundColor(dialog.getBackgroundColor(getContext()));
-        if ((!dialog.getUserPhotoLink_200().isEmpty()) && dialog.getUserPhotoLink_200() != null) {
-            PhotoLoader.loadPhoto(getContext(), dialog.getUserPhotoLink_200(), this.photo);
+        if ((!dialog.getUserPhotoLink().isEmpty()) && dialog.getUserPhotoLink() != null) {
+            PhotoLoader.loadPhoto(getContext(), dialog.getUserPhotoLink(), this.photo);
         }
     }
 }

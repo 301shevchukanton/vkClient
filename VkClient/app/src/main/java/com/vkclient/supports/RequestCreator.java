@@ -74,7 +74,7 @@ public class RequestCreator {
 
     private static final String FRIENDS_REQUEST_PARAMS[] = {ID, FIRST_NAME, LAST_NAME, BDATE, PHOTO_SIZE, PHOTO_MAX, CITY};
 
-    private static final String USER_BY_ID_REQUEST_PARAMS[] = {FIRST_NAME, LAST_NAME, PHOTO_SIZE, PHOTO_MAX_ORIGINAL};
+    private static final String USER_BY_ID_REQUEST_PARAMS[] = {FIRST_NAME, LAST_NAME, PHOTO_SIZE, PHOTO_MAX_ORIGINAL, PHOTO_MAX_ORIGINAL};
     private static final String CHAT_ID = "chat_id";
     private static final String MESSAGES_SEND = "messages.send";
     private static final int MESSAGES_COUNT = 120;

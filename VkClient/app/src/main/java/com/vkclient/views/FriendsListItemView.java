@@ -56,7 +56,7 @@ public class FriendsListItemView extends LinearLayout {
         if (friend.getCity() != null) {
             this.friendCity.setText(friend.getCity() + this.SEPARATOR);
         }
-        friendPhoto.setImageResource(R.drawable.ic_user);
+        this.friendPhoto.setImageResource(R.drawable.ic_user);
         PhotoLoader.loadPhoto(getContext(), friend.getPhoto(), this.friendPhoto);
         String birthDateString = friend.getBirthDate() != null ? friend.getBirthDate().toString(DateTimeFormat.forPattern(friend.getDateFormat())) :
                 String.valueOf(R.string.not_set);
@@ -74,6 +74,6 @@ public class FriendsListItemView extends LinearLayout {
     };
 
     public String getFriendName() {
-        return friendName.getText().toString();
+        return this.friendName.getText().toString();
     }
 }

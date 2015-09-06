@@ -27,7 +27,7 @@ public class MessagesListAdapter extends ArrayAdapter<Message> {
         if (convertView == null) {
             convertView = new SingleDialogListItemView(getContext());
         }
-        if (getItem(position).getFromPhotoLink_200() != "")
+        if (!getItem(position).getFromPhotoLink_200().isEmpty())
             ((SingleDialogListItemView) convertView).setMessagesListItem(getItem(position));
         return convertView;
     }

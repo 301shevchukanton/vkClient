@@ -51,11 +51,11 @@ public class SingleDialogListItemView extends ListItemView {
     }
 
     public void setMessagesListItem(Message message) {
-        nameText.setText(message.getUser_id() == message.getFromId() ? message.getUsername() : message.getFromName());
+        this.nameText.setText(message.getUser_id() == message.getFromId() ? message.getUsername() : message.getFromName());
 
-        if (!message.getUserPhotoLink_200().isEmpty()) {
+        if (!message.getUserPhotoLink().isEmpty()) {
             PhotoLoader.loadPhoto(getContext(),
-                    message.getUser_id() == message.getFromId() ? message.getUserPhotoLink_200() : message.getFromPhotoLink_200(), photo);
+                    message.getUser_id() == message.getFromId() ? message.getUserPhotoLink() : message.getFromPhotoLink_200(), photo);
         }
         this.dateText.setText(getParsedDate(message.getDate()).toString(DATE_FORMAT));
         this.messageBody.setText(message.getBody());

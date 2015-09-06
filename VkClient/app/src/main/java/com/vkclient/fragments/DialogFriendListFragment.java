@@ -78,6 +78,11 @@ public class DialogFriendListFragment extends Fragment {
             batch.executeWithListener(batchListener);
             listAdapter.notifyDataSetChanged();
         }
+
+        public void onError(VKError error) {
+            super.onError(error);
+            startLoading();
+        }
     };
     private final VKBatchRequest.VKBatchRequestListener batchListener = new VKBatchRequest.VKBatchRequestListener() {
         @Override
@@ -92,7 +97,7 @@ public class DialogFriendListFragment extends Fragment {
         }
 
         public void onError(VKError error) {
-            super.onError(error);
+            //super.onError(error);
             startLoading();
         }
 

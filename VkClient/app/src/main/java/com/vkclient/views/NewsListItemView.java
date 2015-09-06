@@ -72,8 +72,8 @@ public class NewsListItemView extends ListItemView {
         }
         this.photo.setImageResource(R.drawable.ic_user);
         this.text.setText(post.getText());
-        if ((!post.getUserPhotoLink_200().isEmpty()) && post.getUserPhotoLink_200() != null) {
-            PhotoLoader.loadPhoto(getContext(), post.getUserPhotoLink_200(), this.photo);
+        if ((!post.getUserPhotoLink().isEmpty()) && post.getUserPhotoLink() != null) {
+            PhotoLoader.loadPhoto(getContext(), post.getUserPhotoLink(), this.photo);
         }
     }
 

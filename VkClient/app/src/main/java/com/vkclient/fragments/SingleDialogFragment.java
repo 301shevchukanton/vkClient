@@ -168,7 +168,7 @@ public class SingleDialogFragment extends Fragment {
             for (int i = 0; i < responses.length; i++) {
                 User responseUser = new UserParser().parseUserName(responses[i]);
                 messages.get(i).setUsername(responseUser.getName());
-                messages.get(i).setUserPhotoLink_200(responseUser.getPhoto());
+                messages.get(i).setUserPhotoLink(responseUser.getPhoto());
                 messages.get(i).setFromName(responseUser.getName());
                 messages.get(i).setFromPhotoLink_200(responseUser.getPhoto());
             }
@@ -190,11 +190,17 @@ public class SingleDialogFragment extends Fragment {
             else listAdapter.notifyDataSetChanged();
         }
 
+        @Override
+        public void onError(VKError error) {
+            super.onError(error);
+            startLoading();
+        }
+
         private void setMessageInfo(VKResponse response) {
             User responseUser = new UserParser().parseUserName(response);
             for (int i = 0; i < arrayLength; i++) {
                 messages.get(i).setUsername(responseUser.getName());
-                messages.get(i).setUserPhotoLink_200(responseUser.getPhoto());
+                messages.get(i).setUserPhotoLink(responseUser.getPhoto());
             }
         }
     }
@@ -215,7 +221,12 @@ public class SingleDialogFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
 
+        @Override
+        public void onError(VKError error) {
+            super.onError(error);
+            startLoading();
         }
 
         private void setMessageInfo(VKResponse response) throws JSONException {
