@@ -19,6 +19,7 @@ import com.vk.sdk.api.VKResponse;
 import com.vkclient.activities.FriendsListActivity;
 import com.vkclient.activities.PhotoViewActivity;
 import com.vkclient.activities.SendMessageActivity;
+import com.vkclient.activities.WallActivity;
 import com.vkclient.activities.WallPostActivity;
 import com.vkclient.adapters.PhotoFeedAdapter;
 import com.vkclient.entities.PhotoFeed;
@@ -96,6 +97,7 @@ public class ProfileFragment extends Fragment {
         container.findViewById(R.id.btProfileFriends).setOnClickListener(profileClickListener);
         container.findViewById(R.id.btSendMessage).setOnClickListener(profileClickListener);
         container.findViewById(R.id.btWallPost).setOnClickListener(profileClickListener);
+        container.findViewById(R.id.btWall).setOnClickListener(profileClickListener);
         container.findViewById(R.id.ivProfilePhoto).setOnClickListener(userPhotoClick);
         container.findViewById(R.id.tbShowFullUser).setOnClickListener(fullUserShow);
     }
@@ -134,6 +136,8 @@ public class ProfileFragment extends Fragment {
                     return SendMessageActivity.class;
                 case R.id.btWallPost:
                     return WallPostActivity.class;
+                case R.id.btWall:
+                    return WallActivity.class;
                 default:
                     return null;
             }

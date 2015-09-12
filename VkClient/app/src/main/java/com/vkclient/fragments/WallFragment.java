@@ -1,6 +1,5 @@
 package com.vkclient.fragments;
 
-
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -12,22 +11,25 @@ import android.widget.ListView;
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
+import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vkclient.adapters.NewsListAdapter;
 import com.vkclient.entities.News;
 import com.vkclient.listeners.AbstractRequestListener;
-import com.vkclient.parsers.NewsParser;
+import com.vkclient.parsers.WallParser;
+import com.vkclient.supports.Logger;
 import com.vkclient.supports.RequestCreator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsFragment extends Fragment {
+public class WallFragment extends Fragment {
+    private static final String ACTIVITY_EXTRA = "id";
     private static final String INSTANCE_STATE_KEY = "key";
     private VKRequest currentRequest;
     private ListView listView;
-    private List<News> news = new ArrayList<>();
+    private List<News> wall = new ArrayList<>();
     private NewsListAdapter listAdapter;
 
     @Override
@@ -42,31 +44,38 @@ public class NewsFragment extends Fragment {
                 startLoading();
             }
         } else {
-            this.news = savedInstanceState.getParcelableArrayList("key");
+            this.wall = savedInstanceState.getParcelableArrayList("key");
         }
-        this.listAdapter = new NewsListAdapter(getActivity(), this.news);
+        this.listAdapter = new NewsListAdapter(getActivity(), this.wall);
         this.listView.setAdapter(this.listAdapter);
         return viewHierarchy;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList("key", (ArrayList<? extends Parcelable>) news);
+        outState.putParcelableArrayList("key", (ArrayList<? extends Parcelable>) wall);
         super.onSaveInstanceState(outState);
     }
 
     private void startLoading() {
-        this.currentRequest = RequestCreator.getNewsFeed();
-        this.currentRequest.executeWithListener(this.getNewsRequestListener);
+        String ownerId = getActivity().getIntent().getStringExtra(ACTIVITY_EXTRA);
+        this.currentRequest = RequestCreator.wallGet(ownerId);
+        this.currentRequest.executeWithListener(this.getHistoryRequestListener);
     }
 
-    private final AbstractRequestListener getNewsRequestListener = new AbstractRequestListener() {
+    private final AbstractRequestListener getHistoryRequestListener = new AbstractRequestListener() {
         @Override
         public void onComplete(final VKResponse response) {
             super.onComplete(response);
-            news.clear();
-            news.addAll(new NewsParser().getNewsList(response));
+            wall.clear();
+            wall.addAll(new WallParser().getNewsList(response));
             listAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onError(VKError error) {
+            super.onError(error);
+            Logger.logError("FUK IT", "onError: " + error);
         }
     };
 

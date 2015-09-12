@@ -36,4 +36,5 @@
     <dimen name="drawer_icon_padding_top">12dp</dimen>
     <dimen name="activity_padding">5dp</dimen>
     <dimen name="profile_info_left_padding">5dp</dimen>
+    <dimen name="wall_fragment_height">500dp</dimen>
 </resources>

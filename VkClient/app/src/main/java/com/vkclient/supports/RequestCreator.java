@@ -78,6 +78,8 @@ public class RequestCreator {
     private static final String CHAT_ID = "chat_id";
     private static final String MESSAGES_SEND = "messages.send";
     private static final int MESSAGES_COUNT = 120;
+    private static final String WALL_POSTS_COUNT = "25";
+    private static final String WALL_GET = "wall.get";
 
     private static String getParamsFromArray(String array[]) {
         String result = "";
@@ -139,6 +141,10 @@ public class RequestCreator {
 
     public static VKRequest sendChatMessageRequest(String chatId, String message) {
         return new VKRequest(MESSAGES_SEND, VKParameters.from(CHAT_ID, chatId, VKApiConst.MESSAGE, message), VKRequest.HttpMethod.GET);
+    }
+
+    public static VKRequest wallGet(String ownerId) {
+        return new VKRequest(WALL_GET, VKParameters.from(OWNER_ID, ownerId, EXTENDED, VK_TRUE, VKApiConst.COUNT, WALL_POSTS_COUNT), VKRequest.HttpMethod.GET);
     }
 }
 

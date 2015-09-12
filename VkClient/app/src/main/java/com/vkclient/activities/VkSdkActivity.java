@@ -31,8 +31,7 @@ public abstract class VkSdkActivity extends ActionBarActivity implements Navigat
         super.onCreate(savedInstanceState);
         VKUIHelper.onCreate(this);
         setContentView(getLayoutResource());
-        profileId = getIntent().getStringExtra(ID);
-
+        this.profileId = getIntent().getStringExtra(ID);
         initializeFragment(new NavigationPanelFragment(), R.id.navigationPanelContainer);
         setupNavigationPanel();
         initializeFragment(createFragment(), R.id.fragmentContainer);
@@ -94,7 +93,6 @@ public abstract class VkSdkActivity extends ActionBarActivity implements Navigat
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (this.toggle.onOptionsItemSelected(item)) {
             return true;
         }

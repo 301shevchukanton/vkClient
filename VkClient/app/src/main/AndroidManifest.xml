@@ -14,7 +14,6 @@
         <activity android:name="com.vkclient.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -46,6 +45,9 @@
             android:name="com.vkclient.activities.NewsActivity"
             android:label="@string/title_activity_news"
             android:launchMode="singleTop"></activity>
+        <activity
+            android:name="com.vkclient.activities.WallActivity"
+            android:label="@string/title_activity_wall"></activity>
     </application>
 
 </manifest>
