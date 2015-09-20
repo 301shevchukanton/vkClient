@@ -13,7 +13,6 @@ public abstract class AbstractRequestListener extends VKRequest.VKRequestListene
 
     @Override
     public void onError(VKError error) {
-        super.onError(error);
         Logger.logError("VkDemoApp", "onError: " + error);
     }
 

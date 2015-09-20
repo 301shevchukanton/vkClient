@@ -15,19 +15,15 @@ import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
-import com.vk.sdk.api.VKBatchRequest;
-import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
-import com.vk.sdk.api.VKResponse;
 import com.vkclient.adapters.DialogsListAdapter;
+import com.vkclient.database.DialogsRepository;
 import com.vkclient.entities.Dialog;
-import com.vkclient.listeners.AbstractRequestListener;
-import com.vkclient.parsers.MessageParser;
-import com.vkclient.parsers.UserParser;
+import com.vkclient.listeners.DialogsLoaderListener;
+import com.vkclient.loaders.DialogsLoader;
+import com.vkclient.loaders.DialogsLoaderFactory;
+import com.vkclient.loaders.NetworkDialogLoader;
 import com.vkclient.supports.Logger;
-import com.vkclient.supports.RequestCreator;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +34,7 @@ public class DialogFriendListFragment extends Fragment {
     public static final String PROFILE_EXTRA = "userid";
     public static final String PROFILE_CHAT_ID = "chatid";
     private VKRequest currentRequest;
+    DialogsLoader dialogsLoader = new NetworkDialogLoader();
     private ListView listView;
     private List<Dialog> dialogs = new ArrayList<>();
     private DialogsListAdapter listAdapter;
@@ -59,52 +56,30 @@ public class DialogFriendListFragment extends Fragment {
     }
 
     private void startLoading() {
-        this.currentRequest = RequestCreator.getDialogs();
-        this.currentRequest.executeWithListener(this.getHistoryRequestListener);
+        DialogsLoader loader = new DialogsLoaderFactory().create();
+        loader.load(loaderListener);
     }
 
-    private final AbstractRequestListener getHistoryRequestListener = new AbstractRequestListener() {
+    private DialogsLoaderListener loaderListener = new DialogsLoaderListener() {
         @Override
-        public void onComplete(final VKResponse response) {
-            super.onComplete(response);
-            Logger.logDebug("profid", response.responseString);
+        public void onLoad(List<Dialog> loadedDialogs) {
             dialogs.clear();
-            dialogs.addAll(new MessageParser().getDialogsList(response));
-            VKRequest[] requests = new VKRequest[dialogs.size()];
-            for (int i = 0; i < dialogs.size(); i++) {
-                requests[i] = RequestCreator.getUserById(String.valueOf(dialogs.get(i).getUser_id()));
-            }
-            VKBatchRequest batch = new VKBatchRequest(requests);
-            batch.executeWithListener(batchListener);
+            dialogs.addAll(loadedDialogs);
             listAdapter.notifyDataSetChanged();
+            Logger.logDebug("cache testing:", String.valueOf(loadedDialogs.size()));
+            DialogsRepository db = new DialogsRepository(getActivity());
+            db.deleteAll();
+            db.addAllDialogs(dialogs);
+            Logger.logDebug("cache testing:", "from db: " + (db.getAllDialogs().size()));
         }
 
-        public void onError(VKError error) {
-            super.onError(error);
-            startLoading();
-        }
-    };
-    private final VKBatchRequest.VKBatchRequestListener batchListener = new VKBatchRequest.VKBatchRequestListener() {
         @Override
-        public void onComplete(VKResponse[] responses) {
-            super.onComplete(responses);
-            try {
-                setUserInfo(responses);
-                listAdapter.notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public void onError(VKError error) {
-            //super.onError(error);
-            startLoading();
-        }
-
-        private void setUserInfo(VKResponse[] responses) throws JSONException {
-            for (int i = 0; i < responses.length; i++) {
-                dialogs.get(i).setDialogUserInfo(new UserParser().parseUserName(responses[i]));
-            }
+        public void onError() {
+            DialogsRepository db = new DialogsRepository(getActivity());
+            dialogs.clear();
+            dialogs.addAll(db.getAllDialogs());
+            Logger.logDebug("cache testing:", "from db: " + (db.getAllDialogs().size()));
+            listAdapter.notifyDataSetChanged();
         }
     };
     private final AdapterView.OnItemClickListener dialogClickListener = new AdapterView.OnItemClickListener() {
