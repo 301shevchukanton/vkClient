@@ -15,15 +15,11 @@ import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vk.sdk.VKSdk;
-import com.vk.sdk.api.VKRequest;
 import com.vkclient.adapters.DialogsListAdapter;
-import com.vkclient.database.DialogsRepository;
 import com.vkclient.entities.Dialog;
 import com.vkclient.listeners.DialogsLoaderListener;
 import com.vkclient.loaders.DialogsLoader;
 import com.vkclient.loaders.DialogsLoaderFactory;
-import com.vkclient.loaders.NetworkDialogLoader;
-import com.vkclient.supports.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +29,6 @@ public class DialogFriendListFragment extends Fragment {
 
     public static final String PROFILE_EXTRA = "userid";
     public static final String PROFILE_CHAT_ID = "chatid";
-    private VKRequest currentRequest;
-    DialogsLoader dialogsLoader = new NetworkDialogLoader();
     private ListView listView;
     private List<Dialog> dialogs = new ArrayList<>();
     private DialogsListAdapter listAdapter;
@@ -57,7 +51,7 @@ public class DialogFriendListFragment extends Fragment {
 
     private void startLoading() {
         DialogsLoader loader = new DialogsLoaderFactory().create();
-        loader.load(loaderListener);
+        loader.load(loaderListener, getActivity());
     }
 
     private DialogsLoaderListener loaderListener = new DialogsLoaderListener() {
@@ -66,19 +60,10 @@ public class DialogFriendListFragment extends Fragment {
             dialogs.clear();
             dialogs.addAll(loadedDialogs);
             listAdapter.notifyDataSetChanged();
-            Logger.logDebug("cache testing:", String.valueOf(loadedDialogs.size()));
-            DialogsRepository db = new DialogsRepository(getActivity());
-            db.deleteAll();
-            db.addAllDialogs(dialogs);
-            Logger.logDebug("cache testing:", "from db: " + (db.getAllDialogs().size()));
         }
 
         @Override
         public void onError() {
-            DialogsRepository db = new DialogsRepository(getActivity());
-            dialogs.clear();
-            dialogs.addAll(db.getAllDialogs());
-            Logger.logDebug("cache testing:", "from db: " + (db.getAllDialogs().size()));
             listAdapter.notifyDataSetChanged();
         }
     };
@@ -123,12 +108,12 @@ public class DialogFriendListFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        callbacks = (Callbacks) activity;
+        this.callbacks = (Callbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        callbacks = null;
+        this.callbacks = null;
     }
 }
