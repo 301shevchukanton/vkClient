@@ -1,14 +1,21 @@
 package com.vkclient.views;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
+import com.squareup.picasso.Callback;
 import com.vkclient.entities.Dialog;
+import com.vkclient.supports.Logger;
 import com.vkclient.supports.PhotoLoader;
+import com.vkclient.supports.PhotoSaver;
+
+import java.io.File;
+import java.io.IOException;
 
 
 public class DialogListItemView extends ListItemView {
@@ -18,6 +25,7 @@ public class DialogListItemView extends ListItemView {
     private TextView date;
     private TextView name;
     private ImageView photo;
+    private String photoUrl;
 
     public DialogListItemView(Context context) {
         this(context, null);
@@ -45,8 +53,34 @@ public class DialogListItemView extends ListItemView {
         this.name.setText(dialog.getTitle().equals(" ... ") ? dialog.getUsername() : dialog.getTitle());
         this.date.setText(getParsedDate(dialog.getDate()).toString(this.DATE_FORMAT));
         this.text.setBackgroundColor(dialog.getBackgroundColor(getContext()));
-        if ((!dialog.getUserPhotoLink().isEmpty()) && dialog.getUserPhotoLink() != null) {
-            PhotoLoader.loadPhoto(getContext(), dialog.getUserPhotoLink(), this.photo);
+        if ((!dialog.getUserPhotoLink().isEmpty())) {
+
+            String folderToSave = Environment.getExternalStorageDirectory().toString();
+            this.photoUrl = PhotoSaver.getBaseFileName(dialog.getUserPhotoLink());
+            File photoFile = new File(folderToSave, this.photoUrl);
+            if (photoFile.exists()) {
+                PhotoLoader.loadPhotoFromFile(getContext(), photoFile, this.photo);
+            } else {
+                PhotoLoader.loadPhoto(getContext(), dialog.getUserPhotoLink(), this.photo, this.callBack);
+                Logger.logDebug("Photo url as:", dialog.getUserPhotoLink());
+                this.photoUrl = dialog.getUserPhotoLink();
+            }
         }
     }
+
+    private Callback callBack = new Callback() {
+        @Override
+        public void onSuccess() {
+            try {
+                PhotoSaver.SavePicture(getContext(), photo, photoUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onError() {
+
+        }
+    };
 }

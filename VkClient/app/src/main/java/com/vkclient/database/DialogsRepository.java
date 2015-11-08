@@ -7,13 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.vkclient.entities.Dialog;
+import com.vkclient.supports.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DialogsRepository extends SQLiteOpenHelper implements IDialogsRepository {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "dialogsManager";
     private static final String TABLE_DIALOGS = "dialogs";
     private static final String KEY_BODY = "text";
@@ -31,17 +32,18 @@ public class DialogsRepository extends SQLiteOpenHelper implements IDialogsRepos
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_DIALOGS + "("
+        String CREATE_DIALOGS_TABLE = "CREATE TABLE " + TABLE_DIALOGS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_DATE + " INTEGER,"
                 + KEY_USER_ID + " INTEGER," + KEY_TITLE + " TEXT ,"
                 + KEY_BODY + " TEXT ," + KEY_CHAT_ID + " INTEGER ,"
-                + KEY_NAME + " TEXT" + KEY_PHOTO_URL + " TEXT" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+                + KEY_NAME + " TEXT ," + KEY_PHOTO_URL + " TEXT" + ")";
+        db.execSQL(CREATE_DIALOGS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DIALOGS);
+        Logger.logDebug("DB:", "dropped");
         onCreate(db);
     }
 
@@ -55,6 +57,7 @@ public class DialogsRepository extends SQLiteOpenHelper implements IDialogsRepos
         values.put(KEY_BODY, dialog.getBody());
         values.put(KEY_CHAT_ID, dialog.getChatId());
         values.put(KEY_NAME, dialog.getUsername());
+        values.put(KEY_PHOTO_URL, dialog.getUserPhotoLink());
         db.insert(TABLE_DIALOGS, null, values);
         db.close();
     }
@@ -87,6 +90,7 @@ public class DialogsRepository extends SQLiteOpenHelper implements IDialogsRepos
                 cursor.getString(5));
 
         dialog.setUsername(cursor.getString(6));
+        dialog.setUserPhotoLink(cursor.getString(7));
         return dialog;
     }
 
@@ -108,6 +112,9 @@ public class DialogsRepository extends SQLiteOpenHelper implements IDialogsRepos
                         cursor.getString(4),
                         cursor.getString(5));
                 dialog.setUsername(cursor.getString(6));
+                if (!cursor.isNull(7)) {
+                    dialog.setUserPhotoLink(cursor.getString(7));
+                }
                 dialogList.add(dialog);
             } while (cursor.moveToNext());
         }
