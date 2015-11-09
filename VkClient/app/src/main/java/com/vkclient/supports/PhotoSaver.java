@@ -38,8 +38,11 @@ public class PhotoSaver {
     }
 
     public static String getBaseFileName(String photoUrl) {
-        String[] pars = photoUrl.split("/");
-        photoUrl = pars[pars.length - 1];
-        return photoUrl;
+        try {
+            String[] pars = photoUrl.split("/");
+            photoUrl = pars[pars.length - 1];
+        } finally {
+            return photoUrl;
+        }
     }
 }
