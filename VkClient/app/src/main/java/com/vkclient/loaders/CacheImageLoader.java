@@ -12,7 +12,7 @@ import com.vkclient.supports.PhotoSaver;
 import java.io.File;
 
 public class CacheImageLoader implements ImageLoader {
-    ImageLoader imageLoader;
+    private ImageLoader imageLoader;
 
     public CacheImageLoader(ImageLoader imageLoader) {
         this.imageLoader = imageLoader;
@@ -26,7 +26,7 @@ public class CacheImageLoader implements ImageLoader {
             String photoUrl = PhotoSaver.getBaseFileName(url);
             File photoFile = new File(folderToSave, photoUrl);
             if (photoFile.exists()) {
-                this.loadPhotoFromFile(context, photoFile, view);
+                loadPhotoFromFile(context, photoFile, view);
                 imageLoaderListener.onLoad();
             } else {
                 this.imageLoader.load(context, imageLoaderListener, url, view);

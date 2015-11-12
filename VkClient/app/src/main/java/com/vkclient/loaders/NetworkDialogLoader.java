@@ -6,7 +6,6 @@ import com.vk.sdk.api.VKBatchRequest;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
-import com.vkclient.database.DialogsRepository;
 import com.vkclient.entities.Dialog;
 import com.vkclient.listeners.AbstractRequestListener;
 import com.vkclient.listeners.DialogsLoaderListener;
@@ -21,8 +20,7 @@ import java.util.List;
 
 public class NetworkDialogLoader implements DialogsLoader {
 
-    final List<Dialog> oldDialogs = new ArrayList<>();
-    final List<Dialog> dialogs = new ArrayList<>();
+    private final List<Dialog> dialogs = new ArrayList<>();
 
     @Override
     public void load(final DialogsLoaderListener dialogsLoaderListener, final Context context) {
@@ -32,12 +30,7 @@ public class NetworkDialogLoader implements DialogsLoader {
                 super.onComplete(responses);
                 try {
                     setUserInfo(responses);
-                    oldDialogs.clear();
-                    oldDialogs.addAll(dialogs);
                     dialogsLoaderListener.onLoad(dialogs);
-                    DialogsRepository db = new DialogsRepository(context);
-                    db.deleteAll();
-                    db.addAllDialogs(dialogs);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     dialogsLoaderListener.onError();

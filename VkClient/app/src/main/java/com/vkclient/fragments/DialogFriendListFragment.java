@@ -18,7 +18,6 @@ import com.vk.sdk.VKSdk;
 import com.vkclient.adapters.DialogsListAdapter;
 import com.vkclient.entities.Dialog;
 import com.vkclient.listeners.DialogsLoaderListener;
-import com.vkclient.loaders.DialogsLoader;
 import com.vkclient.loaders.DialogsLoaderFactory;
 
 import java.util.ArrayList;
@@ -54,11 +53,10 @@ public class DialogFriendListFragment extends Fragment {
     }
 
     private void startLoading() {
-        DialogsLoader loader = new DialogsLoaderFactory().create();
-        loader.load(loaderListener, getActivity());
+        new DialogsLoaderFactory().create().load(dialogsLoaderListener, getActivity());
     }
 
-    private DialogsLoaderListener loaderListener = new DialogsLoaderListener() {
+    private DialogsLoaderListener dialogsLoaderListener = new DialogsLoaderListener() {
         @Override
         public void onLoad(List<Dialog> loadedDialogs) {
             dialogs.clear();
@@ -71,6 +69,7 @@ public class DialogFriendListFragment extends Fragment {
             listAdapter.notifyDataSetChanged();
         }
     };
+
     private final AdapterView.OnItemClickListener dialogClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view,
