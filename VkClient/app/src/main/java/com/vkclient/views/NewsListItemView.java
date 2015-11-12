@@ -13,7 +13,8 @@ import com.example.podkaifom.vkclient.R;
 import com.vkclient.adapters.PhotoFeedAdapter;
 import com.vkclient.entities.News;
 import com.vkclient.entities.PhotoFeed;
-import com.vkclient.supports.PhotoLoader;
+import com.vkclient.listeners.ConcreteImageLoaderListener;
+import com.vkclient.loaders.ImageLoaderFactory;
 import com.vkclient.views.external.HorizontalListView;
 
 import java.util.ArrayList;
@@ -73,7 +74,8 @@ public class NewsListItemView extends ListItemView {
         this.photo.setImageResource(R.drawable.ic_user);
         this.text.setText(post.getText());
         if ((!post.getUserPhotoLink().isEmpty()) && post.getUserPhotoLink() != null) {
-            PhotoLoader.loadPhoto(getContext(), post.getUserPhotoLink(), this.photo);
+            new ImageLoaderFactory().create()
+                    .load(getContext(), new ConcreteImageLoaderListener(), post.getUserPhotoLink(), this.photo);
         }
     }
 

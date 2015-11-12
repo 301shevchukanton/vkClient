@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.podkaifom.vkclient.R;
-import com.vkclient.supports.PhotoLoader;
+import com.vkclient.listeners.ConcreteImageLoaderListener;
+import com.vkclient.loaders.ImageLoaderFactory;
 
 public class PhotoViewFragment extends Fragment {
     private static final String PHOTO = "photo";
@@ -20,7 +21,8 @@ public class PhotoViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View viewHierarchy = inflater.inflate(R.layout.fragment_photo_view, container, false);
         this.photoUrl = getActivity().getIntent().getStringExtra(PHOTO);
-        PhotoLoader.loadPhoto(getActivity(), photoUrl, (ImageView) viewHierarchy.findViewById(R.id.ivPhoto));
+        new ImageLoaderFactory().create()
+                .load(getActivity(), new ConcreteImageLoaderListener(), photoUrl, (ImageView) viewHierarchy.findViewById(R.id.ivPhoto));
         return viewHierarchy;
     }
 

@@ -8,7 +8,8 @@ import android.widget.TextView;
 
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.entities.Dialog;
-import com.vkclient.supports.PhotoLoader;
+import com.vkclient.listeners.ConcreteImageLoaderListener;
+import com.vkclient.loaders.ImageLoaderFactory;
 
 
 public class DialogListItemView extends ListItemView {
@@ -46,7 +47,8 @@ public class DialogListItemView extends ListItemView {
         this.date.setText(getParsedDate(dialog.getDate()).toString(this.DATE_FORMAT));
         this.text.setBackgroundColor(dialog.getBackgroundColor(getContext()));
         if ((!dialog.getUserPhotoLink().isEmpty())) {
-            PhotoLoader.loadPhoto(getContext(), dialog.getUserPhotoLink(), this.photo);
+            new ImageLoaderFactory().create()
+                    .load(getContext(), new ConcreteImageLoaderListener(), dialog.getUserPhotoLink(), this.photo);
         }
     }
 }

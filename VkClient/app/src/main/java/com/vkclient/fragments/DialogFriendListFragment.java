@@ -34,6 +34,10 @@ public class DialogFriendListFragment extends Fragment {
     private DialogsListAdapter listAdapter;
     private Callbacks callbacks;
 
+    public interface Callbacks {
+        void onDialogSelected(Dialog dialog);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,10 +103,6 @@ public class DialogFriendListFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public interface Callbacks {
-        void onDialogSelected(Dialog dialog);
     }
 
     @Override

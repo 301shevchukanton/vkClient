@@ -8,7 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.vkclient.entities.PhotoFeed;
-import com.vkclient.supports.PhotoLoader;
+import com.vkclient.listeners.ConcreteImageLoaderListener;
+import com.vkclient.loaders.ImageLoaderFactory;
 
 import java.util.List;
 
@@ -29,7 +30,8 @@ public class PhotoFeedAdapter extends ArrayAdapter<PhotoFeed> {
         final PhotoFeed photoFeed = getItem(position);
         ImageView photo = ((ImageView) view.findViewById(imageViewId));
         if (!photoFeed.getPhotoLarge().isEmpty() && photoFeed.getPhotoLarge() != null) {
-            PhotoLoader.loadPhoto(getContext(), photoFeed.getPhotoLarge(), photo);
+            new ImageLoaderFactory().create()
+                    .load(getContext(), new ConcreteImageLoaderListener(), photoFeed.getPhotoLarge(), photo);
         }
         return view;
     }

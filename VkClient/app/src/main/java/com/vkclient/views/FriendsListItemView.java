@@ -11,7 +11,8 @@ import android.widget.TextView;
 import com.example.podkaifom.vkclient.R;
 import com.vkclient.adapters.FriendListAdapter;
 import com.vkclient.entities.User;
-import com.vkclient.supports.PhotoLoader;
+import com.vkclient.listeners.ConcreteImageLoaderListener;
+import com.vkclient.loaders.ImageLoaderFactory;
 
 import org.joda.time.format.DateTimeFormat;
 
@@ -57,7 +58,8 @@ public class FriendsListItemView extends LinearLayout {
             this.friendCity.setText(friend.getCity() + this.SEPARATOR);
         }
         this.friendPhoto.setImageResource(R.drawable.ic_user);
-        PhotoLoader.loadPhoto(getContext(), friend.getPhoto(), this.friendPhoto);
+        new ImageLoaderFactory().create()
+                .load(getContext(), new ConcreteImageLoaderListener(), friend.getPhoto(), this.friendPhoto);
         String birthDateString = friend.getBirthDate() != null ? friend.getBirthDate().toString(DateTimeFormat.forPattern(friend.getDateFormat())) :
                 String.valueOf(R.string.not_set);
         if (birthDateString.contains(".")) {

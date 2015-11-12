@@ -16,9 +16,10 @@ import com.vk.sdk.api.VKResponse;
 import com.vkclient.entities.Message;
 import com.vkclient.entities.User;
 import com.vkclient.listeners.AbstractRequestListener;
+import com.vkclient.listeners.ConcreteImageLoaderListener;
+import com.vkclient.loaders.ImageLoaderFactory;
 import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
-import com.vkclient.supports.PhotoLoader;
 import com.vkclient.supports.RequestCreator;
 
 public class SendMessageFragment extends Fragment {
@@ -60,7 +61,9 @@ public class SendMessageFragment extends Fragment {
             User responseUser = new UserParser().parseUserName(response);
             recipientName.setText(responseUser.getName());
             if (responseUser.getPhotoMax() != null)
-                PhotoLoader.loadPhoto(getActivity(), responseUser.getPhotoMax(), messagePhoto);
+                new ImageLoaderFactory().create()
+                        .load(getActivity(), new ConcreteImageLoaderListener(), responseUser.getPhotoMax(), messagePhoto);
+
         }
     };
 

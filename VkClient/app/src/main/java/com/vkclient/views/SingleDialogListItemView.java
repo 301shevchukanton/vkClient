@@ -12,7 +12,8 @@ import com.example.podkaifom.vkclient.R;
 import com.vkclient.adapters.PhotoFeedAdapter;
 import com.vkclient.entities.Message;
 import com.vkclient.entities.PhotoFeed;
-import com.vkclient.supports.PhotoLoader;
+import com.vkclient.listeners.ConcreteImageLoaderListener;
+import com.vkclient.loaders.ImageLoaderFactory;
 import com.vkclient.views.external.HorizontalListView;
 
 import java.util.ArrayList;
@@ -54,8 +55,10 @@ public class SingleDialogListItemView extends ListItemView {
         this.nameText.setText(message.getUser_id() == message.getFromId() ? message.getUsername() : message.getFromName());
 
         if (!message.getUserPhotoLink().isEmpty()) {
-            PhotoLoader.loadPhoto(getContext(),
-                    message.getUser_id() == message.getFromId() ? message.getUserPhotoLink() : message.getFromPhotoLink_200(), photo);
+            new ImageLoaderFactory().create()
+                    .load(getContext(), new ConcreteImageLoaderListener(),
+                            message.getUser_id() == message.getFromId() ? message.getUserPhotoLink() : message.getFromPhotoLink_200(), photo);
+
         }
         this.dateText.setText(getParsedDate(message.getDate()).toString(DATE_FORMAT));
         this.messageBody.setText(message.getBody());

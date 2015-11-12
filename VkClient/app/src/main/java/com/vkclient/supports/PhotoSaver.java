@@ -24,7 +24,7 @@ public class PhotoSaver {
             File file = new File(folderToSave, photoUrl);
             fOut = new BufferedOutputStream(new FileOutputStream(file));
             Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, fOut);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
         } catch (Exception e) {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
             return e.getMessage();

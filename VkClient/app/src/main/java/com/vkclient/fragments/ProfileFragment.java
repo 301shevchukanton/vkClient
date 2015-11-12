@@ -25,10 +25,11 @@ import com.vkclient.adapters.PhotoFeedAdapter;
 import com.vkclient.entities.PhotoFeed;
 import com.vkclient.entities.User;
 import com.vkclient.listeners.AbstractRequestListener;
+import com.vkclient.listeners.ConcreteImageLoaderListener;
+import com.vkclient.loaders.ImageLoaderFactory;
 import com.vkclient.parsers.PhotoFeedParser;
 import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.Logger;
-import com.vkclient.supports.PhotoLoader;
 import com.vkclient.supports.RequestCreator;
 import com.vkclient.views.ProfileInfoView;
 import com.vkclient.views.external.HorizontalListView;
@@ -207,7 +208,8 @@ public class ProfileFragment extends Fragment {
             setViewsData(user);
             profileId = String.valueOf(user.getId());
             if (user.getPhoto() != null) {
-                PhotoLoader.loadPhoto(getActivity(), user.getPhoto(), profilePhoto);
+                new ImageLoaderFactory().create()
+                        .load(getActivity(), new ConcreteImageLoaderListener(), user.getPhoto(), profilePhoto);
             }
         }
 

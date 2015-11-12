@@ -27,10 +27,11 @@ import com.vk.sdk.api.model.VKPhotoArray;
 import com.vk.sdk.api.model.VKWallPostResult;
 import com.vkclient.entities.User;
 import com.vkclient.listeners.AbstractRequestListener;
+import com.vkclient.listeners.ConcreteImageLoaderListener;
+import com.vkclient.loaders.ImageLoaderFactory;
 import com.vkclient.parsers.UserParser;
 import com.vkclient.supports.AlertBuilder;
 import com.vkclient.supports.Logger;
-import com.vkclient.supports.PhotoLoader;
 import com.vkclient.supports.RequestCreator;
 
 import java.io.FileNotFoundException;
@@ -140,7 +141,10 @@ public class WallPostFragment extends Fragment {
         private void setUserInfo(VKResponse response) {
             User user = new UserParser().parse(response);
             ((TextView) getView().findViewById(R.id.tvPostName)).setText(user.getName());
-            PhotoLoader.loadPhoto(getActivity(), user.getPhoto(), (ImageView) getView().findViewById(R.id.ivPostPhoto));
+            new ImageLoaderFactory().create()
+                    .load(getActivity(), new ConcreteImageLoaderListener(), user.getPhoto(),
+                            (ImageView) getView().findViewById(R.id.ivPostPhoto));
+
         }
     };
     private VKRequest.VKRequestListener wallPostRequestListener = new VKRequest.VKRequestListener() {
