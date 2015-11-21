@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,32 +37,47 @@ import com.vkclient.supports.Logger;
 import com.vkclient.supports.RequestCreator;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 public class WallPostFragment extends Fragment {
     private static final int OK_REQUEST_CODE = 1;
-    private VKRequest currentRequest;
     private Bitmap photo;
     private String profileId;
-    protected String msg;
+    private TextView postText;
+    private TextView postName;
+    private ImageView postPhoto;
+    private ImageButton addPhoto;
+    private Button sendPost;
+    protected String message;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewHierarchy = inflater.inflate(R.layout.fragment_wall_post, container, false);
-        profileId = getActivity().getIntent().getStringExtra("id");
+        findViews(viewHierarchy);
         startLoading();
-        viewHierarchy.findViewById(R.id.ibAddPhoto).setOnClickListener(this.wallPostClickListener);
-        viewHierarchy.findViewById(R.id.btWallPost).setOnClickListener(this.wallPostClickListener);
+        setViewsListeners();
         return viewHierarchy;
+    }
+
+    private void setViewsListeners() {
+        addPhoto.setOnClickListener(this.wallPostClickListener);
+        sendPost.setOnClickListener(this.wallPostClickListener);
+    }
+
+    private void findViews(View viewHierarchy) {
+        profileId = getActivity().getIntent().getStringExtra("id");
+        postText = (TextView) viewHierarchy.findViewById(R.id.post);
+        postName = (TextView) viewHierarchy.findViewById(R.id.tvPostName);
+        postPhoto = (ImageView) viewHierarchy.findViewById(R.id.ivPostPhoto);
+        addPhoto = (ImageButton) viewHierarchy.findViewById(R.id.ibAddPhoto);
+        sendPost = (Button) viewHierarchy.findViewById(R.id.btWallPost);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == OK_REQUEST_CODE) {
-            Uri selectedImage = data.getData();
-            selectPhoto(selectedImage);
+            selectPhoto(data.getData());
         }
     }
 
@@ -84,8 +101,7 @@ public class WallPostFragment extends Fragment {
     }
 
     private void startLoading() {
-        this.currentRequest = RequestCreator.getFullUserById(profileId);
-        this.currentRequest.executeWithListener(this.userFullRequestListener);
+        RequestCreator.getFullUserById(profileId).executeWithListener(this.userFullRequestListener);
     }
 
     private void pickPhoto() {
@@ -95,25 +111,21 @@ public class WallPostFragment extends Fragment {
     }
 
     private void selectPhoto(Uri selectedImage) {
-        InputStream imageStream;
         try {
-            imageStream = getActivity().getContentResolver().openInputStream(selectedImage);
-            Bitmap selectedBitmap = BitmapFactory.decodeStream(imageStream);
-            this.photo = selectedBitmap;
+            this.photo = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(selectedImage));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     private void post() {
-        this.msg = ((TextView) getView().findViewById(R.id.post)).getText().toString();
-        Toast.makeText(getActivity(), getString(R.string.posted_successful), Toast.LENGTH_LONG).show();
-        ((TextView) getView().findViewById(R.id.post)).setText("");
+        this.message = postText.getText().toString();
+        postText.setText("");
         if (this.photo != null) {
             VKRequest request = RequestCreator.uploadPhotoToUser(profileId, this.photo);
             request.executeWithListener(this.uploadPhotoRequestListener);
         } else {
-            makePost(this.msg);
+            makePost(this.message);
         }
     }
 
@@ -122,7 +134,7 @@ public class WallPostFragment extends Fragment {
         public void onComplete(VKResponse response) {
             photo.recycle();
             VKApiPhoto photoModel = ((VKPhotoArray) response.parsedModel).get(0);
-            makePost(new VKAttachments(photoModel), msg);
+            makePost(new VKAttachments(photoModel), message);
         }
 
         @Override
@@ -140,10 +152,10 @@ public class WallPostFragment extends Fragment {
 
         private void setUserInfo(VKResponse response) {
             User user = new UserParser().parse(response);
-            ((TextView) getView().findViewById(R.id.tvPostName)).setText(user.getName());
+            postName.setText(user.getName());
             new ImageLoaderFactory().create()
                     .load(getActivity(), new ConcreteImageLoaderListener(), user.getPhoto(),
-                            (ImageView) getView().findViewById(R.id.ivPostPhoto));
+                            postPhoto);
 
         }
     };
@@ -151,6 +163,7 @@ public class WallPostFragment extends Fragment {
         @Override
         public void onComplete(VKResponse response) {
             super.onComplete(response);
+            Toast.makeText(getActivity(), getString(R.string.posted_successful), Toast.LENGTH_LONG).show();
         }
 
         @Override
