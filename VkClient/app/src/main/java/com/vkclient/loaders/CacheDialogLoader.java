@@ -24,7 +24,7 @@ public class CacheDialogLoader implements DialogsLoader {
             DialogsRepository db = new DialogsRepository(context);
             db.deleteAll();
             db.addAllDialogs(dialogs);
-            dialogsLoader.load(dialogsLoaderListener, context);
+            dialogsLoaderListener.onLoad(dialogs);
         }
 
         @Override
@@ -35,6 +35,7 @@ public class CacheDialogLoader implements DialogsLoader {
 
     @Override
     public void load(DialogsLoaderListener dialogsLoaderListener, Context context) {
+        dialogsLoaderListener.onLoad(new DialogsRepository(context).getAllDialogs());
         this.context = context;
         this.dialogsLoaderListener = dialogsLoaderListener;
         this.dialogsLoader.load(dialogsCacheLoaderListener, context);
